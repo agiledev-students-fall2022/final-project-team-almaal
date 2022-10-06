@@ -35,13 +35,17 @@ we want to leave the above part on since the links to instructions are very help
 #### README.md
 - a description of project, including the [Product Vision Statement](https://knowledge.kitchen/Scrum_development_framework#Product_vision_statement)
 
+Product Vision Statement:
+While investement management portfolios in the market have a lot of functionality and complicated UI, our product desires to allow everyone and anyone to be comfortable to the idea of investing money in stocks, crypto and similar by making the process of portfolio management easy to navigate and distinct to manage.
+
+
 Hey guys, so we have decided to shift towards an Investment Management Application.
 The site map is up there.
 The idea is that we'll manually put in investments which can include stocks, crypto, etc.
 We'll get realtime data using APIs from different sources.
 For the other section, we'll have the functionality to add friends, make groups, etc.
 We'll have one more section for news from different sources
-Then, we'll run some sentiment analysis to give some idea to give a direction for beginners
+Then, we'll run some sentiment analysis to give some idea to give a direction for beginners.
 
 - the core team members, including links to their GitHub accounts ✅
   - [Krises Maskey](https://github.com/KrisesMaskey)
