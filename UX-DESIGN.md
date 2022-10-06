@@ -18,17 +18,17 @@ The app map for Almaal includes of 5 key components. The heirarchial structure i
 **1. Home Screen**
 ![Home Screen](/...)
 
-The Home Screen is the landing screen when the user first opens the application. Here, user have access to their investments and navigation links to other pages.
+The Home Screen is the landing screen when the user first opens the application. Here, user have access to their investments and navigation links to other pages. The user can add an investment add assign tags to it and gather realtime analytics on how well it is doing.
 
 **2. News**
 ![News Page](/...)
 
-The News Page is the section of the application where current investment related news briefs are displayed with sentiment score. It is designed to help the user understand market dynamics and sentiment.  
+The News Page is the section of the application where current investment related news briefs are displayed with sentiment score. It is designed to help the user understand market dynamics and sentiment. We can filter between different sources to see how the reaction is on differnt sources. We will perform some sentiment analysis on the data that we collect. Then, the user can see an aggregate score for the news sources that they filter.
 
 **3. Friends**
 ![Friends Page](/...)
 
-The Friends Page lets the user view their current friends, gives them the option to add/remove friends and expand their social circle. This page is visualized to let the user 
+The Friends Page lets the user view their current friends, gives them the option to add/remove friends and expand their social circle. Users can also see how well their friends are doing with their investments if they have shared it on their profile.
 
 **4. Groups**
 ![Groups Page](/...)
@@ -38,4 +38,4 @@ The Groups Page lets the users join groups, view their groups, add/remove groups
 **5. Profile**
 ![Profile Page](/...)
 
-The profile page is the section where the user can view their profile and edit it. 
+The profile page is the section where the user can view their profile and edit it. There are options for the user to edit their username, password, and see some user statistics like the total amount invested yet. Users can decide to hide their investments or their whole profile so others can't see it.
