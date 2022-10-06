@@ -1,4 +1,4 @@
-Product Features:
+**Product Features:**
 1. create account and display personal investment data
 2. manually put in investments which can include stocks, crypto, etc.
 3. graph in the home page to track general investment to visualize how my investments are doing

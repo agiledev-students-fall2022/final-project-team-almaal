@@ -29,8 +29,10 @@ Several sets of instructions are included in this repository. They should each b
 We want to leave the above part on since the links to instructions are very helpful
 
 ## Assign roles
-- Scrum Master:
-- Product Owner:
+We decided to take rotation in assignment of the following roles for very Sprint.
+Sprint 1
+- Scrum Master: Wenbo Bao
+- Product Owner: Maisha Mahrin
 
 ## set up discord channels ✅
 - Public communications channels ✅
