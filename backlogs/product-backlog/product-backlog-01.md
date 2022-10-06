@@ -4,7 +4,7 @@
 3. graph in the home page to track general investment to visualize how my investments are doing
 4. add friends 
 5. Be able to see how friends' investments are doing
-6. make groups
+6. Create Groups to collaborate on investment research and notes 
 7. Group Leader: Post content, investment displays available to group members
 8. Group Members: See group leader contents, see group leader investments
 9. News links of stock market, crypto etc.
