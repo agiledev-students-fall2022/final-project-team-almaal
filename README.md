@@ -1,4 +1,5 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=8742460&assignment_repo_type=AssignmentRepo)
+
 # Project Repository
 
 This repository will be used for team projects.
@@ -19,8 +20,13 @@ Several sets of instructions are included in this repository. They should each b
 
 1. See the [Deployment instructions](./instructions-4-deployment.md) for the requirements of deploying an app.
 
+
+
+
+
+
 # Project Setup
-we want to leave the above part on since the links to instructions are very helpful
+We want to leave the above part on since the links to instructions are very helpful
 
 ## Assign roles
 - Scrum Master:
@@ -35,17 +41,17 @@ we want to leave the above part on since the links to instructions are very help
 #### README.md
 - a description of project, including the [Product Vision Statement](https://knowledge.kitchen/Scrum_development_framework#Product_vision_statement)
 
-Product Vision Statement:
+**Product Vision Statement:**
 While investement management portfolios in the market have a lot of functionality and complicated UI, our product desires to allow everyone and anyone to be comfortable to the idea of investing money in stocks, crypto and similar by making the process of portfolio management easy to navigate and distinct to manage.
 
-
-Hey guys, so we have decided to shift towards an Investment Management Application.
-The site map is up there.
+**Product Description:**
+So we have decided to shift towards an Investment Management Application.
 The idea is that we'll manually put in investments which can include stocks, crypto, etc.
 We'll get realtime data using APIs from different sources.
 For the other section, we'll have the functionality to add friends, make groups, etc.
 We'll have one more section for news from different sources
 Then, we'll run some sentiment analysis to give some idea to give a direction for beginners.
+The site map, wireframe design and the process flow prototype is available in the [UX-DESIGN.md](https://github.com/agiledev-students-fall2022/final-project-team-almaal/blob/master/UX-DESIGN.md) file.
 
 - the core team members, including links to their GitHub accounts ✅
   - [Krises Maskey](https://github.com/KrisesMaskey)
