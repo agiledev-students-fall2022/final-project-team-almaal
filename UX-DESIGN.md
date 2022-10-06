@@ -5,7 +5,7 @@ This repository contains instructions and files for two assignments that togethe
 Replace the contents of this file with the completed assignments, as described in:
 
 - [app map & wireframe instructions](instructions-0a-app-map-wireframes.md).
-- [prototype instructions](instructions-0b-prototyping.md)
+- [figma prototype](https://www.figma.com/file/FKjFAoXqRXyC1Kmzta1TKK/Wireframe-App-(Community)-(Copy)?node-id=223%3A250).
 
 ***
 ## App/Site Map
