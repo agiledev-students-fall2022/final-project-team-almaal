@@ -18,3 +18,38 @@ Several sets of instructions are included in this repository. They should each b
 1. See the [Database Integration instructions](./instructions-3-database.md) for the requirements of integrating a database into the back-end.
 
 1. See the [Deployment instructions](./instructions-4-deployment.md) for the requirements of deploying an app.
+
+# Project Setup
+we want to leave the above part on since the links to instructions are very helpful
+
+## Assign roles
+- Scrum Master:
+- Product Owner:
+
+## set up discord channels ✅
+- Public communications channels ✅
+- Private communications channels ✅
+
+## Configure GitHub Repository
+### GitHub Repository
+#### README.md
+- a description of project, including the [Product Vision Statement](https://knowledge.kitchen/Scrum_development_framework#Product_vision_statement)
+
+Hey guys, so we have decided to shift towards an Investment Management Application.
+The site map is up there.
+The idea is that we'll manually put in investments which can include stocks, crypto, etc.
+We'll get realtime data using APIs from different sources.
+For the other section, we'll have the functionality to add friends, make groups, etc.
+We'll have one more section for news from different sources
+Then, we'll run some sentiment analysis to give some idea to give a direction for beginners
+
+- the core team members, including links to their GitHub accounts ✅
+  - [Krises Maskey](https://github.com/KrisesMaskey)
+  - [Maisha Mahrin](https://github.com/maishahoq)
+  - [Safal Shrestha](https://github.com/safal312)
+  - [Wenbo Bao](https://github.com/Wenbo-Bao)
+  - [Frank Wu](https://github.com/zw2700)
+
+- [CONTRIBUTING.md](./CONTRIBUTING.md)
+
+- instructions for building and testing the project (update with that information once the project reaches that stage)
