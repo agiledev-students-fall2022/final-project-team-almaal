@@ -27,6 +27,10 @@ const Friends = () => {
         setIsModalOpen(false);
     };
 
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <>
             <section className={styles.container}>
