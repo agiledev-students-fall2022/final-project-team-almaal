@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer'
@@ -6,6 +8,7 @@ import Home from './routes/Home'
 import Friends from './routes/Friends'
 import Groups from './routes/Groups'
 import Profile from './routes/Profile';
+import News from './routes/News';
 
 import {
   BrowserRouter,
@@ -23,6 +26,7 @@ function App() {
           <Route path="/friends" element={<Friends />} />
           <Route path="/groups" element={<Groups />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/news" element={<News />} />
         </Routes>
       </BrowserRouter>
       <Footer />
