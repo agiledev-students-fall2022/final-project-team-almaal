@@ -1,12 +1,51 @@
 .container {
-    width: 80%;
-    margin: 0 auto;
+    width: 60%;
+    margin: 3rem auto;
 }
 
 .title {
     /* font-family: 'Times New Roman', Times, serif; */
+    padding-bottom: 0.5rem;
 }
 
+.searchArea {
+    width: 100%;
+    position: relative;
+}
+
+
 .search {
-    width: 70%;
+    position: relative;
+    z-index: 2;
+}
+
+.card {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    background-color: rgba(240, 248, 255, 0.95);
+}
+
+.imgAndName {
+    display: flex;
+}
+
+.imgAndName div:nth-child(2) {
+    padding-left: 1rem;
+}
+
+.friendsLink {
+    padding-top: 1rem;
+    text-decoration: underline;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.friendsLink:hover {
+    font-weight: 500;
+}
+
+.seemore {
+    display: block;
+    margin: 0 auto;
 }
