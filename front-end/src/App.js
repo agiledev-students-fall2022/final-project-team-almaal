@@ -28,12 +28,9 @@ function App() {
           <Route path="/friends" element={<Friends />} />
           <Route path="/groups" element={<Groups />} />
           <Route path="/profile" element={<Profile />} />
-<<<<<<< HEAD
           <Route path="/login" element={<Login />} />
           <Route path="/createAccount" element={<CreateAccount />} />
-=======
           <Route path="/news" element={<News />} />
->>>>>>> 6daa87b9925aacd8f5977c983c1e5d727b78fdc1
         </Routes>
       </BrowserRouter>
       <Footer />
