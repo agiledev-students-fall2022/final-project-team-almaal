@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer'
@@ -8,6 +10,7 @@ import Groups from './routes/Groups'
 import Profile from './routes/Profile'
 import Login from './routes/Login'
 import CreateAccount from './routes/CreateAccount';
+import News from './routes/News';
 
 import {
   BrowserRouter,
@@ -25,8 +28,12 @@ function App() {
           <Route path="/friends" element={<Friends />} />
           <Route path="/groups" element={<Groups />} />
           <Route path="/profile" element={<Profile />} />
+<<<<<<< HEAD
           <Route path="/login" element={<Login />} />
           <Route path="/createAccount" element={<CreateAccount />} />
+=======
+          <Route path="/news" element={<News />} />
+>>>>>>> 6daa87b9925aacd8f5977c983c1e5d727b78fdc1
         </Routes>
       </BrowserRouter>
       <Footer />
