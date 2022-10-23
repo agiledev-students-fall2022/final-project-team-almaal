@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { Typography, Space, Divider, Avatar,Button, Input, Switch, Card, List, Tooltip } from 'antd';
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
+import styles from './Friends.module.css'
 
 const { Tab } = Input
 const { ProfilePic } = Avatar;
@@ -19,7 +20,8 @@ const Profile = ({total_friends=0, total_groups=0, total_investment=0, total_pl=
         }
 
         return(
-        <div>
+        <div className={styles.container}>
+            <Typography level={2} className={styles.title}>Profile</Typography>
             <Space direction="vertical">
                 <Avatar icon={<UserOutlined />}/>
                 Username
