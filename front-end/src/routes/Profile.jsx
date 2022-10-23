@@ -7,22 +7,33 @@ const { ProfilePic } = Avatar;
 
 const Profile = ({total_friends=0, total_groups=0, total_investment=0, total_pl=0}) => {
         const [username, setUsername] = useState('');
+        const [allowUsernameEdit, setAllowUsernameEdit] = useState('false');
+        const [allowPasswordEdit, setAllowPasswordEdit] = useState('false');
+
+        const handleUsernameButton = () => {
+            setAllowUsernameEdit(~allowUsernameEdit);
+        }
+
+        const handlePasswordButton = () => {
+            setAllowPasswordEdit(~allowPasswordEdit);
+        }
+
         return(
         <div>
             <Space direction="vertical">
                 <Avatar icon={<UserOutlined />}/>
                 Username
                 <Space>
-                    <Input defaultValue="current_username" disabled />
+                    <Input defaultValue="current_username" disabled={allowUsernameEdit} />
                     <Tooltip>
-                        <Button icon={<EditOutlined />} />
+                        <Button icon={<EditOutlined />} onClick={handleUsernameButton} />
                     </Tooltip>
                 </Space>
                 Password
                 <Space>
-                    <Input defaultValue="current_password" disabled />
+                    <Input defaultValue="current_password" disabled={allowPasswordEdit} />
                     <Tooltip>
-                        <Button icon={<EditOutlined />} />
+                        <Button icon={<EditOutlined />} onClick={handlePasswordButton}/>
                     </Tooltip>
                 </Space>
                 <Space>Investment Visibility<Switch defaultChecked ></Switch></Space>

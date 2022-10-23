@@ -7,14 +7,21 @@ const Login = ()=>{
         <div>
             <Space direction="vertical">
                 <Avatar icon={<AliwangwangOutlined />}></Avatar>
-                <Button shape="round" icon={<GoogleOutlined />} >
+                <Button shape="round" icon={<GoogleOutlined />} block>
                     Continue with Google
                 </Button>
-                <Button shape="round" icon={<FacebookOutlined />}>
+                <Button shape="round" icon={<FacebookOutlined />} block >
                     Continue with Facebook
                 </Button>
                 OR
-
+                <Input placeholder="Email" />
+                <Input placeholder="Password" />
+                <Button type="primary" shape="round">
+                    Log In
+                </Button>
+                <Button type="link">
+                    No account yet? Create one!
+                </Button>
             </Space>
         </div>
     );
