@@ -13,21 +13,17 @@ const Profile = ({total_friends=0, total_groups=0, total_investment=0, total_pl=
                 <Avatar icon={<UserOutlined />}/>
                 Username
                 <Space>
-                    <Input.Group compact>
-                        <Input defaultValue="current_username" disabled />
-                        <Tooltip>
-                            <Button icon={<EditOutlined />} />
-                        </Tooltip>
-                    </Input.Group>
+                    <Input defaultValue="current_username" disabled />
+                    <Tooltip>
+                        <Button icon={<EditOutlined />} />
+                    </Tooltip>
                 </Space>
                 Password
                 <Space>
-                    <Input.Group compact>
-                        <Input defaultValue="current_password" disabled />
-                        <Tooltip>
-                            <Button icon={<EditOutlined />} />
-                        </Tooltip>
-                    </Input.Group>
+                    <Input defaultValue="current_password" disabled />
+                    <Tooltip>
+                        <Button icon={<EditOutlined />} />
+                    </Tooltip>
                 </Space>
                 <Space>Investment Visibility<Switch defaultChecked ></Switch></Space>
                 <Space>Hide Profile<Switch></Switch></Space>
@@ -42,6 +38,7 @@ const Profile = ({total_friends=0, total_groups=0, total_investment=0, total_pl=
                 </List>
             </Space>
         </div>
-);
+    );
+
 }
 export default Profile

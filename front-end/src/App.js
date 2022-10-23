@@ -5,7 +5,9 @@ import Footer from './components/Footer'
 import Home from './routes/Home'
 import Friends from './routes/Friends'
 import Groups from './routes/Groups'
-import Profile from './routes/Profile';
+import Profile from './routes/Profile'
+import Login from './routes/Login'
+import CreateAccount from './routes/CreateAccount';
 
 import {
   BrowserRouter,
@@ -23,6 +25,8 @@ function App() {
           <Route path="/friends" element={<Friends />} />
           <Route path="/groups" element={<Groups />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/createAccount" element={<CreateAccount />} />
         </Routes>
       </BrowserRouter>
       <Footer />
