@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Avatar, Layout, Typography, Input, Card, Button, List, Modal, Divider, Skeleton, Popover } from 'antd';
-import { EllipsisOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, EllipsisOutlined } from '@ant-design/icons';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import AddComponent from './addGroupComponent';
 import styles from '../routes/Groups.module.css';
 
 const { Sider} = Layout;
@@ -27,13 +28,30 @@ const content = (
 );
 
 const GroupsSideNavigationBar = () => {
+    const [modal2Open, setModal2Open] = useState(false);
     const [searchItem, setItem] = useState('');
     const [showCard, setShowCard] = useState(false);
     return (
     <Sider width={'26%'} className={styles.siteLayoutBackground}> 
         
         <div>
-        <Title level={2} className={styles.sideTitle}>Groups</Title>  
+            <Title level={2} className={styles.sideTitle}>Groups</Title> 
+            <Button className={styles.addbtn} onClick={() => setModal2Open(true)} icon={<PlusCircleOutlined style={{fontSize:"25px"}}/>}></Button> 
+            <Modal
+                title="Add Groups"
+                centered
+                visible={modal2Open}
+                onOk={() => setModal2Open(false)}
+                onCancel={() => setModal2Open(false)}
+            >
+            {[1, 2, 3].map(key => {
+                return (<div key={key}>
+                    <AddComponent type="incoming" />
+                    <Divider />
+                </div>
+                );
+            })}
+            </Modal>
         </div> 
         
         <>
