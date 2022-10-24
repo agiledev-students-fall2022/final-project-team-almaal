@@ -1,5 +1,4 @@
 .mainLayout{
-    background:'red';
     width: 100%;
     height:100vh;
 }
@@ -66,7 +65,7 @@
 
 .chatLayout{
     height: 100vh;
-    background: blue;
+    background: grey;
     border-color: black;
     padding: 1px;
 }
