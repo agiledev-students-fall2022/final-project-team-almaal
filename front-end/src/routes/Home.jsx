@@ -12,23 +12,6 @@ import './Home.css'
 const Home = () => {
   const [letterClass, setLetterClass] = useState('text-animate')
 
-  const nameArray = ['l', 'o', 'b', 'o', 'd', 'a', 'n']
-  const jobArray = [
-    'w',
-    'e',
-    'b',
-    ' ',
-    'd',
-    'e',
-    'v',
-    'e',
-    'l',
-    'o',
-    'p',
-    'e',
-    'r',
-    '.',
-  ]
 
 
   const [mode, setMode] = useState('top');
@@ -71,6 +54,7 @@ const Home = () => {
       />
         </div>
           <h2>Front End Developer / Painter </h2>
+          <Link to="/friends">Home</Link>
           <Link to="/contact" className="flat-button">
             CONTACT ME
           </Link>
