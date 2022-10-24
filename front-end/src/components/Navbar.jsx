@@ -37,7 +37,7 @@ const menu = (
             defaultOpenKeys={['sub1']}
             mode="inline"
             theme="dark"
-            //inlineCollapsed={collapsed}
+            
         >
             <Menu.Item key="1" icon={<DesktopOutlined /> }>
                 Home
