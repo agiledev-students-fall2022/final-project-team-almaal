@@ -85,7 +85,7 @@ const Friends = () => {
                 })}
                 {incomingRequests.length > 3 && <Button type="default" className={styles.seemore}>See More</Button>}
                 {incomingRequests.length <= 3 && <p style={{ color: "grey" }}>No incoming requests</p>}
-                <div className="spacer" style={{ height: "6rem" }}></div>
+
             </section>
         </>
     )

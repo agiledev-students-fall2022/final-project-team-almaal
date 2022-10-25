@@ -1,28 +1,28 @@
-import React, {useState} from 'react'
-import { Typography, Space, Divider, Avatar,Button, Input, Switch, Card, List, Tooltip } from 'antd';
+import React, { useState } from 'react'
+import { Typography, Space, Divider, Avatar, Button, Input, Switch, Card, List, Tooltip } from 'antd';
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
 import styles from './Profile.module.css'
 
 const { Title } = Typography;
 
-const Profile = ({total_friends=0, total_groups=0, total_investment=0, total_pl=0}) => {
-        const [username, setUsername] = useState('');
-        const [allowUsernameEdit, setAllowUsernameEdit] = useState('false');
-        const [allowPasswordEdit, setAllowPasswordEdit] = useState('false');
+const Profile = ({ total_friends = 0, total_groups = 0, total_investment = 0, total_pl = 0 }) => {
+    const [username, setUsername] = useState('');
+    const [allowUsernameEdit, setAllowUsernameEdit] = useState('false');
+    const [allowPasswordEdit, setAllowPasswordEdit] = useState('false');
 
-        const handleUsernameButton = () => {
-            setAllowUsernameEdit(~allowUsernameEdit);
-        }
+    const handleUsernameButton = () => {
+        setAllowUsernameEdit(~allowUsernameEdit);
+    }
 
-        const handlePasswordButton = () => {
-            setAllowPasswordEdit(~allowPasswordEdit);
-        }
+    const handlePasswordButton = () => {
+        setAllowPasswordEdit(~allowPasswordEdit);
+    }
 
-        return(
+    return (
         <div>
-            <Title level={2} className={styles.title}>Your Almaal Profile</Title>
+            {/* <Title level={2} className={styles.title}>Your Almaal Profile</Title> */}
             <Space className={styles.container} direction="vertical" size="large" align="center" style={{ display: 'flex' }}>
-                <Avatar className={styles.profilePic} size={96} icon={<UserOutlined />}/>
+                <Avatar className={styles.profilePic} size={96} icon={<UserOutlined />} />
                 <Space align="center">
                     <Space direction="vertical">
                         <Typography className={styles.inputLabel}>Username</Typography>
@@ -38,10 +38,10 @@ const Profile = ({total_friends=0, total_groups=0, total_investment=0, total_pl=
                         <Space className={styles.input}>
                             <Input defaultValue="current_password" disabled={allowPasswordEdit} size="large" />
                             <Tooltip>
-                                <Button icon={<EditOutlined />} onClick={handlePasswordButton}/>
+                                <Button icon={<EditOutlined />} onClick={handlePasswordButton} />
                             </Tooltip>
                         </Space>
-                        </Space>
+                    </Space>
                 </Space>
                 <Space direction="vertical" className={styles.switchContainer}>
                     <Space size="small">Investment Visibility<Switch className={styles.switch} defaultChecked ></Switch></Space>
