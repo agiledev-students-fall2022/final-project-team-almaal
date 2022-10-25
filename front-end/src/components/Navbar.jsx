@@ -4,10 +4,10 @@ import {
     BrowserRouter,
     Routes,
     Route,
-    Link
+    Link, useLocation
 } from "react-router-dom";
 import "antd/dist/antd.css";
-import styles from'./Navbar.module.css'
+import styles from './Navbar.module.css'
 import {
     ContainerOutlined,
     DesktopOutlined,
@@ -60,7 +60,7 @@ const menu = (
             <Link to="news">News</Link>
         </Menu.Item>
         <Menu.Item key="6" icon={<RadarChartOutlined />}>
-            <Link to="login">Profile</Link>
+            <Link to="login">Logout</Link>
         </Menu.Item>
     </Menu>
 
@@ -82,34 +82,39 @@ const Navbar = () => {
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
     };
+    const location = useLocation();
+    const notlogin = location.pathname !== "/login" && location.pathname !== '/createaccount';
+
     return (
-        <PageHeader
-            title="Almaal"  //how to get page name here?
-            className="site-page-header"
-            // tags={<Tag color="blue">Running</Tag>}
-            extra={[
-                <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-                    <a onClick={(e) => e.preventDefault()}>
-                        <Space>
+        <div>
 
-                            <Button
-                                type="primary"
-                                onClick={toggleCollapsed}
-                            >
-                                {collapsed ? <MenuUnfoldOutlined style={{ fontSize: 20, }} /> : <MenuFoldOutlined style={{ fontSize: 20, }} />}
-                            </Button>
+            <PageHeader
+                title="Almaal"  //how to get page name here?
+                className="site-page-header"
+                // tags={<Tag color="blue">Running</Tag>}
+                extra={notlogin && [
+                    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+                        <a onClick={(e) => e.preventDefault()}>
+                            <Space>
+                                <Button
+                                    type="primary"
+                                    onClick={toggleCollapsed}
+                                >
+                                    {collapsed ? <MenuUnfoldOutlined style={{ fontSize: 20, }} /> : <MenuFoldOutlined style={{ fontSize: 20, }} />}
+                                </Button>
 
-                        </Space>
-                    </a>
-                </Dropdown>
-            ]}
-            avatar={{
-                // src: 'https://www.vecteezy.com/vector-art/563714-finance-logo-and-symbols-vector-concept',
-                icon: <RadarChartOutlined style={{ fontSize: '30px', alignSelf: 'right' }} />
-            }}
+                            </Space>
+                        </a>
+                    </Dropdown>
+                ]}
+                avatar={{
+                    // src: 'https://www.vecteezy.com/vector-art/563714-finance-logo-and-symbols-vector-concept',
+                    icon: <RadarChartOutlined style={{ fontSize: '30px', alignSelf: 'right' }} />
+                }}
 
-        >
-        </PageHeader>
+            >
+            </PageHeader>
+        </div>
     );
 }
 
