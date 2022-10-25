@@ -15,6 +15,7 @@ import CreateAccount from './routes/CreateAccount';
 // import News from './routes/News';
 import NewsContextProvider from './routes/NewsContext';
 import axios from "axios";
+// import NewsContext from './routes/NewsContext';
 
 import {
   BrowserRouter,
@@ -37,8 +38,8 @@ function App() {
           <Route path="/createAccount" element={<CreateAccount />} />
           <Route path="/news" element={
             <NewsContextProvider>
-            <News />
-          </NewsContextProvider>
+              <News />
+            </NewsContextProvider>
           } />
         </Routes>
       </BrowserRouter>
