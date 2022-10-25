@@ -1,8 +1,26 @@
 .container {
-    width: 60%;
-    margin: 3rem auto;
+    width: 30%;
+    margin-left: 35%;
 }
 
-*{
-    max-width: 500;
+.title{
+    width:30%;
+    margin-left:20%;
+    padding-top: 5%;
+}
+
+.profilePic{
+    padding-bottom: 50px;
+}
+
+.input{
+    width:100%;
+}
+
+.inputLabel{
+    padding: 6px 0;
+}
+
+.switch{
+    float:right;
 }

@@ -3,8 +3,7 @@ import { Typography, Space, Divider, Avatar,Button, Input, Switch, Card, List, T
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
 import styles from './Profile.module.css'
 
-const { Tab } = Input
-const { ProfilePic } = Avatar;
+const { Title } = Typography;
 
 const Profile = ({total_friends=0, total_groups=0, total_investment=0, total_pl=0}) => {
         const [username, setUsername] = useState('');
@@ -20,27 +19,35 @@ const Profile = ({total_friends=0, total_groups=0, total_investment=0, total_pl=
         }
 
         return(
-        <div className={styles.container}>
-            <Typography level={2} className={styles.title}>Profile</Typography>
-            <Space direction="vertical">
-                <Avatar icon={<UserOutlined />}/>
-                Username
-                <Space>
-                    <Input defaultValue="current_username" disabled={allowUsernameEdit} />
-                    <Tooltip>
-                        <Button icon={<EditOutlined />} onClick={handleUsernameButton} />
-                    </Tooltip>
+        <div>
+            <Title level={2} className={styles.title}>Your Almaal Profile</Title>
+            <Space className={styles.container} direction="vertical" size="large" align="center" style={{ display: 'flex' }}>
+                <Avatar className={styles.profilePic} size={96} icon={<UserOutlined />}/>
+                <Space align="center">
+                    <Space direction="vertical">
+                        <Typography className={styles.inputLabel}>Username</Typography>
+                        <Typography className={styles.inputLabel}>Password</Typography>
+                    </Space>
+                    <Space direction="vertical">
+                        <Space className={styles.input}>
+                            <Input defaultValue="current_username" disabled={allowUsernameEdit} size="large" />
+                            <Tooltip>
+                                <Button icon={<EditOutlined />} onClick={handleUsernameButton} />
+                            </Tooltip>
+                        </Space>
+                        <Space className={styles.input}>
+                            <Input defaultValue="current_password" disabled={allowPasswordEdit} size="large" />
+                            <Tooltip>
+                                <Button icon={<EditOutlined />} onClick={handlePasswordButton}/>
+                            </Tooltip>
+                        </Space>
+                        </Space>
                 </Space>
-                Password
-                <Space>
-                    <Input defaultValue="current_password" disabled={allowPasswordEdit} />
-                    <Tooltip>
-                        <Button icon={<EditOutlined />} onClick={handlePasswordButton}/>
-                    </Tooltip>
+                <Space direction="vertical" className={styles.switchContainer}>
+                    <Space size="small">Investment Visibility<Switch className={styles.switch} defaultChecked ></Switch></Space>
+                    <Space size={60}>Hide Profile<Switch className={styles.switch}></Switch></Space>
                 </Space>
-                <Space>Investment Visibility<Switch defaultChecked ></Switch></Space>
-                <Space>Hide Profile<Switch></Switch></Space>
-                <Divider/>
+                <Divider plain></Divider>
                 <List>
                     <Space>
                         <Card size="small" title="Total Friends">{total_friends}</Card>
