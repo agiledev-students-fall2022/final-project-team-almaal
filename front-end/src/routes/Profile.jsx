@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Typography, Space, Divider, Avatar,Button, Input, Switch, Card, List, Tooltip } from 'antd';
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
-import styles from './Friends.module.css'
+import styles from './Profile.module.css'
 
 const { Tab } = Input
 const { ProfilePic } = Avatar;
