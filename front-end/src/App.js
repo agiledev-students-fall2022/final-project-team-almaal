@@ -43,6 +43,7 @@ function App() {
           } />
         </Routes>
       </BrowserRouter>
+      <div className="spacer" style={{ height: "3rem" }}></div>
       <Footer />
     </div>
   );
