@@ -2,7 +2,7 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 import "antd/dist/antd.css";
-import './Navbar.css'
+import styles from'./Navbar.module.css'
 import {
   ContainerOutlined,
   DesktopOutlined,
