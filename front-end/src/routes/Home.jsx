@@ -2,7 +2,6 @@ import React from 'react'
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Col, Row, Space } from 'antd';
 import './Home.css'
 import Portfolio from '../components/Portfolio/Portfolio';
