@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './Friends.module.css'
 
 import { Input, Space, Card, Col, Row, Image, Divider, Button } from 'antd';
@@ -19,6 +19,9 @@ const Friends = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const [incomingRequests, setIncomingRequests] = useState([]);
+    const [friends, setFriends] = useState([]);
+
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -30,6 +33,23 @@ const Friends = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+
+    useEffect(() => {
+        const getUsers = async () => {
+            const response = await fetch("https://dummyapi.io/data/v1/user?limit=5", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "app-id": "6357430507c41c1c4cf1a09b"
+                }
+            })
+            const data = await response.json();
+            setIncomingRequests(data.data);
+            setFriends(data.data);
+        }
+
+        getUsers();
+    }, []);
 
     return (
         <>
@@ -51,19 +71,21 @@ const Friends = () => {
                     }
                 </div>
                 <div className={styles.friendsLink} onClick={showModal}>All Friends (19)</div>
-                <FriendsModal isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} />
+                <FriendsModal friends={friends} isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} />
 
             </section>
             <section className={styles.container}>
                 <Title level={3} className={styles.title}>Incoming Requests</Title>
-                {[1, 2, 3].map(key => {
-                    return (<div key={key}>
-                        <IncomingRequest type="incoming" />
+                {incomingRequests.map(friend => {
+                    return (<div key={friend.id}>
+                        <IncomingRequest request={friend} type="incoming" />
                         <Divider />
                     </div>
                     );
                 })}
-                <Button type="default" className={styles.seemore}>See More</Button>
+                {incomingRequests.length > 3 && <Button type="default" className={styles.seemore}>See More</Button>}
+                {incomingRequests.length <= 3 && <p style={{ color: "grey" }}>No incoming requests</p>}
+                <div className="spacer" style={{ height: "6rem" }}></div>
             </section>
         </>
     )
