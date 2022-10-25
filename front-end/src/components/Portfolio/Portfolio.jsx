@@ -86,6 +86,10 @@ export default function Portfolio({ stocks, setStocks }) {
                     setInputVisibility={setInputVisibility}
                 />
             ) : null}
+            <p>
+
+                            
+            </p>
             <button
                 className='add-more-button'
                 onClick={() => setInputVisibility(!inputVisibility)}

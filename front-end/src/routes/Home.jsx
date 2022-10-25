@@ -65,6 +65,10 @@ const Home = () => {
                     <div className='portfolio-configuration'>
                         <Portfolio stocks={stocks} setStocks={setStocks} />
                         <div className='portfolio-button-continue-wrapper'>
+                          <p>
+
+
+                          </p>
                             <button
                                 className='portfolio-button-continue'
                                 onClick={() => setIsPortfolioReady(true)}
@@ -76,12 +80,20 @@ const Home = () => {
                 ) : (
                     <div className='portfolio-monitor'>
                         <div className='portfolio-button-back-wrapper'>
+                            <p>
+
+                            
+                            </p>
                             <button
                                 className='portfolio-button-back'
                                 onClick={() => setIsPortfolioReady(false)}
                             >
                                 <span>Go back to Portfolio</span>
                             </button>
+                            <p>
+
+                            
+                            </p>
                         </div>
                         <PortfolioMonitor
                             stocks={stocks}
