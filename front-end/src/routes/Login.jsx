@@ -25,7 +25,6 @@ const Login = () => {
                     <Link to="/">Log In</Link>
                 </Button>
                 <Button type="link">
-                    
                     <Link to="/createAccount">No account yet? Create one!</Link>
                 </Button>
             </Space>
