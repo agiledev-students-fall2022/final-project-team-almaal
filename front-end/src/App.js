@@ -15,9 +15,7 @@ import CreateAccount from './routes/CreateAccount';
 // import News from './routes/News';
 import NewsContextProvider from './routes/NewsContext';
 import axios from "axios";
-import Profile from './routes/Profile';
 // import NewsContext from './routes/NewsContext';
-import NewsContextProvider from './routes/NewsContext';
 
 import {
   BrowserRouter,
