@@ -6,11 +6,11 @@ import ChatComponent from '../components/ChatComponent';
 
 
 const Groups = () => {
- 
-  return (  
+
+  return (
     <Layout className={styles.mainLayout}>
       <GroupsSideNavigationBar />
-      <ChatComponent />    
+      <ChatComponent />
     </Layout>
   )
 }

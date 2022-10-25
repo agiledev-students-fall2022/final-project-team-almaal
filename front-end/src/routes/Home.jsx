@@ -3,7 +3,6 @@ import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import {Tabs } from 'antd';
 import { useState } from 'react';
-import { useRef } from 'react';
 import { Link } from 'react-router-dom'
 import './Home.css'
 
@@ -21,7 +20,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="container home-page">
+      <div className="container">
         <div className="text-zone">
             <Avatar size={{
                         xs: 24,
