@@ -66,10 +66,6 @@ const menu = (
 
 );
 
-
-
-
-
 /**
  * A React component that is used for the navigation bar displayed at the top of every page of the site.
  * @param {*} param0 an object holding any props passed to this component from its parent component
@@ -93,7 +89,7 @@ const Navbar = () => {
                 className="site-page-header"
                 // tags={<Tag color="blue">Running</Tag>}
                 extra={notlogin && [
-                    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+                    <Dropdown key="1" overlay={menu} trigger={['click']} placement="bottomRight">
                         <a onClick={(e) => e.preventDefault()}>
                             <Space>
                                 <Button
