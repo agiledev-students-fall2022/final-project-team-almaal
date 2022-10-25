@@ -56,8 +56,8 @@ export default function PortfolioForm({ setStocks, setInputVisibility }) {
                         ...stocks,
                         { id: data.name, ...newStock },
                     ]);
-                    setFormValues(INITIAL_STATE);
-                    setInputVisibility(false);
+                   setFormValues(INITIAL_STATE);
+                   setInputVisibility(false);
                 }
             }
         } catch (error) {
