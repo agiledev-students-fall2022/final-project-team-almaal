@@ -95,6 +95,7 @@ const Navbar = () => {
                                 <Button
                                     type="primary"
                                     onClick={toggleCollapsed}
+                                    style
                                 >
                                     {collapsed ? <MenuUnfoldOutlined style={{ fontSize: 20, }} /> : <MenuFoldOutlined style={{ fontSize: 20, }} />}
                                 </Button>
