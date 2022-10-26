@@ -1,21 +1,24 @@
-#components-dropdown-trigger-mode .Header-navbar
-{
+#components-dropdown-trigger-mode .Header-navbar {
     background-color: #ffffff;
     display: flex;
     margin-left: auto;
     margin-right: auto;
     justify-content: space-between;
-    
+
 }
 
 
-.Header-logo
-{
-        align-self: right;
-        display: block;
-        margin-left: 10;
-        margin-right: auto;
-        width: 200 px;
-        
-        
+.Header-logo {
+    align-self: right;
+    display: block;
+    margin-left: 10;
+    margin-right: auto;
+    width: 200 px;
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        width: 90%;
+        /* font-size: 12px; */
+    }
 }

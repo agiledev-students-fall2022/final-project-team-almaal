@@ -2,3 +2,10 @@
     width: 60%;
     margin: 3rem auto;
 }
+
+@media screen and (max-width: 480px) {
+    .container {
+        width: 90%;
+        font-size: 12px;
+    }
+}

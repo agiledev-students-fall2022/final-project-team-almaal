@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Typography, Space, Divider, Avatar, Button, Input, Switch, Card, List, Tooltip } from 'antd';
+import { Typography, Space, Divider, Avatar, Button, Input, Switch, Card, List, Tooltip, Col, Row } from 'antd';
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
 import styles from './Profile.module.css'
 
@@ -45,17 +45,33 @@ const Profile = ({ total_friends = 0, total_groups = 0, total_investment = 0, to
                 </Space>
                 <Space direction="vertical" className={styles.switchContainer}>
                     <Space size="small">Investment Visibility<Switch className={styles.switch} defaultChecked ></Switch></Space>
-                    <Space size={60}>Hide Profile<Switch className={styles.switch}></Switch></Space>
+                    <Space size="small">Hide Profile<Switch className={styles.switch}></Switch></Space>
                 </Space>
                 <Divider plain></Divider>
-                <List>
+                {/* <List className='cards'>
                     <Space>
                         <Card size="small" title="Total Friends">{total_friends}</Card>
                         <Card size="small" title="Total Groups">{total_groups}</Card>
+                    </Space>
+                    <Space>
                         <Card size="small" title="Total Investment">{total_investment}</Card>
                         <Card size="small" title="Total P/L">{total_pl}</Card>
                     </Space>
-                </List>
+                </List> */}
+                <Row justify="space-around" gutter={[16, 16]}>
+                    <Col md={12} xl={6}>
+                        <Card style={{ Width: "50%" }} title="Total Friends">{total_friends}</Card>
+                    </Col>
+                    <Col md={12} xl={6}>
+                        <Card style={{ Width: "50%" }} title="Total Groups">{total_groups}</Card>
+                    </Col>
+                    <Col md={12} xl={6}>
+                        <Card style={{ Width: "50%" }} title="Total Investment">{total_investment}</Card>
+                    </Col>
+                    <Col md={12} xl={6}>
+                        <Card style={{ Width: "50%" }} title="Total P/L">{total_pl}</Card>
+                    </Col>
+                </Row>
             </Space>
         </div>
     );
