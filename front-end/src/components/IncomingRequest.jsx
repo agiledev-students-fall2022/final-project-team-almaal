@@ -14,7 +14,7 @@ const IncomingRequest = ({ request, type }) => {
                     <div className={styles.imgAndName}>
                         <div>
                             <Image
-                                style={{ height: "4rem", width: "4rem" }}
+                                className={styles.profileImage}
                                 width={"100%"}
                                 height={"100%"}
                                 src={request.picture}
@@ -22,7 +22,7 @@ const IncomingRequest = ({ request, type }) => {
                             />
                         </div>
                         <div>
-                            <Title level={4} className={styles.title} style={{ paddingBottom: "0", marginBottom: "0", marginTop: "0.5rem" }}>{request.firstName + " " + request.lastName}</Title>
+                            <p className={styles.title} style={{ paddingBottom: "0", marginBottom: "0", marginTop: "0.5rem" }}>{request.firstName + " " + request.lastName}</p>
                             01/01/2022
                         </div>
                     </div>
@@ -31,17 +31,17 @@ const IncomingRequest = ({ request, type }) => {
                 </Col>
                 {type == "incoming" && <>
                     <Col span={2} style={{ cursor: "pointer" }}>
-                        <CheckOutlined style={{ fontSize: "1.5rem" }} />
+                        <CheckOutlined className={styles.icon} />
                     </Col>
                     <Col span={2} style={{ cursor: "pointer" }}>
-                        <DeleteOutlined style={{ fontSize: "1.5rem" }} />
+                        <DeleteOutlined className={styles.icon} />
                     </Col>
                 </>}
                 {type == "view" &&
                     <Col span={2} offset={2} style={{ cursor: "pointer" }}>
                         <Popover placement="bottomRight" content={
                             <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-                                <Button type="text">View Profile</Button>
+                                <Button type="text" >View Profile</Button>
                                 <Button type="text" danger>Delete Connection</Button>
                             </div>
                         }>
