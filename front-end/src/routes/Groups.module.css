@@ -1,3 +1,41 @@
+@media only screen and (max-width: 600px) {
+    .mainLayout{
+        width: 100%;
+        background-color: 'red';
+    }
+  .mainsitelayout{
+    width: 100%;
+  }
+
+  .chatSec{
+    width: 0%;
+    display: none;
+  }
+
+  .ant-drawer-body {
+    padding: 24px 0;
+  }
+
+  .drawerCard{
+    background-color: aliceblue;
+    position:absolute;
+    top:100vh;
+    transform:translateY(-100%);
+    width:100%;
+ }
+
+ .dChatSec{
+    width: 100%;
+    height: 100vh;
+    background-color: #FAF9F6;
+ }
+}
+
+@media only screen and (min-width: 600px){
+    .mainsitelayout{
+        width: 26%;
+    }
+}
 .mainLayout{
     width: 100%;
     height:100vh;
@@ -20,10 +58,15 @@
 .sideTitle{
     color:"black";
     display:inline-block;
-    padding-left:25px;
+    padding-left:  5%;;
 }
 
+
+.chatSec{
+    width: 100%;
+}
 .siteLayoutBackground{
+    width: 100%;
     display: inline-block;
     background:#ededed;
     height:100vh

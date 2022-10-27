@@ -17,6 +17,7 @@ function sendMessage() {
 
 const ChatComponent = () => {
   return (
+    <section className={styles.chatSec}>
     <Layout className={styles.chatLayout}>
       <Header style={{ width: '100%', padding: '1px', height: '10%' }}>
         <Card size='small' className={styles.userCard}>
@@ -146,6 +147,8 @@ const ChatComponent = () => {
         </Card>
       </Footer>
     </Layout>
+
+    </section>
   )
 }
 
