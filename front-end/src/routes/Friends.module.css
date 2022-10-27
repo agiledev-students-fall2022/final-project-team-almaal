@@ -6,6 +6,13 @@
 .title {
     /* font-family: 'Times New Roman', Times, serif; */
     padding-bottom: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.profileImage {
+    width: 4rem;
+    height: 4rem;
 }
 
 .searchArea {
@@ -48,4 +55,24 @@
 .seemore {
     display: block;
     margin: 0 auto;
+}
+
+.icon {
+    font-size: 1.25rem;
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        width: 90%;
+        /* font-size: 12px; */
+    }
+
+    .profileImage {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    .icon {
+        font-size: 1rem;
+    }
 }

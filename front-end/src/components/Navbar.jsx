@@ -82,7 +82,7 @@ const Navbar = () => {
     const notlogin = location.pathname !== "/login" && location.pathname !== '/createaccount';
 
     return (
-        <div>
+        <div className={styles.container}>
 
             <PageHeader
                 title="Almaal"  //how to get page name here?
