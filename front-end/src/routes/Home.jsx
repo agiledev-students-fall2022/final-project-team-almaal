@@ -61,7 +61,7 @@ const Home = () => {
                  {/* If user is ready with portfolio shows PortfolioMonitor */}
                 {!isPortfolioReady ? (
                     <div className='portfolio-configuration'>
-                        <Portfolio stocks={stocks} setStocks={setStocks} />
+                        <Portfolio/>
                         <div className='portfolio-button-continue-wrapper'>
                           <p>
 

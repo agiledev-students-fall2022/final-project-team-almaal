@@ -1,7 +1,6 @@
 import { Button, Form, Input, Popconfirm, Table} from 'antd';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import{Select} from 'antd';
-import PortfolioForm from '../PortfolioForm/PortfolioForm'
 import DATABASE from '../utils/database';
 //Importing the database endpoint as string to be used
 import './Portfolio.css';
@@ -104,7 +103,7 @@ const getRandomuserParams = (params) => ({
 });
 
 
-const Portfolio = (  { stocks, setStocks }) => {
+const Portfolio = () => {
 
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
@@ -165,9 +164,9 @@ const defaultColumns = [
     editable: true,
   },
   {
-    title: 'Price',
+    title: 'Price ($)',
     key: 'price',
-    dataIndex: '$ price',
+    dataIndex: 'price',
     width: '30%',
     editable: true,
   },
@@ -322,7 +321,7 @@ const defaultColumns = [
         loading={loading}
         onChange={handleTableChange}
         bordered
-        columns={defaultColumns}
+        columns={columns}
       />
     </div>
   );

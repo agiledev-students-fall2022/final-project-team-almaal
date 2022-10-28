@@ -1,21 +1,20 @@
-import { STOCK_API } from './stockAPI';
-import { TOKEN } from './stockAPI';
-
+import { STOCK_API } from '../utils/stockAPI';
+import { TOKEN } from '../utils/stockAPI';
+import DATABASE from '../utils/database';
 //Function which fetches the current prices and updates our state with current prices and profit/loss
 const stockFetcher = (stocks, setStocks, profitLossCalculator) => {
     stocks.forEach(async (s) => {
         try {
             const stockName = s.ticker.replace('', '');
-            const response = await fetch(
-                `${STOCK_API}/quote?symbol=${stockName}&token=${TOKEN}`
+            const response = await fetch("https://my.api.mockaroo.com/stockDATA.json?key=8052c770"  
             );
             const data = await response.json();
 
             const profitLoss = profitLossCalculator(
-                s.price,
+                s.Price,
                 data.c,
-                s.position,
-                s.quantity
+                s.Position,
+                s.Quantity
             );
 
             const stockWithPrice = {
