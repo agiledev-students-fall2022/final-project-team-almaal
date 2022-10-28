@@ -2,7 +2,7 @@ import React from 'react'
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import { useState } from 'react';
-import { Col, Row, Space } from 'antd';
+import { Col, Row, Space, Button } from 'antd';
 import './Home.css'
 import Portfolio from '../components/Portfolio/Portfolio';
 import PortfolioMonitor from '../components/PortfolioMonitor/PortfolioMonitor';
@@ -67,12 +67,19 @@ const Home = () => {
 
 
                           </p>
-                            <button
+                            {/* <button
                                 className='portfolio-button-continue'
                                 onClick={() => setIsPortfolioReady(true)}
                             >
                                 <span>Continue</span>
-                            </button>
+                            </button> */}
+                              <Button
+                                  onClick={() => setIsPortfolioReady(true)}
+                                  type="primary"
+                                  className='portfolio-button-continue'
+                                >
+                                Continue
+                              </Button>
                         </div>
                     </div>
                 ) : (
@@ -82,12 +89,19 @@ const Home = () => {
 
                             
                             </p>
-                            <button
+                            {/* <button
                                 className='portfolio-button-back'
                                 onClick={() => setIsPortfolioReady(false)}
                             >
                                 <span>Go back to Portfolio</span>
-                            </button>
+                            </button> */}
+                              <Button
+                                  onClick={() => setIsPortfolioReady(false)} 
+                                  type="primary"
+                                  className='portfolio-button-back'
+                                >
+                                Go back to Portfolio
+                              </Button>
                             <p>
 
                             
