@@ -1,21 +1,59 @@
 
-.footer {
-    background-color: #1890ff;
-    /*border-top: 2px solid red;*/
-    position: fixed;
+.add-more-wrapper {
+    margin: 20px 0px 5px 0px;
+    display: flex;
+    align-items: center;
     width: 100%;
-    height: 7%;
-    bottom: 0;
-    font-size: 12px;
-    color: white;
-    text-align: center;
-    margin-top: auto;
+
 }
 
-.container{
-    color: white;
-        /*Text Color*/
-    text-align:center;
-    margin-top: auto;
+.add-more-form {
+    display: flex;
+    justify-content: left;
+    align-items: left;
 }
 
+.add-more-row {
+    width: 140px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.add-more-row input,
+select {
+    width: 100%;
+    height: 100%;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+    outline: none;
+}
+
+.add-new-stock-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    margin: 0px 0px 0px 5px;
+}
+
+.add-new-stock-button span {
+    font-size: 20px;
+    color: black;
+}
+
+.add-new-stock-button:hover {
+    cursor: pointer;
+    border: 2px solid black;
+}
+
+.add-new-stock-button {
+    background: greenyellow;
+}
