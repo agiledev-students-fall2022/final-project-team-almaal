@@ -232,28 +232,28 @@ const defaultColumns = [
     };
   });
 
-  const fetchData = () => {
-    setLoading(true);
-    fetch(`https://my.api.mockaroo.com/stockData.json?key=8052c770${qs.stringify(getRandomuserParams(tableParams))}`)
-      .then((res) => res.json())
-      .then(({ results }) => {
-        setData(results);
-        setLoading(false);
-        setTableParams({
-          ...tableParams,
-          pagination: {
-            ...tableParams.pagination,
-            total: 200,
-            // 200 is mock data, you should read it from server
-            // total: data.totalCount,
-          },
-        });
-      });
-  };
+  // const fetchData = () => {
+  //   setLoading(true);
+  //   fetch(`https://my.api.mockaroo.com/stockData.json?key=8052c770${qs.stringify(getRandomuserParams(tableParams))}`)
+  //     .then((res) => res.json())
+  //     .then(({ results }) => {
+  //       setData(results);
+  //       setLoading(false);
+  //       setTableParams({
+  //         ...tableParams,
+  //         pagination: {
+  //           ...tableParams.pagination,
+  //           total: 200,
+  //           // 200 is mock data, you should read it from server
+  //           // total: data.totalCount,
+  //         },
+  //       });
+  //     });
+  // };
 
-  useEffect(() => {
-    fetchData();
-  }, [JSON.stringify(tableParams)]);
+  // useEffect(() => {
+  //   fetchData();
+  // }, [JSON.stringify(tableParams)]);
   const handleTableChange = (pagination, filters, sorter) => {
     setTableParams({
       pagination,
@@ -316,7 +316,6 @@ const defaultColumns = [
       <Table
         components={components}
         rowClassName={() => 'editable-row'}
-        //rowKey={(record) => record.login.uuid}
         dataSource={dataSource}
         loading={loading}
         onChange={handleTableChange}
