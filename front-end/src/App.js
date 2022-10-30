@@ -5,7 +5,6 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer'
 import News from './components/News'
 
-
 import Home from './routes/Home'
 import Friends from './routes/Friends'
 import Groups from './routes/Groups'

@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Table} from 'antd';
-import qs from 'qs';
-import stockFetcher from '../utils/stockFetcher';
+import { Input, Table, Divider, Space} from 'antd';
 import './PortfolioMonitor.css';
 import axios from 'axios'
-
-
+import DemoLine from './DemoLine'
 const originData = [];
 
 //default columns at the beg of the form, not to be updated 
@@ -15,7 +12,6 @@ const columns = [
     dataIndex: 'ticker',
     key: 'ticker',
     width: '30%',
-    /*render: (text) => <a>{text}</a>,*/
   },
   {
     title: 'position',
@@ -48,15 +44,6 @@ const columns = [
     width: '30%',
   },
   ];
-
-
-  const getRandomuserParams = (params) => ({
-  results: params.pagination?.pageSize,
-  page: params.pagination?.current,
-  ...params,
-});
-
-
 
 
 
@@ -149,13 +136,27 @@ export default function PortfolioMonitor() {
     // };
 
     return (
+    
+    <Space direction="verticle" size="middle" style={{
+      display: 'flex',
+    }}>
+      <div>
+        <Table
+          columns={columns}
+          dataSource={originData}
+          onChange={handleTableChange}>      
+        </Table>
+      </div>
+      <div>
+        <DemoLine/>
+      </div>
+        
+      
+    
 
-            <Table
-                columns={columns}
-                dataSource={originData}
-                onChange={handleTableChange}>
-            
-          </Table>
+    </Space>
+
+
     );
 }
 
