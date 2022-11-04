@@ -1,26 +1,32 @@
 import React from 'react'
-import { Space, Button, Input, Avatar } from 'antd'
-import { AliwangwangOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import { Space, Button, Input, Avatar, Typography } from 'antd'
+import { RadarChartOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons'
+import styles from './Login.module.css';
+
+const { Title } = Typography;
 
 const CreateAccount = () => {
     return (
         <div>
-            <Space direction="vertical">
-                <Avatar icon={<AliwangwangOutlined />}></Avatar>
+            {/* <Title level={2} className={styles.title}>Create Your Almaal Account</Title> */}
+            <Space direction="vertical" align="center" className={styles.container}>
+                <Avatar size="large" icon={<RadarChartOutlined />}></Avatar>
                 <Button shape="round" icon={<GoogleOutlined />} block>
                     Continue with Google
                 </Button>
                 <Button shape="round" icon={<FacebookOutlined />} block>
                     Continue with Facebook
                 </Button>
-                OR
-                <Input placeholder="Email" />
-                <Input placeholder="Password" />
+                <Title Level={5} className={styles.sectionTitle}>OR</Title>
+                <Input placeholder="Email" size="large" />
+                <Input placeholder="Password" size="large" />
                 <Button type="primary" shape="round">
-                    Create Account
+                    <Link to="/login">Create Account</Link>
                 </Button>
                 <Button type="link">
-                    Already have an account? Log in.
+                    <Link to="/">Already have an account? Log in.</Link>
+
                 </Button>
             </Space>
         </div>

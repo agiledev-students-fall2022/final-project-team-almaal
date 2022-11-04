@@ -1,0 +1,43 @@
+.container {
+    width: 60%;
+    margin: 0 auto;
+    /* margin-left: 35%; */
+}
+
+.switchContainer {
+    width: 100%;
+}
+
+.title {
+    width: 30%;
+    margin-left: 20%;
+    padding-top: 5%;
+}
+
+.profilePic {
+    padding-bottom: 50px;
+}
+
+.input {
+    width: 100%;
+}
+
+.inputLabel {
+    padding: 6px 0;
+}
+
+.switch {
+    float: right;
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        width: 90%;
+        font-size: 12px;
+    }
+}

@@ -82,8 +82,7 @@ const Navbar = () => {
     const notlogin = location.pathname !== "/login" && location.pathname !== '/createaccount';
 
     return (
-        <div>
-
+        <div className={styles.container}>
             <PageHeader
                 title="Almaal"  //how to get page name here?
                 className="site-page-header"
@@ -91,7 +90,7 @@ const Navbar = () => {
                 extra={notlogin && [
                     <Dropdown key="1" overlay={menu} trigger={['click']} placement="bottomRight">
                         <a onClick={(e) => e.preventDefault()}>
-                            <Space>
+                            <Space className={styles.button}>
                                 <Button
                                     type="primary"
                                     onClick={toggleCollapsed}
