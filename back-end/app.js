@@ -1,11 +1,14 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3001
 const home = require('./routes/home')
 const friends = require('./routes/friends')
 const groups = require('./routes/groups')
 const news = require('./routes/news')
 const profile = require('./routes/profile')
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.use('/home', home);
 app.use('/groups', groups);
