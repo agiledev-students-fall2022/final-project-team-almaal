@@ -1,4 +1,4 @@
-Maisha Work Distribution:
+# Maisha Work Distribution:
 - Create a basic home page with React and Ant Design
 - Slide-Able Menu:
 1. Create a slide-able menu on the home page that will have links to all the investment
@@ -9,7 +9,7 @@ Maisha Work Distribution:
 5. Setup mock API for data fetching for graph
 6. Create form to add new investment
 
-Frank Work Distribution:
+# Frank Work Distribution:
 Tasks under Profile:
 
 1. Create a place for profile picture
@@ -36,20 +36,20 @@ Tasks under Create Account:
 4. Create an option to login using Google/Facebook
 
 
-Krises work Distribution:
+# Krises work Distribution:
 1. Add Side Navigation Bar that includes list of Group a User is enrolled in
 2. Add a Chat feed section that displays your interaction in a particular group, display group name, group settings members, 
 3. Create message bar in the Chat feed section that allows users to send photos, documents, text messages
 4. Add route to group template (Done)
 
 
-Safal Work Distribution:
+# Safal Work Distribution:
 1. Make the search button; add debouncing
 2. Make Incoming Requests component
 3. Make Firendlist component
 4. Front-end route setup and antd setup
 
-Wenbo Work Distribution:
+# Wenbo Work Distribution:
 general News Page
 
 - section for news for relatled stocks
