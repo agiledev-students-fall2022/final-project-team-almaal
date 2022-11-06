@@ -1,12 +1,9 @@
 import { Button, Form, Input, Popconfirm, Table} from 'antd';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import{Select} from 'antd';
-import DATABASE from '../utils/database';
+
 //Importing the database endpoint as string to be used
 import './Portfolio.css';
-import axios from 'axios'
-import useItems from 'antd/lib/menu/hooks/useItems';
-import qs from 'qs';
 
 //These components are for the Portfolio
 const { Option } = Select;
@@ -232,28 +229,7 @@ const defaultColumns = [
     };
   });
 
-  const fetchData = () => {
-    setLoading(true);
-    fetch(`https://my.api.mockaroo.com/stockData.json?key=8052c770${qs.stringify(getRandomuserParams(tableParams))}`)
-      .then((res) => res.json())
-      .then(({ results }) => {
-        setData(results);
-        setLoading(false);
-        setTableParams({
-          ...tableParams,
-          pagination: {
-            ...tableParams.pagination,
-            total: 200,
-            // 200 is mock data, you should read it from server
-            // total: data.totalCount,
-          },
-        });
-      });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [JSON.stringify(tableParams)]);
+  
   const handleTableChange = (pagination, filters, sorter) => {
     setTableParams({
       pagination,
@@ -307,16 +283,12 @@ const defaultColumns = [
         }}
       >
         Add a row
-        {/* <p> {stocks.map(item => (
-          <handleData key={item.id} details={item}/>
-        ))}</p> */}
       </Button>
       
       
       <Table
         components={components}
         rowClassName={() => 'editable-row'}
-        //rowKey={(record) => record.login.uuid}
         dataSource={dataSource}
         loading={loading}
         onChange={handleTableChange}
@@ -327,7 +299,7 @@ const defaultColumns = [
   );
 }
 
-
+export default Portfolio
 
 
 
@@ -481,4 +453,3 @@ const defaultColumns = [
 //     );
 // }
 
-export default Portfolio

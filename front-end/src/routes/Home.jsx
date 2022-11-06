@@ -26,97 +26,102 @@ const Home = () => {
     <Space direction="vertical" size="large" style={{ display: 'flex' }}>
       <div className="container">
         <div className="text-zone">
-           <Row justify="left" align="left">
-            <Col span={4}>
-              <Avatar size={{
-                        xs: 24,
-                        sm: 32,
-                        md: 40,
-                        lg: 64,
-                        xl: 80,
-                        xxl: 100,
-                    }} 
-                      icon={<UserOutlined />} 
-              />
-            </Col>
-            <Col>
-              <Row>
-                <span className={letterClass}>  Maisha Mahrin </span>
-              </Row>
-              <Row>
-                <span className={letterClass}>     Total Investment Up</span>
+          <Space direction="horizontal" size="middle">
+            <Row justify="left" align="left">
+              <Col span={8}>
+                <Avatar size={{
+                          xs: 24,
+                          sm: 32,
+                          md: 40,
+                          lg: 64,
+                          xl: 80,
+                          xxl: 100,
+                      }} 
+                        icon={<UserOutlined />} 
+                />
+              </Col>
+              <Col span={10}>
+                <Row className={letterClass}> MaishaMahrin
+                  {/* <span >  Maisha Mahrin </span> */}
+                </Row>
+                <Row className={letterClass}>
+                  TotalInvestmentUp
 
-              </Row>
-              <Row>
-                <p><span className={letterClass}>    Total Investment Down</span></p>
-              </Row>               
-            </Col>
-                
-           </Row> 
+                </Row>
+                <Row className={letterClass}>
+                  TotalInvestmentDown
+                </Row>               
+              </Col>
+                  
+            </Row> 
+          </Space>
         </div>
         <p>
           
         </p>
-        <div>
-                 {/* If user is ready with portfolio shows PortfolioMonitor */}
-                {!isPortfolioReady ? (
-                    <div className='portfolio-configuration'>
-                        <Portfolio/>
-                        <div className='portfolio-button-continue-wrapper'>
-                          <p>
+        
+        <Space>
+            <div>
+                {/* If user is ready with portfolio shows PortfolioMonitor */}
+                    {!isPortfolioReady ? (
+                        <div className='portfolio-configuration'>
+                            <Portfolio/>
+                            <div className='portfolio-button-continue-wrapper'>
+                              <p>
 
 
-                          </p>
-                            {/* <button
-                                className='portfolio-button-continue'
-                                onClick={() => setIsPortfolioReady(true)}
-                            >
-                                <span>Continue</span>
-                            </button> */}
-                              <Button
-                                  onClick={() => setIsPortfolioReady(true)}
-                                  type="primary"
-                                  className='portfolio-button-continue'
+                              </p>
+                                {/* <button
+                                    className='portfolio-button-continue'
+                                    onClick={() => setIsPortfolioReady(true)}
                                 >
-                                Continue
-                              </Button>
+                                    <span>Continue</span>
+                                </button> */}
+                                  <Button
+                                      onClick={() => setIsPortfolioReady(true)}
+                                      type="primary"
+                                      className='portfolio-button-continue'
+                                    >
+                                    Continue
+                                  </Button>
+                            </div>
                         </div>
-                    </div>
-                ) : (
-                    <div className='portfolio-monitor'>
-                        <div className='portfolio-button-back-wrapper'>
-                            <p>
+                    ) : (
+                        <div className='portfolio-monitor'>
+                            <div className='portfolio-button-back-wrapper'>
+                                <p>
 
-                            
-                            </p>
-                            {/* <button
-                                className='portfolio-button-back'
-                                onClick={() => setIsPortfolioReady(false)}
-                            >
-                                <span>Go back to Portfolio</span>
-                            </button> */}
-                              <Button
-                                  onClick={() => setIsPortfolioReady(false)} 
-                                  type="primary"
-                                  className='portfolio-button-back'
+                                
+                                </p>
+                                {/* <button
+                                    className='portfolio-button-back'
+                                    onClick={() => setIsPortfolioReady(false)}
                                 >
-                                Go back to Portfolio
-                              </Button>
-                            <p>
+                                    <span>Go back to Portfolio</span>
+                                </button> */}
+                                  <Button
+                                      onClick={() => setIsPortfolioReady(false)} 
+                                      type="primary"
+                                      className='portfolio-button-back'
+                                    >
+                                    Go back to Portfolio
+                                  </Button>
+                                <p>
 
-                            
-                            </p>
+                                
+                                </p>
+                            </div>
+                            <PortfolioMonitor
+                                stocks={stocks}
+                                setStocks={setStocks}
+                            />
                         </div>
-                        <PortfolioMonitor
-                            stocks={stocks}
-                            setStocks={setStocks}
-                        />
-                    </div>
-                )}
-        </div>
+                    )}
+            </div>
+        </Space>
 
       </div>
-    </Space>        
+    </Space>     
     </>
   )
 }

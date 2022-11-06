@@ -1,46 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Table} from 'antd';
-import qs from 'qs';
-import stockFetcher from '../utils/stockFetcher';
+import { Input, Table, Divider, Space} from 'antd';
 import './PortfolioMonitor.css';
-
-
+import axios from 'axios'
+import DemoLine from './DemoLine'
+const originData = [];
 
 //default columns at the beg of the form, not to be updated 
 const columns = [
   {
-    title: 'Ticker',
+    title: 'ticker',
     dataIndex: 'ticker',
     key: 'ticker',
     width: '30%',
-    /*render: (text) => <a>{text}</a>,*/
   },
   {
-    title: 'Position',
+    title: 'position',
     dataIndex: 'position',
     key: 'position',
     width: '30%',
   },
   {
-    title: 'Quantity',
+    title: 'quantity',
     dataIndex: 'quantity',
     key: 'quantity',
     width: '30%',
   },
   {
-    title: 'Price ($)',
+    title: 'price',
     key: 'price',
     dataIndex: 'price',
     width: '30%',
   },
   {
-    title: 'MarketPrice ($)',
+    title: 'marketprice',
     key: 'marketprice',
     dataIndex: 'price',
     width: '30%',
   },
   {
-    title: 'Profit/Loss',
+    title: 'profitloss',
     key: 'profitloss',
     dataIndex: 'profitloss',
     width: '30%',
@@ -48,47 +46,46 @@ const columns = [
   ];
 
 
-  const getRandomuserParams = (params) => ({
-  results: params.pagination?.pageSize,
-  page: params.pagination?.current,
-  ...params,
-});
-
-
-
-
 
 export default function PortfolioMonitor() {
     //State of the stocks
     const [stocks, setStocks] = useState([]);
-    //const [data, setData] = useState();
     const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
       pageSize: 10,
     },
   });
-  const fetchData = () => {
 
-    fetch(`https://my.api.mockaroo.com/stockDATA.json?key=8052c770${qs.stringify(getRandomuserParams(tableParams))}`).then((res) => res.json())
-      .then(({ results }) => {
-        setStocks(results);
-        console.log(results);
-        setTableParams({
-          ...tableParams,
-          pagination: {
-            ...tableParams.pagination,
-            total: 200,
-            // 200 is mock data, you should read it from server
-            // total: data.totalCount,
-          },
-        });
-      });
-  };
+ 
+
+ async function fetchData()
+  {
+    const result = await axios("https://my.api.mockaroo.com/stock_data.json?key=8052c770");
+    setStocks(result.data);
+  }
 
   useEffect(() => {
     fetchData();
   }, []);
+
+ 
+  stocks.map((item)=>(
+  // <handleFetch details={item}/>
+  originData.push({
+    key:item.id,
+    ticker: item.ticker,
+    position:item.position,
+    quantity:item.quantity,
+    price:item.price,
+    marketprice:item.marketprice,
+    profitloss:item.profitloss,
+  })
+ ));
+  console.log("Hurray: "+originData.map(item=>(item.ticker))+"   ");
+
+
+
   const handleTableChange = (pagination, filters, sorter) => {
     setTableParams({
       pagination,
@@ -138,16 +135,28 @@ export default function PortfolioMonitor() {
     //     stockFetcher(stocks, setStocks, profitLossCalculator);
     // };
 
-
     return (
+    
+    <Space direction="verticle" size="middle" style={{
+      display: 'flex',
+    }}>
+      <div>
+        <Table
+          columns={columns}
+          dataSource={originData}
+          onChange={handleTableChange}>      
+        </Table>
+      </div>
+      <div>
+        <DemoLine/>
+      </div>
+        
+      
+    
 
-            <Table
-                      columns={columns}
-                      rowKey={(record) => record.login.uuid}
-                      dataSource={stocks}
-                      onChange={handleTableChange}>
-            
-          </Table>
+    </Space>
+
+
     );
 }
 
@@ -155,6 +164,25 @@ export default function PortfolioMonitor() {
 
 
 
+
+
+  // const fetchData = () => {
+
+  //   fetch(`https://my.api.mockaroo.com/stockDATA.json?key=8052c770${qs.stringify(getRandomuserParams(tableParams))}`).then((res) => res.json())
+  //     .then(({ results }) => {
+  //       setStocks(results);
+  //       console.log(results);
+  //       setTableParams({
+  //         ...tableParams,
+  //         pagination: {
+  //           ...tableParams.pagination,
+  //           total: 200,
+  //           // 200 is mock data, you should read it from server
+  //           // total: data.totalCount,
+  //         },
+  //       });
+  //     });
+  // };
 
     
             /* For each stock in a portfolio prints a row with info */
@@ -195,3 +223,4 @@ export default function PortfolioMonitor() {
             // <button className='monitor-fetch-prices' onClick={fetchPrices}>
             //     <span>Update prices</span>
             // </button>
+
