@@ -101,6 +101,7 @@ const Friends = () => {
     return (
         <>
             <Context.Provider value={{ name: 'Ant Design' }}>
+                {contextHolder}
                 <section className={styles.container}>
                     <Title level={3} className={styles.title}>Add a Friend</Title>
                     <div className={styles.searchArea}>

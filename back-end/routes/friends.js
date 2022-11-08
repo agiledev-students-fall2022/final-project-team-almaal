@@ -6,7 +6,7 @@ const router = express.Router()
 const getIncomingRequests = async () => {
     const response = await axios.get("https://randomuser.me/api?results=5");
 
-    return response.data;
+    return response.data.results;
 }
 
 // view requests
@@ -21,10 +21,11 @@ router.get('/', async (req, res) => {
 // modify incoming requests
 router.post('/modifyrequest', async (req, res) => {
     const response = {}
+    console.log(req.body)
 
-    if (req.body.action === "add") {
+    if (req.body.action === "accept") {
         response.message = "Friend Successfully Added!"
-    } else if (req.body.action === "remove") {
+    } else if (req.body.action === "delete") {
         response.message = "Request Removed"
     }
 
@@ -35,7 +36,7 @@ router.post('/modifyrequest', async (req, res) => {
 router.get('/friendlist', async (req, res) => {
     const response = {}
 
-    response.friendRequests = await getIncomingRequests();
+    response.friends = await getIncomingRequests();
 
     res.status(200).json(response);
 })
@@ -45,7 +46,7 @@ router.get('/viewprofile', async (req, res) => {
     response.id = req.body.id;
 
     const profile = await axios.get("https://randomuser.me/api?results=1");
-    response.profile = profile.data
+    response.profile = profile.results
 
     res.status(200).json(response);
 })
