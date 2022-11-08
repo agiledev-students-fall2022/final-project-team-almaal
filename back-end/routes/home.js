@@ -29,10 +29,11 @@ router.use("/static", express.static("public"))
 
 
 // using async/await in this route to show another way of dealing with asynchronous requests to an external API or database
-router.get("/home/portfolio", (req, res, next) => {
+router.get("/home-portfolio", (req, res, next) => {
     axios
         .get("https://my.api.mockaroo.com/stock_data.json?key=8052c770")
-        .then(apiResponse => res.json(apiResponse.data)) // pass data along directly to client
+        .then(apiResponse => apiResponse.data) // pass data along directly to client
+        .then(data=>res.json(data))
         .catch(err => next(err)) // pass any errors to express
     
 })
