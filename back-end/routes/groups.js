@@ -19,27 +19,27 @@ router.get('/', (req, res) => {
     const data = {feed : [{
         profilePic:'https://randomuser.me/api/',
         message: 'Hello World!',
-        timestamp:'69 secs ago',
-        username:'Ram Bahadur',
-        image:'https://picsum.photos/200/300',
+        timestamp:'59 secs ago',
+        username:'User1',
+        image:'https://picsum.photos/500/300',
         likes: '20',
-        comments:[{username: 'Alice', comment:'Wow!', profilePic: ''},{username: 'Bob', comment:'Following... jknkjn jknjkjnjk jknjknkj jknkjnjk jknjknjk jknjkn jk knjk jknjknjk jknjknjk jknjknjk jknjk ', profilePic: ''}]
+        comments:[{username: 'Alice', comment:'Wow!', profilePic: ''},{username: 'Bob', comment:'Interesting :)', profilePic: ''}]
     }, 
     {
         profilePic:'https://randomuser.me/api/',
-        message: 'Here are Cryptos for 2022...',
+        message: 'Lovely!',
         timestamp:'2 mins ago',
-        username:'Mark Muji',
-        image:'https://picsum.photos/200/300',
+        username:'User2',
+        image:'https://random.imagecdn.app/500/300',
         likes: '69',
         comments:[]
     },
     {
         profilePic:'https://randomuser.me/api/',
-        message: 'Twitter is Here',
+        message: 'Lorem Ipsum',
         timestamp:'2 days sgo',
-        username:'Elan Mosk',
-        image:'https://picsum.photos/200/300',
+        username:'User3',
+        image:'https://picsum.photos/500/350',
         likes: '155',
         comments:[]
     }
@@ -49,13 +49,20 @@ router.get('/', (req, res) => {
 })
 
 router.post("/feedpost", upload.single('test'), (req, res) => {
-    console.log('HERE', req.file);
+    console.log(req.file);
     setTimeout(()=>{
         console.log(req.body);
         console.log('Upload Complete');
         return res.status(200).json({result:true, message:'post saved successfully'});
     }, 3000);
 
+})
+
+router.post("/postcomment", (req, res) => {
+    setTimeout(()=>{
+        console.log(req.body);
+        return res.status(200).json({result:true, message:'comment saved successfully'});
+    }, 1000);
 })
 
 module.exports = router

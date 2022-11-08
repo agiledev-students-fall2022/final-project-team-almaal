@@ -18,18 +18,24 @@
 }
 
 .post__topInfo > h3{
+    font-weight: 600;
+    margin: 0;
+    color: black;
     font-size: medium;
 }
 
 .post__topInfo > p{
+    margin: 0;
     font-size: small;
     color: gray;
 }
 
 .post__bottom {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 15px 25px;
+	padding: 0px 20px 5px;
+}
+
+.post__bottom > p{
+    margin: 0;
 }
 
 .post__image > img {
@@ -56,6 +62,7 @@
 }
 
 .post__option > p{
+    margin: 0;
     margin-left: 10px;
 }
 
@@ -70,6 +77,7 @@
 }
 
 .like__counter > p{
+    margin: 0;
     padding-left: 0.5rem;
 }
 
