@@ -9,6 +9,7 @@ const profile = require('./routes/profile')
 const login = require('./routes/login')
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.text());
 app.use(express.json());
 //allow cross-origin resource sharing
 app.use(function (req, res, next) {
