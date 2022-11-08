@@ -3,6 +3,7 @@ import { Input, Table, Divider, Space} from 'antd';
 import './PortfolioMonitor.css';
 import axios from 'axios'
 import DemoLine from './DemoLine'
+import { get } from 'react-scroll/modules/mixins/scroller';
 const originData = [];
 
 //default columns at the beg of the form, not to be updated 
@@ -59,14 +60,44 @@ export default function PortfolioMonitor() {
 
  
 
- async function fetchData()
-  {
-    const result = await axios("https://my.api.mockaroo.com/stock_data.json?key=8052c770");
-    setStocks(result.data);
-  }
+//  async function fetchData()
+//   {
+//     const result = await axios("https://my.api.mockaroo.com/stock_data.json?key=8052c770");
+//     setStocks(result.data);
+//   }
 
-  useEffect(() => {
-    fetchData();
+//   useEffect(() => {
+//     fetchData();
+//   }, []);
+
+ useEffect(() => {
+        //GET request to the database to fetch the stock which are already in our portfolio
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("/portfolioData");
+                const result = await response.json();
+                //Validates that the database is not empty
+                if (result) {
+                  setStocks(result.data);
+                    // //If not empty, modifies the data with fetched results and updates state
+                    // const dataModified = Object.keys(data).map((key) => ({
+                    //     id: key,
+                    //     ticker: data[key]['ticker'],
+                    //     position: data[key]['position'],
+                    //     quantity: data[key]['quantity'],
+                    //     price: data[key]['price'],
+                    // }));
+                    // setStocks(dataModified);
+                    
+                }
+            } catch (error) {
+                /*The option how to handle the error is totally up to you. 
+                Ideally, you can send notification to the user */
+                console.log(error);
+            }
+        };
+
+        fetchData();
   }, []);
 
  

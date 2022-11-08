@@ -3,17 +3,34 @@ import './MessageSender.css'
 import {Avatar} from "@material-ui/core"
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 
+const URL = "http://localhost:3001/";
+
 function MessageSender() {
     const [input, setInput] = useState('');
     const [image, setImage] = useState(null);
     const [randfile, setfile] = useState(null);
 
     const handleSubmit = (e) =>{
-        e.preventDefault();  
+      e.preventDefault();  
 
-        setImage(null);
-        setInput("");
-    }
+      if(input){
+        const formData = new FormData();
+        if(image){
+            formData.append('message', input);
+            formData.append('test', randfile, randfile.name);
+        }else{
+            formData.append('message', input);
+        }
+
+        fetch(URL+'groups/feedpost', {
+            method: 'POST',
+            body: formData
+        })
+      }
+      //db stuff
+      setImage(null);
+      setInput("");
+    };
 
     const uploadHandler = (event) => {
         const file = event.target.files[0];
@@ -42,7 +59,7 @@ function MessageSender() {
                     value={input}
                     onChange={(e)=> setInput(e.target.value)}
                     className='messageSender__input' 
-                    placeholder={'Any Investment Insights, Muji?'}
+                    placeholder={'Any Investment Insights?'}
 
                 />
                 
