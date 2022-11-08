@@ -8,6 +8,7 @@ const news = require('./routes/news')
 const profile = require('./routes/profile')
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.text());
 app.use(express.json());
 
 app.use(function (req, res, next) {
