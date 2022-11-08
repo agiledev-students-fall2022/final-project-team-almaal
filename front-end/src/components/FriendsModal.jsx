@@ -5,13 +5,14 @@ import IncomingRequest from './IncomingRequest';
 import { Button, Modal, Typography, Divider } from 'antd';
 const { Title } = Typography
 
-const FriendsModal = ({ friends, isModalOpen, handleOk, handleCancel }) => {
+const FriendsModal = ({ friends, isModalOpen, handleOk, handleCancel, handleRemove }) => {
+
     return (
         <>
-            <Modal title="All Friends (19)" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={""}>
+            <Modal title="All Friends" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={""}>
                 {friends.map(friend => {
-                    return (<div key={friend.id}>
-                        <IncomingRequest request={friend} type="view" />
+                    return (<div key={friend.login.uuid}>
+                        <IncomingRequest request={friend} type="view" handleRemove={handleRemove} />
                         <Divider />
                     </div>
                     );
