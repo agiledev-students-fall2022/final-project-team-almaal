@@ -7,7 +7,7 @@ import News from './components/News'
 
 import Home from './routes/Home'
 import Friends from './routes/Friends'
-import Groups from './routes/Groups'
+import Groups from './routes/Feed'
 import Profile from './routes/Profile'
 import Login from './routes/Login'
 import CreateAccount from './routes/CreateAccount';
