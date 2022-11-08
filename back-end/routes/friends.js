@@ -27,7 +27,7 @@ router.get('/friendlist', async (req, res) => {
 
 router.post('/search', async (req, res) => {
     const response = {}
-    const friends = ['a', 'b', 'cs'];
+    const friends = ['a', 'b', 'c'];
 
     if (friends.includes(req.body.handle)) {
         response.message = "Profile Found"
