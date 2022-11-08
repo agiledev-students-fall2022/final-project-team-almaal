@@ -24,10 +24,10 @@ const Friends = () => {
 
     const [api, contextHolder] = notification.useNotification();
 
-    const openNotification = (placement) => {
+    const openNotification = (placement, message_desc) => {
         api.info({
-            message: `Notification ${placement}`,
-            description: <Context.Consumer>{({ name }) => `Hello, ${name}!`}</Context.Consumer>,
+            message: `Notification`,
+            description: <Context.Consumer>{({ name }) => `${message_desc}!`}</Context.Consumer>,
             placement,
         });
     };
@@ -44,8 +44,7 @@ const Friends = () => {
                 }
             }).then(res => res.json())
                 .then(res => {
-                    console.log(res);
-                    openNotification()
+                    openNotification("topLeft", res.message)
                 })
 
             console.log(type)
@@ -57,7 +56,7 @@ const Friends = () => {
                     'Content-Type': 'application/json'
                 }
             }).then(res => res.json())
-                .then(res => console.log(res))
+                .then(res => openNotification("topLeft", res.message))
 
             console.log(type)
         }
