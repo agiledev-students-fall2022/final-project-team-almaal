@@ -20,9 +20,9 @@ router.get('/', async (req, res) => {
 router.get('/friendlist', async (req, res) => {
     const response = {}
 
-    // response.friendRequests = await getIncomingRequests();
+    response.friendRequests = await getIncomingRequests();
 
-    // res.status(200).json(response);
+    res.status(200).json(response);
 })
 
 router.post('/search', async (req, res) => {
