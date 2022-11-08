@@ -40,6 +40,24 @@ router.get('/friendlist', async (req, res) => {
     res.status(200).json(response);
 })
 
+router.get('/viewprofile', async (req, res) => {
+    const response = {}
+    response.id = req.body.id;
+
+    const profile = await axios.get("https://randomuser.me/api?results=1");
+    response.profile = profile.data
+
+    res.status(200).json(response);
+})
+
+router.get('/deletefriend', async (req, res) => {
+    const response = {}
+    response.id = req.body.id;
+    response.message = "Friend Removed from Connection"
+
+    res.status(200).json(response);
+})
+
 // search a profile
 router.post('/search', async (req, res) => {
     const response = {}
