@@ -7,6 +7,9 @@ const groups = require('./routes/groups')
 const news = require('./routes/news')
 const profile = require('./routes/profile')
 const axios = require("axios")
+
+
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -30,14 +33,6 @@ app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
 
-// using async/await in this route to show another way of dealing with asynchronous requests to an external API or database
-app.get('/home/portfolio', (req, res, next) => {
-    axios
-        .get("https://my.api.mockaroo.com/stock_data.json?key=8052c770")
-        .then(apiResponse => res.send(apiResponse.data)) // pass data along directly to client
-        .catch(err => next(err)) // pass any errors to express
-    
-})
 
 // export the express app we created to make it available to other modules
 module.exports = app // CommonJS export style!

@@ -27,9 +27,8 @@ router.use("/static", express.static("public"))
 // define the home page route
 
 
-
 // using async/await in this route to show another way of dealing with asynchronous requests to an external API or database
-router.get("/home-portfolio", (req, res, next) => {
+router.get("/portfolioData", (req, res, next) => {
     axios
         .get("https://my.api.mockaroo.com/stock_data.json?key=8052c770")
         .then(apiResponse => apiResponse.data) // pass data along directly to client
@@ -41,22 +40,26 @@ router.get('/', (req, res) => {
     res.send('Profile page')
 })
 
+//this will grab the portfolio form data and store it in an
+router.post('/', (req,res)=>{
 
-// // receive POST data from the client
-// app.post("/post-example", (req, res) => {
-//   // now do something amazing with the data we received from the client
-//   const data = {
-//     status: "amazing success!",
-//     message: "congratulations on sending us this data!",
-//     your_data: {
-//       name: req.body.your_name,
-//       email: req.body.your_email,
-//       agree: req.body.agree,
-//     },
-//   }
-//   // ... then send a response of some kind to client
-//   res.json(data)
-// })
+})
+
+let storeData=[];
+// receive POST data from the client
+router.post("/post-example", async(req, res) => {
+  // now do something amazing with the data we received from the client
+  
+  const data = {
+      Ticker: req.body.Ticker,
+      Position: req.body.Position,
+      Quantity: req.body.Quantity,
+      Price: req.body.Price,
+  }
+  storeData.push(data);
+  // ... then send a response of some kind to client
+  res.json(storeData);
+})
 
 module.exports = router
 //module.exports = home
