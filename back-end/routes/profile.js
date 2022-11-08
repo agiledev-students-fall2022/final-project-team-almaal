@@ -18,24 +18,24 @@ router.get('/', async (req, res) => {
 })
 
 // logout route
-router.get('/logout',async (req,res) => {
+router.get('/logout', async (req, res) => {
     res.redirect('/login')
 })
 
 // update profile information
-router.post('/update', async (req,res) => {
+router.post('/update', async (req, res) => {
     const response = {}
 
-    if(req.body.username){
+    if (req.body.username) {
         response.username = req.body.username
     }
-    if(req.body.password){
+    if (req.body.password) {
         response.password = req.body.username
     }
-    if(req.body.investment_visibility){
+    if (req.body.investment_visibility) {
         response.investment_visibility = req.body.investment_visibility
     }
-    if(req.body.hide_profile){
+    if (req.body.hide_profile) {
         response.hide_profile = req.body.hide_profile
     }
     res.status(200).json(response)
