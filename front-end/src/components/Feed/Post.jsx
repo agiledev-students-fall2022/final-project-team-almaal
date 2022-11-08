@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Avatar} from "@material-ui/core"
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
@@ -6,7 +6,7 @@ import Drawer from "react-bottom-drawer";
 import './Post.css'
 import AddDrawer from './AddDrawer';
 
-function Post() {
+function Post({profilePic, image, username, timestamp, message, likes, comments}) {
     const [comment, setComment] = useState('');
     const [isVisible, setIsVisible] = useState(false);
     const openDrawer = React.useCallback(() => setIsVisible(true), []);
@@ -14,30 +14,45 @@ function Post() {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        setComment('');
+        
+        if(comment){
+            //const formData = new FormData();
+            
+            if(comment === ''){
+                return
+            }
+
+            // formData.append('comment', comment);
+            fetch('/postcomment', {
+                method: 'POST',
+                body: comment
+            })
+          }
+          //db stuff
+          setComment("");
     }
 
   return (
     <div className='post'>
         <div className="post__top">
-            <Avatar src='https://avatars.dicebear.com/api/:sprites/:seed.svg' className='post__avatar'/>
+            <Avatar src={profilePic} className='post__avatar'/>
             <div className='post__topInfo'>
-                <h3>{'username'}</h3>
-                <p>{'timestamp'}</p>
+                <h3>{username}</h3>
+                <p>{timestamp}</p>
             </div>
         </div>
 
         <div className="post__bottom">
-            <p>{'message'}</p>
+            <p>{message}</p>
         </div>
 
         <div className="post__image">
-            <img src={'image'} height={250} alt=""/>
+            <img src={image} height={250} alt=""/>
         </div>
 
         <div className='like__counter'>
             <ThumbUpIcon style={{display:'flex', color:'blue'}}/>
-            <p>{'8'}</p>
+            <p>{likes}</p>
         </div>
 
         <div className="post__options">
@@ -58,14 +73,13 @@ function Post() {
                 isVisible={isVisible}
             >
                <div>
-                    {/* {comments.map((key,i) => (
-                        <CommentDrawer 
+                    {comments.map((key,i) => (
+                        <AddDrawer 
                             username={key.username}
                             profilePic={key.profilePic}
                             comment={key.comment}
                         />
-                    ))} */}
-                    <AddDrawer />
+                    ))}
 
                     <div className='drawer_comment'>        
                         <Avatar />
