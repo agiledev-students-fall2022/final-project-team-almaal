@@ -40,14 +40,10 @@ router.get('/', (req, res) => {
     res.send('Profile page')
 })
 
-//this will grab the portfolio form data and store it in an
-router.post('/', (req,res)=>{
-
-})
 
 let storeData=[];
 // receive POST data from the client
-router.post("/post-example", async(req, res) => {
+router.post("/", async(req, res) => {
   // now do something amazing with the data we received from the client
   
   const data = {
