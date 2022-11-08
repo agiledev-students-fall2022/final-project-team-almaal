@@ -7,6 +7,8 @@ const groups = require('./routes/groups')
 const news = require('./routes/news')
 const profile = require('./routes/profile')
 
+require('dotenv').config()
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -27,5 +29,7 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`App listening on port ${port}`)
 })
+
+module.exports = { app }
