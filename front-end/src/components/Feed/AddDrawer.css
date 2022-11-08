@@ -28,6 +28,7 @@
 }
 
 .profile__name {
+    margin: 0;
 	display: flex;
 	padding-left: 20px;
 	font-size: small;

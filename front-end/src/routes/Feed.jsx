@@ -3,7 +3,7 @@ import './Feed.module.css'
 import MessageSender from '../components/Feed/MessageSender'
 import Post from '../components/Feed/Post'
 
-const URL = "http://localhost:3001/"
+const URL = "http://localhost:3001/";
 
 function Feed() {
     const [backendData, setBackendData] = useState([{}])

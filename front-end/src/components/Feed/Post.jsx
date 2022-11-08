@@ -6,6 +6,8 @@ import Drawer from "react-bottom-drawer";
 import './Post.css'
 import AddDrawer from './AddDrawer';
 
+const URL = "http://localhost:3001/";
+
 function Post({profilePic, image, username, timestamp, message, likes, comments}) {
     const [comment, setComment] = useState('');
     const [isVisible, setIsVisible] = useState(false);
@@ -14,22 +16,18 @@ function Post({profilePic, image, username, timestamp, message, likes, comments}
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        
-        if(comment){
-            //const formData = new FormData();
-            
+        if(comment){            
             if(comment === ''){
                 return
             }
 
-            // formData.append('comment', comment);
-            fetch('/postcomment', {
+            fetch(URL+ 'groups/postcomment', {
                 method: 'POST',
                 body: comment
             })
-          }
+        }
           //db stuff
-          setComment("");
+        setComment("");
     }
 
   return (
@@ -62,7 +60,7 @@ function Post({profilePic, image, username, timestamp, message, likes, comments}
             </div>
 
             <div onClick={ openDrawer} className="post__option">
-                <ChatBubbleOutlineIcon/>
+                <ChatBubbleOutlineIcon style={{marginTop:'5px'}}/>
                 <p>Comment</p>
             </div>
             <Drawer 
