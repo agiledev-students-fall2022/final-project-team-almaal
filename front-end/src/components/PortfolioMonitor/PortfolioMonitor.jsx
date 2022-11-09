@@ -3,7 +3,7 @@ import { Input, Table, Divider, Space} from 'antd';
 import './PortfolioMonitor.css';
 import axios from 'axios'
 import DemoLine from './DemoLine'
-import { get } from 'react-scroll/modules/mixins/scroller';
+// import { get } from 'react-scroll/modules/mixins/scroller';
 const originData = [];
 
 //default columns at the beg of the form, not to be updated 
