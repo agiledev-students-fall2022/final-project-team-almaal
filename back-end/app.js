@@ -10,7 +10,8 @@ const login = require('./routes/login')
 
 require('dotenv').config()
 
-const port = process.env.BACKEND_PORT
+// const port = process.env.BACKEND_PORT
+const port = 3000
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.text());
@@ -40,8 +41,8 @@ app.get('/', (req, res) => {
     res.send('Hello World!!!')
 })
 
-app.listen(port, () => {
-    console.log(`App listening on port ${port}`)
-})
+// app.listen(port, () => {
+//     console.log(`App listening on port ${port}`)
+// })
 
-module.exports = { app }
+module.exports = app.listen(port)
