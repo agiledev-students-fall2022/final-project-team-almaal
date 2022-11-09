@@ -1,15 +1,16 @@
 const express = require('express')
 const app = express()
-const port = 3000
 const home = require('./routes/home')
 const friends = require('./routes/friends')
 const groups = require('./routes/groups')
 const news = require('./routes/news')
 const profile = require('./routes/profile')
 const axios = require("axios")
-
-
 const login = require('./routes/login')
+
+require('dotenv').config()
+
+const port = process.env.BACKEND_PORT
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.text());
@@ -22,11 +23,11 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
 
 app.use('/home', home);
 app.use('/groups', groups);
@@ -40,9 +41,7 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`App listening on port ${port}`)
 })
 
-
-// export the express app we created to make it available to other modules
-module.exports = app // CommonJS export style!
+module.exports = { app }
