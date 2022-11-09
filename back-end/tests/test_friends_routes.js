@@ -13,4 +13,13 @@ describe('API /friends', () => {
                 done();
             });
     });
+
+    it('it should have friendRequests key', (done) => {
+        chai.request(app)
+            .get('/friends')
+            .end((err, res) => {
+                expect(res.body).to.have.all.keys('friendRequests');
+                done();
+            })
+    })
 });
