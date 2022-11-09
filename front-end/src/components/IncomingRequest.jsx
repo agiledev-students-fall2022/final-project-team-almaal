@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '../routes/Friends.module.css'
 import { Input, Space, Card, Col, Row, Image, Divider, Button, Popover } from 'antd';
-import { CheckOutlined, DeleteOutlined, MoreOutlined } from "@ant-design/icons"
+import { CheckOutlined, DeleteOutlined, MoreOutlined, UserAddOutlined } from "@ant-design/icons"
 import { Typography } from 'antd'
 const { Title } = Typography
 
@@ -53,6 +53,11 @@ const IncomingRequest = ({ request, type, handleRemove }) => {
                         </Popover>
                     </Col>
                 }
+                {type == "search" && <>
+                    <Col span={2} style={{ cursor: "pointer" }} onClick={(e) => modifyRequest(e, "send", request)}>
+                        <UserAddOutlined className={styles.icon} />
+                    </Col>
+                </>}
             </Row>
 
         </div >

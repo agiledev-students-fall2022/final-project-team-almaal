@@ -7,7 +7,7 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "test": "mocha tests",
-    "nyc": "nyc mocha"
+    "coverage": "nyc npm run test"
   },
   "keywords": [],
   "author": "",
