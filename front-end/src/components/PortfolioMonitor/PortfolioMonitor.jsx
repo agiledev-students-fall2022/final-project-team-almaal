@@ -74,11 +74,11 @@ export default function PortfolioMonitor() {
         //GET request to the database to fetch the stock which are already in our portfolio
         const fetchData = async () => {
             try {
-                const response = await axios.get("/portfolioData");
-                const result = await response.json();
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_HOSTNAME}/home/portfolioData`);
+                //const result = await response.json();
                 //Validates that the database is not empty
-                if (result) {
-                  setStocks(result.data);
+                if (response) {
+                  setStocks(response.data);
                     // //If not empty, modifies the data with fetched results and updates state
                     // const dataModified = Object.keys(data).map((key) => ({
                     //     id: key,
@@ -98,7 +98,7 @@ export default function PortfolioMonitor() {
         };
 
         fetchData();
-  }, []);
+  }, [setStocks]);
 
  
   stocks.map((item)=>(

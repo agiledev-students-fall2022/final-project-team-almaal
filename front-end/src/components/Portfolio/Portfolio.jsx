@@ -89,6 +89,7 @@ const EditableCell = ({
   return <td {...restProps}>{childNode}</td>;
 };
 
+//function to handle the change of BYE or SELL operation
 const handleChange = (value) => {
   console.log(`selected ${value}`);
 };
@@ -120,7 +121,7 @@ const Portfolio = () => {
       Price: 200,
     },
   ]);
-  const [count, setCount] = useState(2);
+  const [count, setCount] = useState(0);
    
   const handleDelete = (key) => {
     const newData = dataSource.filter((item) => item.key !== key);
@@ -194,7 +195,7 @@ const defaultColumns = [
     setCount(count + 1);
   };
 
-  
+  //parses and saves the newly added data
   const handleSave = (row) => {
     const newData = [...dataSource];
     const index = newData.findIndex((item) => row.key === item.key);
