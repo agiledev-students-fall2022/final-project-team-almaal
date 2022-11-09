@@ -1,11 +1,14 @@
 const express = require('express')
 const app = express()
-const port = 3001
+const port = 3000
 const home = require('./routes/home')
 const friends = require('./routes/friends')
 const groups = require('./routes/groups')
 const news = require('./routes/news')
 const profile = require('./routes/profile')
+const axios = require("axios")
+
+
 const login = require('./routes/login')
 
 require('dotenv').config()
@@ -35,7 +38,7 @@ app.use('/profile', profile);
 app.use('/login', login);
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Hello World!!!')
 })
 
 app.listen(port, () => {
