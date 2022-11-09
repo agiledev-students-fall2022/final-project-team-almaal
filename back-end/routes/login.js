@@ -21,12 +21,12 @@ router.post('/', function (req, res) {
                 message: "successful login!!!"
             })
         } else {
-            res.status(200).send({
+            res.status(400).send({
                 message: "Password incorrect!!!"
             })
         }
     } else {
-        res.status(200).send({
+        res.status(401).send({
             message: "User not found"
         })
     }
