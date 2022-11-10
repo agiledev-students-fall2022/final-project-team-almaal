@@ -36,6 +36,7 @@ router.get("/portfolioData", (req, res, next) => {
         .catch(err => next(err)) // pass any errors to express
     
 })
+
 router.get('/', (req, res) => {
     res.send('Profile page')
 })

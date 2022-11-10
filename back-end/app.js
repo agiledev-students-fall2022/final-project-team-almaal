@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const port = 3001
 const home = require('./routes/home')
 const friends = require('./routes/friends')
 const groups = require('./routes/groups')
@@ -9,9 +10,6 @@ const axios = require("axios")
 const login = require('./routes/login')
 
 require('dotenv').config()
-
-// const port = process.env.BACKEND_PORT
-const port = 3000
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.text());

@@ -59,7 +59,7 @@ export default function PortfolioMonitor() {
   });
 
  
-
+/*SPrint -1 fetch data starts */
 //  async function fetchData()
 //   {
 //     const result = await axios("https://my.api.mockaroo.com/stock_data.json?key=8052c770");
@@ -69,25 +69,17 @@ export default function PortfolioMonitor() {
 //   useEffect(() => {
 //     fetchData();
 //   }, []);
+/*SPrint -1 fetch data ends */
 
  useEffect(() => {
         //GET request to the database to fetch the stock which are already in our portfolio
         const fetchData = async () => {
             try {
-                const response = await axios.get("/portfolioData");
-                const result = await response.json();
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_HOSTNAME}/home/portfolioData`);
+                //const result = await response.json();
                 //Validates that the database is not empty
-                if (result) {
-                  setStocks(result.data);
-                    // //If not empty, modifies the data with fetched results and updates state
-                    // const dataModified = Object.keys(data).map((key) => ({
-                    //     id: key,
-                    //     ticker: data[key]['ticker'],
-                    //     position: data[key]['position'],
-                    //     quantity: data[key]['quantity'],
-                    //     price: data[key]['price'],
-                    // }));
-                    // setStocks(dataModified);
+                if (response) {
+                  setStocks(response.data);
                     
                 }
             } catch (error) {
@@ -98,7 +90,7 @@ export default function PortfolioMonitor() {
         };
 
         fetchData();
-  }, []);
+  }, [setStocks]);
 
  
   stocks.map((item)=>(
@@ -126,6 +118,8 @@ export default function PortfolioMonitor() {
   };
   
 
+  
+  
   //no need for Sprint-1
 
     // useEffect(() => {
