@@ -7,7 +7,8 @@ chai.use(chaiHttp) // use the chai-http middleware to simplify testing routes
 const expect = chai.expect // the assertion library in the style using the word 'expect'
 const should = chai.should() // the same assertion library in the style using the word 'should'
 
-const server = require("../app")
+const app = require("../app")
+
 
 describe("Login", () => {
     /**
@@ -20,7 +21,7 @@ describe("Login", () => {
     describe("POST /login with correct username/password", () => {
         it("it should return a 401 HTTP response code", done => {
             chai
-                .request(server)
+                .request(app)
                 .post("/login")
                 .type("json")
                 .send(formData)
@@ -35,7 +36,7 @@ describe("Login", () => {
         const formData = { email: "abc@gmail.com", password: "bar" } // mock form data with correct credentials
         it("it should return a 401 HTTP response code", done => {
             chai
-                .request(server)
+                .request(app)
                 .post("/login")
                 .type("form")
                 .send(formData)
@@ -50,7 +51,7 @@ describe("Login", () => {
         const formData = { email: "abcd@gmail.com", password: "bar" } // mock form data with correct credentials
         it("it should return a 400 HTTP response code", done => {
             chai
-                .request(server)
+                .request(app)
                 .post("/login")
                 .type("form")
                 .send(formData)

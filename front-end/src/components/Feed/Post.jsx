@@ -5,16 +5,19 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import Drawer from "react-bottom-drawer";
 import './Post.css'
 import AddDrawer from './AddDrawer';
+import { useNavigate } from 'react-router-dom';
 
 const URL = "http://localhost:3001/";
 
 function Post({profilePic, image, username, timestamp, message, likes, comments}) {
     const [comment, setComment] = useState('');
     const [isVisible, setIsVisible] = useState(false);
+    const [flag, setFlag] = useState(false);
+    const [test, setTest] = useState(likes)
     const openDrawer = React.useCallback(() => setIsVisible(true), []);
     const closeDrawer = React.useCallback(() => setIsVisible(false), []);
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = (e, username) =>{
         e.preventDefault();
         if(comment){            
             if(comment === ''){
@@ -23,11 +26,18 @@ function Post({profilePic, image, username, timestamp, message, likes, comments}
 
             fetch(URL+ 'groups/postcomment', {
                 method: 'POST',
-                body: comment
+                body: JSON.stringify({userPost: username, user: 'User0', user_comment: comment})
             })
         }
           //db stuff
         setComment("");
+    }
+
+    const handleLike = (username, likeflag) =>{
+        fetch(URL+ 'groups/postLike', {
+            method: 'POST',
+            body: JSON.stringify({userPost: username, like: likeflag})
+        })
     }
 
   return (
@@ -44,18 +54,25 @@ function Post({profilePic, image, username, timestamp, message, likes, comments}
             <p>{message}</p>
         </div>
 
-        <div className="post__image">
-            <img src={image} height={250} alt=""/>
-        </div>
+        {image != null &&
+            <div className="post__image">
+                <img src={image} height={250} alt=""/>
+            </div>
+        }
 
         <div className='like__counter'>
             <ThumbUpIcon style={{display:'flex', color:'blue'}}/>
-            <p>{likes}</p>
+            <p>{test}</p>
         </div>
 
         <div className="post__options">
-            <div className="post__option">
-                <ThumbUpIcon className='likebtn'/>
+            <div onClick={()=>{if(flag){handleLike(username, false); setFlag(false); setTest((test) => (parseInt(test) - 1));}else{handleLike(username, true); setFlag(true); setTest((test) => (parseInt(test) + 1));}}} className="post__option">
+                {flag &&
+                    <ThumbUpIcon style={{color:'red'}}/>
+                }
+                {!flag &&
+                    <ThumbUpIcon className='likebtn'/>
+                }
                 <p>Like</p>
             </div>
 
@@ -111,7 +128,7 @@ function Post({profilePic, image, username, timestamp, message, likes, comments}
 
                 />
                 
-                <button onClick={handleSubmit} type="submit">
+                <button onClick={(e) => {handleSubmit(e, username)}} type="submit">
                     Hidden Submit
                 </button>
 
