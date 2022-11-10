@@ -61,6 +61,28 @@ const Profile = () => {
         }
     }
 
+    const handleInvestmentSwitch = () => {
+        setInvestmentVisibility(~investmentVisibility);
+        axios.post(URL+"profile/update", {investment_visibility: investmentVisibility})
+            .then(() => {
+                console.log("successfully updated investment visibility to "+investmentVisibility)
+            })
+            .catch(err => {
+                console.log(err);
+            }) 
+    }
+
+    const handleProfileSwitch = () => {
+        setProfileVisibility(~profileVisibility);
+        axios.post(URL+"profile/update", {profile_visibility: profileVisibility})
+            .then(() => {
+                console.log("successfully updated profile visibility to "+profileVisibility)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     useEffect(() => {
         const getProfile = async() => {
             const response = await fetch(URL+"profile",{
@@ -101,8 +123,8 @@ const Profile = () => {
                     </Space>
                 </Space>
                 <Space direction="vertical" className={styles.switchContainer}>
-                    <Space size="small">Investment Visibility<Switch className={styles.switch} defaultChecked={investmentVisibility} ></Switch></Space>
-                    <Space size="small">Hide Profile<Switch className={styles.switch} defaultChecked={profileVisibility}></Switch></Space>
+                    <Space size="small">Investment Visibility<Switch className={styles.switch} checked={investmentVisibility} onClick={handleInvestmentSwitch}></Switch></Space>
+                    <Space size="small">Hide Profile<Switch className={styles.switch} checked={profileVisibility} onClick={handleProfileSwitch}></Switch></Space>
                 </Space>
                 <Divider plain></Divider>
                 {/* <List className='cards'>

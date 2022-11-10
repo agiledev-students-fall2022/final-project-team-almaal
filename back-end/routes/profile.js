@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
     const response = {
         username: "@frankwu2002",
         password: "fakepassword",
-        investment_visibility: true,
+        investment_visibility: false,
         profile_visibility: false,
         total_friends: 10,
         total_groups: 7,
