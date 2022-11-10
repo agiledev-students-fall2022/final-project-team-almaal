@@ -118,7 +118,6 @@ const Friends = () => {
                 method: "GET"
             })
             const data = await response.json();
-            console.log(data.friends)
             setFriends(data.friends);
         }
 
@@ -126,6 +125,8 @@ const Friends = () => {
         getFriendList();
 
     }, []);
+
+
 
     return (
         <>
