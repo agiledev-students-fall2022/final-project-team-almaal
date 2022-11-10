@@ -4,6 +4,7 @@ import{Select} from 'antd';
 import axios from 'axios'
 //Importing the database endpoint as string to be used
 import './Portfolio.css';
+import { ErrorResponse } from '@remix-run/router';
 
 //These components are for the Portfolio
 const { Option } = Select;
@@ -88,13 +89,18 @@ const Portfolio = () => {
           ...item,
           ...row,
         });
-        //console.log(newData[index]);
+      //console.log(newData[index]);
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newData[index]),
+    };
   //POST request to the database to add a new stock
-    const response = await fetch(`${process.env.REACT_APP_SERVER_HOSTNAME}/home/saved`, {
-            method: 'POST',
-            'Content-Type': 'application/json',
-            body: JSON.stringify(newData[index]),
-                });
+    await fetch(`${process.env.REACT_APP_SERVER_HOSTNAME}/home/`, requestOptions)
+    .then(response=>response.json)
+    .then(data=>console.log(data) )         
+
+        
         setData(newData);
         setEditingKey('');
       } else {
@@ -103,7 +109,7 @@ const Portfolio = () => {
         setEditingKey('');
       }
     } catch (errInfo) {
-      console.log('Validate Failed:', errInfo);
+      console.err('Validate Failed:', errInfo);
     }
   };
 
