@@ -30,10 +30,12 @@ We want to leave the above part on since the links to instructions are very help
 
 ## Assign roles
 We decided to take rotation in assignment of the following roles for very Sprint.
-Sprint 1
+
+#### Sprint 1
 - Scrum Master: Wenbo Bao
 - Product Owner: Maisha Mahrin
-Sprint 2
+
+#### Sprint 2
 - Scrum Master: Safal
 - Product Owner: Krises
 
