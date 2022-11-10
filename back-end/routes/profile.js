@@ -7,12 +7,12 @@ router.get('/', async (req, res) => {
     const response = {
         username: "@frankwu2002",
         password: "fakepassword",
-        investment_visibility: "true",
-        profile_visibility: "false",
+        investment_visibility: true,
+        profile_visibility: false,
         total_friends: 10,
         total_groups: 7,
         total_invested: "$5000",
-        total_proflie: "+10.5%"
+        total_profit: "+10.5%"
     }
     res.status(200).json(response)
 })

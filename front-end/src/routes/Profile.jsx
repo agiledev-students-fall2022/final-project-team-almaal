@@ -2,21 +2,78 @@ import React, { useState } from 'react'
 import { Typography, Space, Divider, Avatar, Button, Input, Switch, Card, List, Tooltip, Col, Row } from 'antd';
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
 import styles from './Profile.module.css'
+import { useEffect } from 'react'
+import axios from "axios";
 
 const { Title } = Typography;
 
-const Profile = ({ total_friends = 0, total_groups = 0, total_investment = 0, total_pl = 0 }) => {
-    const [username, setUsername] = useState('');
-    const [allowUsernameEdit, setAllowUsernameEdit] = useState('false');
-    const [allowPasswordEdit, setAllowPasswordEdit] = useState('false');
+const URL = "http://localhost:3001/"
+
+const Profile = () => {
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
+    const [investmentVisibility, setInvestmentVisibility] = useState();
+    const [profileVisibility, setProfileVisibility] = useState();
+    const [totalFriends, setTotalFriends] = useState();
+    const [totalGroups, setTotalGroups] = useState();
+    const [totalInvestment, setTotalInvestment] = useState();
+    const [totalPl, setTotalPl] = useState();
+    const [allowUsernameEdit, setAllowUsernameEdit] = useState(false);
+    const [allowPasswordEdit, setAllowPasswordEdit] = useState(false);
+
+    const updateInformation = data => {
+        setUsername(data.username)
+        setPassword(data.password)
+        setInvestmentVisibility(data.investment_visibility)
+        setProfileVisibility(data.profile_visibility)
+        setTotalFriends(data.total_friends)
+        setTotalGroups(data.total_groups)
+        setTotalInvestment(data.total_invested)
+        setTotalPl(data.total_profit)
+    }
 
     const handleUsernameButton = () => {
         setAllowUsernameEdit(~allowUsernameEdit);
+        if(~allowUsernameEdit){
+            setUsername(document.getElementById('exampleInputEmail1').value)
+            axios.post(URL+"profile/update", {username: username})
+                .then(() => {
+                    console.log("successfully updated username to "+username)
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+       
     }
 
     const handlePasswordButton = () => {
         setAllowPasswordEdit(~allowPasswordEdit);
+        if(~allowPasswordEdit){
+            setPassword(document.getElementById('exampleInputPassword1').value)
+            axios.post(URL+"profile/update", {password: password})
+                .then(() => {
+                    console.log("successfully updated username to "+password)
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
     }
+
+    useEffect(() => {
+        const getProfile = async() => {
+            const response = await fetch(URL+"profile",{
+                method:"GET"
+            })
+            const data = await response.json();
+            console.log(data)
+            updateInformation(data)
+        }
+
+        getProfile();
+        console.log(username);
+    },[])
 
     return (
         <div>
@@ -30,13 +87,13 @@ const Profile = ({ total_friends = 0, total_groups = 0, total_investment = 0, to
                     </Space>
                     <Space direction="vertical">
                         <Space className={styles.input}>
-                            <Input defaultValue="current_username" disabled={allowUsernameEdit} size="large" />
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled={allowUsernameEdit} placeholder={username}/>
                             <Tooltip>
                                 <Button icon={<EditOutlined />} onClick={handleUsernameButton} />
                             </Tooltip>
                         </Space>
                         <Space className={styles.input}>
-                            <Input defaultValue="current_password" disabled={allowPasswordEdit} size="large" />
+                        <input type="password" class="form-control" id="exampleInputPassword1" disabled={allowPasswordEdit} placeholder={password}/>
                             <Tooltip>
                                 <Button icon={<EditOutlined />} onClick={handlePasswordButton} />
                             </Tooltip>
@@ -44,8 +101,8 @@ const Profile = ({ total_friends = 0, total_groups = 0, total_investment = 0, to
                     </Space>
                 </Space>
                 <Space direction="vertical" className={styles.switchContainer}>
-                    <Space size="small">Investment Visibility<Switch className={styles.switch} defaultChecked ></Switch></Space>
-                    <Space size="small">Hide Profile<Switch className={styles.switch}></Switch></Space>
+                    <Space size="small">Investment Visibility<Switch className={styles.switch} defaultChecked={investmentVisibility} ></Switch></Space>
+                    <Space size="small">Hide Profile<Switch className={styles.switch} defaultChecked={profileVisibility}></Switch></Space>
                 </Space>
                 <Divider plain></Divider>
                 {/* <List className='cards'>
@@ -60,16 +117,16 @@ const Profile = ({ total_friends = 0, total_groups = 0, total_investment = 0, to
                 </List> */}
                 <Row justify="space-around" gutter={[16, 16]}>
                     <Col md={12} xl={6}>
-                        <Card style={{ Width: "50%" }} title="Total Friends">{total_friends}</Card>
+                        <Card style={{ Width: "50%" }} title="Total Friends">{totalFriends}</Card>
                     </Col>
                     <Col md={12} xl={6}>
-                        <Card style={{ Width: "50%" }} title="Total Groups">{total_groups}</Card>
+                        <Card style={{ Width: "50%" }} title="Total Groups">{totalGroups}</Card>
                     </Col>
                     <Col md={12} xl={6}>
-                        <Card style={{ Width: "50%" }} title="Total Investment">{total_investment}</Card>
+                        <Card style={{ Width: "50%" }} title="Total Investment">{totalInvestment}</Card>
                     </Col>
                     <Col md={12} xl={6}>
-                        <Card style={{ Width: "50%" }} title="Total P/L">{total_pl}</Card>
+                        <Card style={{ Width: "50%" }} title="Total P/L">{totalPl}</Card>
                     </Col>
                 </Row>
             </Space>
