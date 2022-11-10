@@ -44,18 +44,29 @@ router.get('/', (req, res) => {
 
 let storeData=[];
 // receive POST data from the client
-router.post("/", async(req, res) => {
+router.post("/saved", async(req, res) => {
   // now do something amazing with the data we received from the client
   
   const data = {
-      Ticker: req.body.Ticker,
-      Position: req.body.Position,
-      Quantity: req.body.Quantity,
-      Price: req.body.Price,
+      key:req.body.key,
+      ticker: req.body.ticker,
+      position: req.body.position,
+      quantity: req.body.quantity,
+      price: req.body.price,
   }
-  storeData.push(data);
+  storeData.push(data)
+  console.log(data)
   // ... then send a response of some kind to client
-  res.json(storeData);
+  //res.json(storeData);
+  res.send(storeData)
+})
+
+
+// receive POST data from the client
+router.get("/saved", async(req, res) => {
+  // now do something amazing with the data we received from the client
+
+  res.send(storeData)
 })
 
 module.exports = router

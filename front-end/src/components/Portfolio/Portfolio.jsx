@@ -88,11 +88,12 @@ const Portfolio = () => {
           ...item,
           ...row,
         });
+        //console.log(newData[index]);
   //POST request to the database to add a new stock
-    const response = await fetch(`https://${DATABASE}.json`, {
+    const response = await fetch(`${process.env.REACT_APP_SERVER_HOSTNAME}/home/saved`, {
             method: 'POST',
             'Content-Type': 'application/json',
-            body: JSON.stringify(newStock),
+            body: JSON.stringify(newData[index]),
                 });
         setData(newData);
         setEditingKey('');
@@ -222,7 +223,7 @@ const defaultColumns = [
       ...col,
       onCell: (record) => ({
         record,
-        inputType: col.dataIndex === 'price'||'quantity' ? 'number' : 'text',
+        inputType: col.dataIndex === 'price' ? 'number' : 'text',
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
