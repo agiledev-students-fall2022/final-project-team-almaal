@@ -1,7 +1,7 @@
 import { Button, Form, Input, Popconfirm, Table} from 'antd';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import{Select} from 'antd';
-
+import axios from 'axios'
 //Importing the database endpoint as string to be used
 import './Portfolio.css';
 
@@ -103,7 +103,7 @@ const getRandomuserParams = (params) => ({
 
 const Portfolio = () => {
 
-  const [data, setData] = useState();
+  //const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
     pagination: {
@@ -183,7 +183,67 @@ const defaultColumns = [
 
  
 
-  const handleAdd = () => {
+  const handleNew = (newData) => {
+    // const newData = {
+    //   key: count,
+    //   Ticker: 'Apple',
+    //   Position: 'BUY',
+    //   Quantity: 10,
+    //   Price: 200,
+    // };
+    const addData={
+      Ticker: newData.Ticker,
+      Position: newData.Position,
+      Quantity: newData.Quantity,
+      Price: newData.Price,    
+    }
+    setDataSource([...dataSource, addData]);
+    setCount(count + 1);
+  };
+
+
+  const handleAdd = async() => {
+
+            try {
+            //Basic validation if user entered a ticker, price and quantity above 0
+            if (
+                dataSource.Ticker &&
+                dataSource.Price > 0 &&
+                dataSource.Quantity > 0
+            ) {
+              axios
+              // post new message to server
+              .post(`${process.env.REACT_APP_SERVER_HOSTNAME}/`)
+              .then(response => {
+                // // setFeedback(`ooh la la: ${data}`)
+                handleNew(response.data)
+               
+              })
+                // //POST request to the database to add a new stock
+                // const response = await fetch(`https://${DATABASE}.json`, {
+                //     method: 'POST',
+                //     'Content-Type': 'application/json',
+                //     body: JSON.stringify(newData),
+                // });
+
+                //const data = await response.json();
+
+                // //Validates the stock is saved
+                // if (data.name) {
+                //     //Updates state with the new stock
+                //     setStocks((stocks) => [
+                //         ...stocks,
+                //         { id: data.name, ...newData },
+                //     ]);
+                //    setDataSource(INITIAL_STATE);
+                //    setInputVisibility(false);
+                // }
+            }
+        } catch (error) {
+            /*The option how to handle the error is totally up to you. 
+            Ideally, you can send notification to the user */
+            console.log(error);
+        }
     const newData = {
       key: count,
       Ticker: 'Apple',
@@ -194,6 +254,8 @@ const defaultColumns = [
     setDataSource([...dataSource, newData]);
     setCount(count + 1);
   };
+
+
 
   //parses and saves the newly added data
   const handleSave = (row) => {
