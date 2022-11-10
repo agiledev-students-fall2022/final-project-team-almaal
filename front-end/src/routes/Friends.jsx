@@ -16,6 +16,7 @@ const URL = "http://localhost:3001/"
 const Friends = () => {
     const [searchItem, setItem] = useState('');
     const [showCard, setShowCard] = useState(false);
+    const [loaderBool, setLoaderBool] = useState(false);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -33,7 +34,7 @@ const Friends = () => {
     };
 
     const handleRemove = (type, friend) => {
-        setIncomingRequests(incomingRequests.filter(request => request.login.uuid !== friend.login.uuid))
+        if (type !== "send") setIncomingRequests(incomingRequests.filter(request => request.login.uuid !== friend.login.uuid))
 
         if (type === "accept") {
             fetch(URL + "friends/modifyrequest", {
@@ -59,7 +60,34 @@ const Friends = () => {
                 .then(res => openNotification("topLeft", res.message))
 
             console.log(type)
+        } else if (type === "send") {
+            setShowCard(false);
+            fetch(URL + "friends/sendrequest", {
+                method: 'POST',
+                body: JSON.stringify({ handle: friend }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+                .then(res => openNotification("topLeft", res.message))
         }
+    }
+
+    const searchFriend = (value) => {
+        setLoaderBool(true);
+        fetch(URL + "friends/search", {
+            method: 'POST',
+            body: JSON.stringify({ handle: value }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+            .then(data => {
+                setLoaderBool(false);
+                console.log(data)
+                setItem(data);
+                setShowCard(true);
+            });
     }
 
     const showModal = () => {
@@ -104,17 +132,26 @@ const Friends = () => {
                 <section className={styles.container}>
                     <Title level={3} className={styles.title}>Add a Friend</Title>
                     <div className={styles.searchArea}>
-                        <Search className={styles.search} placeholder="Search for a friend..."
-                            onChange={(event) => {
-                                setItem(event.target.value);
-                            }}
-                            onFocus={(event) => setShowCard(true)}
-                            onBlur={(event) => setShowCard(false)} />
+                        <Search className={styles.search} enterButton="Search" size="large" placeholder="Search for a friend..." loading={loaderBool}
+                            // onChange={(event) => {
+                            //     setItem(event.target.value);
+                            // }}
+                            onSearch={((value, event) => {
+                                searchFriend(value);
+                            })}
+                        // onFocus={(event) => setShowCard(true)}
+                        // onBlur={(event) => {
+                        //     console.log(event.target);
+                        //     setShowCard(false)
+                        // }}
+                        />
                         {
                             searchItem !== '' && showCard && <Card className={styles.card}>
-                                {[1, 2, 3].map(key => {
-                                    return <p key={key}> {searchItem} </p>;
-                                })}
+                                <>
+                                    {searchItem.found === false ? <p>{searchItem.message}</p> :
+                                        <IncomingRequest request={searchItem.profile} type="search" handleRemove={handleRemove} />}
+                                </>
+
                             </Card>
                         }
                     </div>

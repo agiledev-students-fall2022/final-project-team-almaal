@@ -64,14 +64,26 @@ router.post('/search', async (req, res) => {
     const response = {}
     const friends = ['a', 'b', 'c'];
 
+    console.log(req.body)
+
     if (friends.includes(req.body.handle)) {
         response.message = "Profile Found"
-        response.profile = req.body.handle
+        response.found = true
+        response.profile = {
+            name: {
+                first: req.body.handle,
+                last: "rand"
+            },
+            picture: {
+                medium: "https://randomuser.me/api/portraits/med/men/46.jpg"
+            }
+        }
     } else {
+        response.found = false
         response.message = "Profile Not Found"
     }
 
-    res.status(200).json(req.body);
+    res.status(200).json(response);
 })
 
 // send friend request
@@ -79,14 +91,14 @@ router.post('/sendrequest', async (req, res) => {
     const response = {}
     const friends = ['a', 'b', 'c'];
 
-    if (friends.includes(req.body.handle)) {
+    if (friends.includes(req.body.handle.name.first)) {
         response.message = "Request Sent!"
         response.profile = req.body.handle
     } else {
         response.message = "Profile Not Found"
     }
 
-    res.status(200).json(req.body);
+    res.status(200).json(response);
 })
 
 module.exports = router

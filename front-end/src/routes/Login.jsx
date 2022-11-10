@@ -7,6 +7,21 @@ import axios from "axios";
 
 const { Title } = Typography;
 
+function login(e) {
+    e.preventDefault();
+    let request = {
+        email: document.getElementById('exampleInputEmail1').value,
+        password: document.getElementById('exampleInputPassword1').value
+    }
+    axios.post("http://localhost:3001/login", request)
+        .then(resp => {
+            alert(resp.data.message);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+}
+
 const Login = () => {
     return (
         <div>
@@ -50,18 +65,5 @@ const Login = () => {
     );
 }
 
-function login(e) {
-    e.preventDefault();
-    let request = {
-        email: document.getElementById('exampleInputEmail1').value,
-        password: document.getElementById('exampleInputPassword1').value
-    }
-    axios.post("http://localhost:3000/login", request)
-        .then(resp => {
-            alert(resp.data.message);
-        })
-        .catch(err => {
-            console.log(err);
-        })
-}
+
 export default Login
