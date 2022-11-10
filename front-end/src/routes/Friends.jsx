@@ -61,7 +61,8 @@ const Friends = () => {
 
             console.log(type)
         } else if (type === "send") {
-            setShowCard(false);
+            // setShowCard(false);
+            console.log("Request gdfsdf")
             fetch(URL + "friends/sendrequest", {
                 method: 'POST',
                 body: JSON.stringify({ handle: friend }),
@@ -133,16 +134,16 @@ const Friends = () => {
                     <Title level={3} className={styles.title}>Add a Friend</Title>
                     <div className={styles.searchArea}>
                         <Search className={styles.search} enterButton="Search" size="large" placeholder="Search for a friend..." loading={loaderBool}
-                            // onChange={(event) => {
-                            //     setItem(event.target.value);
-                            // }}
+                            onChange={(event) => {
+                                setShowCard(false);
+                            }}
                             onSearch={((value, event) => {
                                 searchFriend(value);
                             })}
                         // onFocus={(event) => setShowCard(true)}
                         // onBlur={(event) => {
                         //     console.log(event.target);
-                        //     setShowCard(false)
+                        //     setShowCard(false);
                         // }}
                         />
                         {
