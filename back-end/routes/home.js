@@ -46,7 +46,7 @@ let storeData=[];
 // receive POST data from the client
 router.post("/", async(req, res) => {
   // now do something amazing with the data we received from the client
-  //console.log(req.body)
+  console.log(req.body)
   const data = {
       key:req.body.key,
       ticker: req.body.ticker,
@@ -58,7 +58,7 @@ router.post("/", async(req, res) => {
   //console.log(data)
   // ... then send a response of some kind to client
   res.json(storeData)
-  //console.log(storeData)
+  console.log(storeData)
   //res.send(storeData)
 })
 
