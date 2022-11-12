@@ -10,5 +10,10 @@
     "react-router-dom": "^6.4.3",
     "react-scripts": "^5.0.1",
     "react-scroll": "^1.8.8"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.1.0",
+    "nyc": "^15.1.0"
   }
 }
