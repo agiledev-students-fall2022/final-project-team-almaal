@@ -37,6 +37,16 @@ router.get("/portfolioData", (req, res, next) => {
     
 })
 
+// using async/await in this route to show another way of dealing with asynchronous requests to an external API or database
+router.get("/portfolioChartData", (req, res, next) => {
+    axios
+        .get("https://my.api.mockaroo.com/chart_data.json?key=8052c770")
+        .then(apiChartResponse => apiChartResponse.data) // pass data along directly to client
+        .then(data=>res.json(data))
+        .catch(err => next(err)) // pass any errors to express
+    
+})
+
 router.get('/', (req, res) => {
     res.send('Profile page')
 })
@@ -64,7 +74,7 @@ router.post("/", async(req, res) => {
 
 
 // receive POST data from the client
-router.get("/saved", async(req, res) => {
+router.get("/", async(req, res) => {
   // now do something amazing with the data we received from the client
 
   res.send(storeData)

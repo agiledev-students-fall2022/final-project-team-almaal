@@ -89,7 +89,7 @@ const Portfolio = () => {
           ...item,
           ...row,
         });
-      //console.log(newData[index]);
+      console.log(newData[index]);
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
