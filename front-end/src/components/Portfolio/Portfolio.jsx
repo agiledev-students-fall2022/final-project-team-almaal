@@ -1,131 +1,145 @@
-import { Button, Form, Input, Popconfirm, Table} from 'antd';
+import { Button, Form, Input, Popconfirm, Table, InputNumber,Typography} from 'antd';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import{Select} from 'antd';
 import axios from 'axios'
 //Importing the database endpoint as string to be used
 import './Portfolio.css';
+import { ErrorResponse } from '@remix-run/router';
 
 //These components are for the Portfolio
 const { Option } = Select;
-const EditableContext = React.createContext(null);
-const EditableRow = ({ index, ...props }) => {
-  const [form] = Form.useForm();
+
+
+const originData = [];
+for (let i = 0; i < 2; i++) {
+  originData.push({
+    key: i.toString(),
+    ticker: 'Apple Inc',
+    position: 'BUY',
+    quantity: 10,
+    price: i*150,
+  });
+}
+const EditableCell = ({
+  editing,
+  dataIndex,
+  title,
+  inputType,
+  record,
+  index,
+  children,
+  ...restProps
+}) => {
+  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
   return (
-    <Form form={form} component={false}>
-      <EditableContext.Provider value={form}>
-        <tr {...props} />
-      </EditableContext.Provider>
-    </Form>
+    <td {...restProps}>
+      {editing ? (
+        <Form.Item
+          name={dataIndex}
+          style={{
+            margin: 0,
+          }}
+          rules={[
+            {
+              required: true,
+              message: `Please Input ${title}!`,
+            },
+          ]}
+        >
+          {inputNode}
+        </Form.Item>
+      ) : (
+        children
+      )}
+    </td>
   );
 };
 
 
-const EditableCell = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  ...restProps
-}) => {
-  const [editing, setEditing] = useState(false);
-  const inputRef = useRef(null);
-  const form = useContext(EditableContext);
-  useEffect(() => {
-    if (editing) {
-      inputRef.current.focus();
-    }
-  }, [editing]);
-  const toggleEdit = () => {
-    setEditing(!editing);
-    form.setFieldsValue({
-      [dataIndex]: record[dataIndex],
-    });
-  };
-  const save = async (e) => {
-    //Prevents the default behavior of the event to refresh the page
-    e.preventDefault();
-    try {
-      const values = await form.validateFields();
-      toggleEdit();
-      handleSave({
-        ...record,
-        ...values,
-      });
-    } catch (errInfo) {
-      console.log('Save failed:', errInfo);
-    }
-  };
-  let childNode = children;
-  if (editable) {
-    childNode = editing ? (
-      <Form.Item
-        style={{
-          margin: 0,
-        }}
-        name={dataIndex}
-        rules={[
-          {
-            required: true,
-            message: `${title} is required.`,
-          },
-        ]}
-      >
-        <Input ref={inputRef} onPressEnter={save} onBlur={save} />
-      </Form.Item>
-    ) : (
-      <div
-        className="editable-cell-value-wrap"
-        style={{
-          paddingRight: 24,
-        }}
-        onClick={toggleEdit}
-      >
-        {children}
-      </div>
-    );
-  }
-  return <td {...restProps}>{childNode}</td>;
-};
-
-//function to handle the change of BYE or SELL operation
-const handleChange = (value) => {
-  console.log(`selected ${value}`);
-};
-
-const getRandomuserParams = (params) => ({
-  results: params.pagination?.pageSize,
-  page: params.pagination?.current,
-  ...params,
-});
-
 
 const Portfolio = () => {
 
-  //const [data, setData] = useState();
+  const [form] = Form.useForm();
+  const [data, setData] = useState(originData);
   const [loading, setLoading] = useState(false);
-  const [tableParams, setTableParams] = useState({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  });
+  const [count, setCount] = useState(2);
+  const [editingKey, setEditingKey] = useState('');
+  const isEditing = (record) => record.key === editingKey;
+  const edit = (record) => {
+    form.setFieldsValue({
+      ticker: '',
+      position: '',
+      quantity: '',
+      price: '',
+      ...record,
+    });
+    setEditingKey(record.key);
+  };
+  const cancel = () => {
+    setEditingKey('');
+  };
+  const save = async (key) => {
+    try {
+      const row = await form.validateFields();
+      const newData = [...data];
+      const index = newData.findIndex((item) => key === item.key);
+      if (index > -1) {
+        const item = newData[index];
+        newData.splice(index, 1, {
+          ...item,
+          ...row,
+        });
+      console.log(newData[index]);
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newData[index]),
+    };
+  //POST request to the database to add a new stock
+    await fetch(`${process.env.REACT_APP_SERVER_HOSTNAME}/home/`, requestOptions)
+    .then(response=>response.json)
+    .then(data=>console.log(data) )         
+
+        
+        setData(newData);
+        setEditingKey('');
+      } else {
+        newData.push(row);
+        setData(newData);
+        setEditingKey('');
+      }
+    } catch (errInfo) {
+      console.err('Validate Failed:', errInfo);
+    }
+  };
+
+
+
+
+
+  //const [data, setData] = useState();
+  
+  // const [tableParams, setTableParams] = useState({
+  //   pagination: {
+  //     current: 1,
+  //     pageSize: 10,
+  //   },
+  // });
   //to generate the table and functionalitites
-  const [dataSource, setDataSource] = useState([
-    {
-      key: 1,
-      Ticker: 'Apple Inc',
-      Position: 'BUY',
-      Quantity: 10,
-      Price: 200,
-    },
-  ]);
-  const [count, setCount] = useState(0);
+  // const [dataSource, setDataSource] = useState([
+  //   {
+  //     key: 1,
+  //     Ticker: 'Apple Inc',
+  //     Position: 'BUY',
+  //     Quantity: 10,
+  //     Price: 200,
+  //   },
+  // ]);
+  
    
   const handleDelete = (key) => {
-    const newData = dataSource.filter((item) => item.key !== key);
-    setDataSource(newData);
+    const newData = data.filter((item) => item.key !== key);
+    setData(newData);
   };
 //default columns at the beg of the form, not to be updated 
 const defaultColumns = [
@@ -148,7 +162,7 @@ const defaultColumns = [
       style={{
         width: 120,
       }}
-      onChange={handleChange}
+      // onChange={handleChange}
     >
       <Option value="buy">BUY</Option>
       <Option value="sell">SELL</Option>
@@ -173,110 +187,41 @@ const defaultColumns = [
     key: 'action',
     dataIndex: 'action',
     render: (_, record) =>
-    dataSource.length >= 1 ? (
+    data.length >= 1 ? (
           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
             <a>Delete</a>
           </Popconfirm>
         ) : null,
   },
-  ];
-
- 
-
-  const handleNew = (newData) => {
-    // const newData = {
-    //   key: count,
-    //   Ticker: 'Apple',
-    //   Position: 'BUY',
-    //   Quantity: 10,
-    //   Price: 200,
-    // };
-    const addData={
-      Ticker: newData.Ticker,
-      Position: newData.Position,
-      Quantity: newData.Quantity,
-      Price: newData.Price,    
-    }
-    setDataSource([...dataSource, addData]);
-    setCount(count + 1);
-  };
-
-
-  const handleAdd = async() => {
-
-            try {
-            //Basic validation if user entered a ticker, price and quantity above 0
-            if (
-                dataSource.Ticker &&
-                dataSource.Price > 0 &&
-                dataSource.Quantity > 0
-            ) {
-              axios
-              // post new message to server
-              .post(`${process.env.REACT_APP_SERVER_HOSTNAME}/`)
-              .then(response => {
-                // // setFeedback(`ooh la la: ${data}`)
-                handleNew(response.data)
-               
-              })
-                // //POST request to the database to add a new stock
-                // const response = await fetch(`https://${DATABASE}.json`, {
-                //     method: 'POST',
-                //     'Content-Type': 'application/json',
-                //     body: JSON.stringify(newData),
-                // });
-
-                //const data = await response.json();
-
-                // //Validates the stock is saved
-                // if (data.name) {
-                //     //Updates state with the new stock
-                //     setStocks((stocks) => [
-                //         ...stocks,
-                //         { id: data.name, ...newData },
-                //     ]);
-                //    setDataSource(INITIAL_STATE);
-                //    setInputVisibility(false);
-                // }
-            }
-        } catch (error) {
-            /*The option how to handle the error is totally up to you. 
-            Ideally, you can send notification to the user */
-            console.log(error);
-        }
-    const newData = {
-      key: count,
-      Ticker: 'Apple',
-      Position: 'BUY',
-      Quantity: 10,
-      Price: 200,
-    };
-    setDataSource([...dataSource, newData]);
-    setCount(count + 1);
-  };
-
-
-
-  //parses and saves the newly added data
-  const handleSave = (row) => {
-    const newData = [...dataSource];
-    const index = newData.findIndex((item) => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    setDataSource(newData);
-  };
-  const components = {
-    body: {
-      row: EditableRow,
-      cell: EditableCell,
+    {
+      title: 'Operation',
+      key: 'operation',
+      dataIndex: 'operation',
+      render: (_, record) => {
+        const editable = isEditing(record);
+        return editable ? (
+          <span>
+            <Typography.Link
+              onClick={() => save(record.key)}
+              style={{
+                marginRight: 8,
+              }}
+            >
+              Save
+            </Typography.Link>
+            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+              <a>Cancel</a>
+            </Popconfirm>
+          </span>
+        ) : (
+          <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+            Edit
+          </Typography.Link>
+        );
+      },
     },
-  };
-
-
-  const columns = defaultColumns.map((col) => {
+  ];
+  const mergedColumns = defaultColumns.map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -284,22 +229,113 @@ const defaultColumns = [
       ...col,
       onCell: (record) => ({
         record,
-        editable: col.editable,
+        inputType: col.dataIndex === 'price' ? 'number' : 'text',
         dataIndex: col.dataIndex,
         title: col.title,
-        handleSave,
+        editing: isEditing(record),
       }),
     };
   });
+ 
+
+  // const handleNew = (newData) => {
+  //   // const newData = {
+  //   //   key: count,
+  //   //   Ticker: 'Apple',
+  //   //   Position: 'BUY',
+  //   //   Quantity: 10,
+  //   //   Price: 200,
+  //   // };
+  //   const addData={
+  //     Ticker: newData.Ticker,
+  //     Position: newData.Position,
+  //     Quantity: newData.Quantity,
+  //     Price: newData.Price,    
+  //   }
+  //   setDataSource([...dataSource, addData]);
+  //   setCount(count + 1);
+  // };
+
+
+  const handleAdd = async() => {
+
+        //     try {
+        //     //Basic validation if user entered a ticker, price and quantity above 0
+        //     if (
+        //         dataSource.Ticker &&
+        //         dataSource.Price > 0 &&
+        //         dataSource.Quantity > 0
+        //     ) {
+        //       axios
+        //       // post new message to server
+        //       .post(`${process.env.REACT_APP_SERVER_HOSTNAME}/`)
+        //       .then(response => {
+        //         handleNew(response.data)
+               
+        //       })
+        //     }
+        // } catch (error) {
+        //     /*The option how to handle the error is totally up to you. 
+        //     Ideally, you can send notification to the user */
+        //     console.log(error);
+        // }
+    const newData = {
+      key: count,
+      ticker: 'Apple',
+      position: 'BUY',
+      quantity: 10,
+      price: 200,
+    };
+    setData([...data, newData]);
+    setCount(count + 1);
+  };
+
+
+
+  // //parses and saves the newly added data
+  // const handleSave = (row) => {
+  //   const newData = [...dataSource];
+  //   const index = newData.findIndex((item) => row.key === item.key);
+  //   const item = newData[index];
+  //   newData.splice(index, 1, {
+  //     ...item,
+  //     ...row,
+  //   });
+  //   setDataSource(newData);
+  //   console.log("Data saved");
+  // };
+  // const components = {
+  //   body: {
+  //     row: EditableRow,
+  //     cell: EditableCell,
+  //   },
+  // };
+
+
+  // const columns = defaultColumns.map((col) => {
+  //   if (!col.editable) {
+  //     return col;
+  //   }
+  //   return {
+  //     ...col,
+  //     onCell: (record) => ({
+  //       record,
+  //       editable: col.editable,
+  //       dataIndex: col.dataIndex,
+  //       title: col.title,
+  //       handleSave,
+  //     }),
+  //   };
+  // });
 
   
-  const handleTableChange = (pagination, filters, sorter) => {
-    setTableParams({
-      pagination,
-      filters,
-      ...sorter,
-    });
-  };
+  // const handleTableChange = (pagination, filters, sorter) => {
+  //   setTableParams({
+  //     pagination,
+  //     filters,
+  //     ...sorter,
+  //   });
+  // };
   
     //   useEffect(() => {
     //     //GET request to the mock API database to fetch the stock
@@ -332,7 +368,11 @@ const defaultColumns = [
 
 
 
-
+  const components = {
+    body: {
+      cell: EditableCell,
+    },
+  };
 
 
 
@@ -347,17 +387,30 @@ const defaultColumns = [
       >
         Add a row
       </Button>
-      
-      
+
+      <Form form={form} component={false}>
       <Table
+        components={components}
+        bordered
+        dataSource={data}
+        columns={mergedColumns}
+        loading={loading}
+        rowClassName="editable-row"
+        pagination={{
+          onChange: cancel,
+        }}
+      />
+    </Form>
+      
+      {/* <Table
         components={components}
         rowClassName={() => 'editable-row'}
         dataSource={dataSource}
-        loading={loading}
+        
         onChange={handleTableChange}
         bordered
         columns={columns}
-      />
+      /> */}
     </div>
   );
 }

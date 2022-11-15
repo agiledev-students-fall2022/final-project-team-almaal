@@ -37,6 +37,16 @@ router.get("/portfolioData", (req, res, next) => {
     
 })
 
+// using async/await in this route to show another way of dealing with asynchronous requests to an external API or database
+router.get("/portfolioChartData", (req, res, next) => {
+    axios
+        .get("https://my.api.mockaroo.com/chart_data.json?key=8052c770")
+        .then(apiChartResponse => apiChartResponse.data) // pass data along directly to client
+        .then(data=>res.json(data))
+        .catch(err => next(err)) // pass any errors to express
+    
+})
+
 router.get('/', (req, res) => {
     res.send('Profile page')
 })
@@ -46,16 +56,28 @@ let storeData=[];
 // receive POST data from the client
 router.post("/", async(req, res) => {
   // now do something amazing with the data we received from the client
-  
+  //console.log(req.body)
   const data = {
-      Ticker: req.body.Ticker,
-      Position: req.body.Position,
-      Quantity: req.body.Quantity,
-      Price: req.body.Price,
+      key:req.body.key,
+      ticker: req.body.ticker,
+      position: req.body.position,
+      quantity: req.body.quantity,
+      price: req.body.price,
   }
-  storeData.push(data);
+  storeData.push(data)
+  //console.log(data)
   // ... then send a response of some kind to client
-  res.json(storeData);
+  res.json(storeData)
+  //console.log(storeData)
+  //res.send(storeData)
+})
+
+
+// receive POST data from the client
+router.get("/", async(req, res) => {
+  // now do something amazing with the data we received from the client
+
+  res.send(storeData)
 })
 
 module.exports = router
