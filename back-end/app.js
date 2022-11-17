@@ -13,9 +13,9 @@ const login = require('./routes/login')
 
 require('dotenv').config()
 
-// mongoose.connect(`${process.env.DB_URL}`).then(connection => console.log('Connected to MongoDB'),
-//     err => console.log(err));
-// const db = mongoose.connection
+mongoose.connect(`${process.env.DB_URL}`).then(connection => console.log('Connected to MongoDB'),
+    err => console.log(err));
+const db = mongoose.connection
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.text());
