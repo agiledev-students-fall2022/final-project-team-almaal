@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 const port = 3001
+const mongoose = require('mongoose')
+
 const home = require('./routes/home')
 const friends = require('./routes/friends')
 const groups = require('./routes/groups')
@@ -10,6 +12,10 @@ const axios = require("axios")
 const login = require('./routes/login')
 
 require('dotenv').config()
+
+// mongoose.connect(`${process.env.DB_URL}`).then(connection => console.log('Connected to MongoDB'),
+//     err => console.log(err));
+// const db = mongoose.connection
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.text());
@@ -21,12 +27,6 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
     next();
 });
-
-// app.use(function (req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//     next();
-// });
 
 app.use('/home', home);
 app.use('/groups', groups);
