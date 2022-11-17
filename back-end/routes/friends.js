@@ -64,8 +64,6 @@ router.post('/search', async (req, res) => {
     const response = {}
     const friends = ['a', 'b', 'c'];
 
-    console.log(req.body)
-
     if (friends.includes(req.body.handle)) {
         response.message = "Profile Found"
         response.found = true

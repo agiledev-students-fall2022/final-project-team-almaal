@@ -54,7 +54,7 @@ const IncomingRequest = ({ request, type, handleRemove }) => {
                     </Col>
                 }
                 {type == "search" && <>
-                    <Col span={2} style={{ cursor: "pointer" }} onClick={(e) => modifyRequest(e, "send", request)}>
+                    <Col span={2} offset={2} style={{ cursor: "pointer" }} onClick={(e) => modifyRequest(e, "send", request)}>
                         <UserAddOutlined className={styles.icon} />
                     </Col>
                 </>}
