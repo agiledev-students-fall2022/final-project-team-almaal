@@ -69,7 +69,7 @@ const UsersSchema = new mongoose.Schema({
         }
     },
     "friends": [],
-    "incomingReuests": []
+    "friendRequests": []
 })
 
 const UsersModel = mongoose.model("Users", UsersSchema)
