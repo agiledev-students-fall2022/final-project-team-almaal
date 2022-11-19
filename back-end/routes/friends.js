@@ -1,5 +1,6 @@
 const express = require('express')
-const axios = require('axios')
+const axios = require('axios');
+const UsersModel = require('../db/models/UsersModal');
 const router = express.Router()
 // define the home page rout
 
@@ -34,29 +35,35 @@ router.post('/modifyrequest', async (req, res) => {
 
 // view all friends
 router.get('/friendlist', async (req, res) => {
-    const response = {}
-
-    response.friends = await getIncomingRequests();
-
-    res.status(200).json(response);
+    try {
+        const doc = await UsersModel.findById(req.body.id)
+        res.status(200).json({ success: true, id: req.body.id, friends: doc.friends })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, error })
+    }
 })
 
 router.get('/viewprofile', async (req, res) => {
-    const response = {}
-    response.id = req.body.id;
-
-    const profile = await axios.get("https://randomuser.me/api?results=1");
-    response.profile = profile.results
-
-    res.status(200).json(response);
+    try {
+        const doc = await UsersModel.findById(req.body.id)
+        res.status(200).json({ success: true, id: req.body.id, profile: doc })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, error })
+    }
 })
 
-router.get('/deletefriend', async (req, res) => {
-    const response = {}
-    response.id = req.body.id;
-    response.message = "Friend Removed from Connection"
+router.post('/deletefriend', async (req, res) => {
+    try {
+        const user = await UsersModel.findById(req.body.id)
+        user.friends.pop(req.body.friendId)
+        const savedResult = await user.save()
 
-    res.status(200).json(response);
+        res.status(200).json({ success: true, message: "Friend removed from connection", result: savedResult })
+    } catch (error) {
+        res.status(500).send({ success: false, error })
+    }
 })
 
 // search a profile
@@ -98,5 +105,41 @@ router.post('/sendrequest', async (req, res) => {
 
     res.status(200).json(response);
 })
+
+router.get('/populate', async (req, res) => {
+    try {
+        const apiResponse = await axios.get("https://randomuser.me/api?results=5");
+        const entries = []
+
+        for (let i = 0; i < apiResponse.data.results.length; i++) {
+            let entry = apiResponse.data.results[i]
+
+            let result = {
+                gender: entry.gender,
+                name: entry.name,
+                email: entry.email,
+                login: entry.login,
+                dob: entry.dob,
+                registered: entry.registered,
+                picture: entry.picture,
+                friends: [],
+                incomingRequests: []
+            }
+
+            // const doc = await UsersModel.create(result)
+            entries.push(result)
+        }
+
+        // console.log(entries)
+        const insertResponse = await UsersModel.insertMany(entries)
+        console.log(insertResponse)
+
+        res.status(200).send("ok")
+    } catch (e) {
+        res.status(500).json({ error: e })
+        console.log(e)
+    }
+})
+
 
 module.exports = router
