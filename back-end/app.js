@@ -10,16 +10,22 @@ const news = require('./routes/news')
 const profile = require('./routes/profile')
 const axios = require("axios")
 const login = require('./routes/login')
+const session = require('express-session')
 
-require('dotenv').config()
+const Posts = require('./db/models/PostsModal')
+
+
+require('dotenv').config({path: './config.env'});
 
 mongoose.connect(`${process.env.DB_URL}`).then(connection => console.log('Connected to MongoDB'),
     err => console.log(err));
+
 const db = mongoose.connection
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.text());
 app.use(express.json());
+
 //allow cross-origin resource sharing
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
