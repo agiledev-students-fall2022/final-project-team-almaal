@@ -1,18 +1,75 @@
 const mongoose = require('mongoose')
 
 const UsersSchema = new mongoose.Schema({
-    f_name: {
-        type: String,
-        required: true
+    "gender": {
+        "type": "String"
     },
-    l_name: {
-        type: String,
-        required: true
+    "name": {
+        "title": {
+            "type": "String"
+        },
+        "first": {
+            "type": "String"
+        },
+        "last": {
+            "type": "String"
+        }
     },
-    friends: {
-        type: Array,
-        required: true
-    }
+    "email": {
+        "type": "String"
+    },
+    "login": {
+        "uuid": {
+            "type": "String"
+        },
+        "username": {
+            "type": "String"
+        },
+        "password": {
+            "type": "String"
+        },
+        "salt": {
+            "type": "String"
+        },
+        "md5": {
+            "type": "String"
+        },
+        "sha1": {
+            "type": "String"
+        },
+        "sha256": {
+            "type": "String"
+        }
+    },
+    "dob": {
+        "date": {
+            "type": "Date"
+        },
+        "age": {
+            "type": "Number"
+        }
+    },
+    "registered": {
+        "date": {
+            "type": "Date"
+        },
+        "age": {
+            "type": "Number"
+        }
+    },
+    "picture": {
+        "large": {
+            "type": "String"
+        },
+        "medium": {
+            "type": "String"
+        },
+        "thumbnail": {
+            "type": "String"
+        }
+    },
+    "friends": [],
+    "friendRequests": []
 })
 
 const UsersModel = mongoose.model("Users", UsersSchema)
