@@ -5,7 +5,7 @@ import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 
 const URL = "http://localhost:3001/";
 
-function MessageSender() {
+function MessageSender({session_user, callback}) {
     const [input, setInput] = useState('');
     const [image, setImage] = useState(null);
     const [randfile, setfile] = useState(null);
@@ -16,10 +16,10 @@ function MessageSender() {
       if(input){
         const formData = new FormData();
         if(image){
-            formData.append('message', input);
-            formData.append('test', randfile, randfile.name);
+            formData.append('post_text', input);
+            formData.append('post_img', randfile, randfile.name);
         }else{
-            formData.append('message', input);
+            formData.append('post_text', input);
         }
 
         fetch(URL+'groups/feedpost', {
@@ -30,6 +30,7 @@ function MessageSender() {
       //db stuff
       setImage(null);
       setInput("");
+      callback(false);
     };
 
     const uploadHandler = (event) => {
@@ -53,7 +54,7 @@ function MessageSender() {
   return (
     <div className='messageSender'>
        <div className="messageSender__top">
-            <Avatar />
+            <Avatar src = {session_user != undefined ? session_user.user_pp : null}/>
             <form>
                 <input 
                     value={input}
