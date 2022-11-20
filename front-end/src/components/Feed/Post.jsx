@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Avatar} from "@material-ui/core"
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Drawer from "react-bottom-drawer";
 import './Post.css'
 import AddDrawer from './AddDrawer';
@@ -9,14 +10,22 @@ import { useNavigate } from 'react-router-dom';
 
 const URL = "http://localhost:3001/";
 
-function Post({profilePic, image, username, timestamp, message, likes, comments}) {
+function Post({callback, sid, pid, uid, profilePic, image, username, timestamp, message, likes, comments}) {
     const [comment, setComment] = useState('');
     const [isVisible, setIsVisible] = useState(false);
-    const [flag, setFlag] = useState(false);
-    const [test, setTest] = useState(likes)
+    const [flag, setFlag] = useState(likes.includes(sid)?true:false);
+    const [test, setTest] = useState(likes.length)
     const openDrawer = React.useCallback(() => setIsVisible(true), []);
     const closeDrawer = React.useCallback(() => setIsVisible(false), []);
+    let render_image;
 
+    useEffect(() => {
+        setFlag(likes.includes(sid)?true:false);
+        setTest(likes.length)
+    }, [likes])
+
+
+    console.log("LIKES", test);
     const handleSubmit = (e, username) =>{
         e.preventDefault();
         if(comment){            
@@ -26,18 +35,31 @@ function Post({profilePic, image, username, timestamp, message, likes, comments}
 
             fetch(URL+ 'groups/postcomment', {
                 method: 'POST',
-                body: JSON.stringify({userPost: username, user: 'User0', user_comment: comment})
+                body: JSON.stringify({post_id: pid, user_comment: comment}) //Backend: usercomment_id: req.session.uid, username: req.session.user, usercomment_pp: ''
             })
         }
           //db stuff
         setComment("");
+        callback(false);
     }
 
     const handleLike = (username, likeflag) =>{
         fetch(URL+ 'groups/postLike', {
             method: 'POST',
-            body: JSON.stringify({userPost: username, like: likeflag})
+            body: JSON.stringify({post_id: pid, like: likeflag})
         })
+    }
+
+    const handleDelete = ()=>{
+        fetch(URL+ 'groups/deletepost', {
+            method: 'POST',
+            body: JSON.stringify({post_id: pid})
+        })
+    }
+
+    if(image != undefined){
+        const blob = new Blob([Int8Array.from(image.data.data)], {type: image.contentType});
+        render_image = window.URL.createObjectURL(blob);
     }
 
   return (
@@ -48,15 +70,18 @@ function Post({profilePic, image, username, timestamp, message, likes, comments}
                 <h3>{username}</h3>
                 <p>{timestamp}</p>
             </div>
+            {sid==uid &&
+                <DeleteIcon style={{cursor:'pointer', display:'flex', marginLeft:'45%'}} onClick={handleDelete}/>
+            }
         </div>
 
         <div className="post__bottom">
             <p>{message}</p>
         </div>
 
-        {image != null &&
+        {image != undefined &&
             <div className="post__image">
-                <img src={image} height={250} alt=""/>
+                <img src={render_image} height={250} alt=""/> 
             </div>
         }
 

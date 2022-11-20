@@ -13,6 +13,11 @@
     padding: 15px;
 }
 
+.horizicon{
+    display: flex;
+    padding-left: 90%;
+}
+
 .post__avatar{
     margin-right: 10px;
 }
