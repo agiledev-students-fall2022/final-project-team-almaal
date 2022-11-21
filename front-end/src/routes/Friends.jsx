@@ -35,11 +35,14 @@ const Friends = () => {
 
     const handleRemove = (type, friend) => {
         if (type !== "send") setIncomingRequests(incomingRequests.filter(request => request.login.uuid !== friend.login.uuid))
-
+        console.log(friend)
         if (type === "accept") {
             fetch(URL + "friends/modifyrequest", {
                 method: 'POST',
-                body: JSON.stringify({ action: type }),
+                body: JSON.stringify({
+                    action: type,
+                    sender: friend._id
+                }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -48,11 +51,10 @@ const Friends = () => {
                     openNotification("topLeft", res.message)
                 })
 
-            console.log(type)
         } else if (type === "delete") {
             fetch(URL + "friends/modifyrequest", {
                 method: 'POST',
-                body: JSON.stringify({ action: type }),
+                body: JSON.stringify({ action: type, sender: friend._id }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -62,10 +64,9 @@ const Friends = () => {
             console.log(type)
         } else if (type === "send") {
             // setShowCard(false);
-            console.log("Request gdfsdf")
             fetch(URL + "friends/sendrequest", {
                 method: 'POST',
-                body: JSON.stringify({ handle: friend }),
+                body: JSON.stringify({ searchId: friend._id }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -78,7 +79,7 @@ const Friends = () => {
         setLoaderBool(true);
         fetch(URL + "friends/search", {
             method: 'POST',
-            body: JSON.stringify({ handle: value }),
+            body: JSON.stringify({ searchId: value }),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -151,7 +152,7 @@ const Friends = () => {
                         {
                             searchItem !== '' && showCard && <Card className={styles.card}>
                                 <>
-                                    {searchItem.found === false ? <p>{searchItem.message}</p> :
+                                    {searchItem.success === false ? <p>{searchItem.message}</p> :
                                         <IncomingRequest request={searchItem.profile} type="search" handleRemove={handleRemove} />}
                                 </>
 

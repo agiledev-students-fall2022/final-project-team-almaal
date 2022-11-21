@@ -3,11 +3,17 @@ const axios = require('axios');
 const UsersModel = require('../db/models/UsersModal');
 const router = express.Router()
 
-// const getIncomingRequests = async () => {
-//     const response = await axios.get("https://randomuser.me/api?results=5");
+const getIncomingRequests = async () => {
+    const response = await axios.get("https://randomuser.me/api?results=5");
 
-//     return response.data.results;
-// }
+    return response.data.results;
+}
+
+router.use((req, res, next) => {
+    req.body.id = "637820a5a5376540710ee44f"
+    // console.log("here", req.body.id)
+    next()
+})
 
 // view requests
 router.get('/', async (req, res) => {
@@ -15,10 +21,22 @@ router.get('/', async (req, res) => {
         const doc = await UsersModel.findById(req.body.id).orFail(() => {
             throw "ID not found"
         })
-        res.status(200).send({ success: true, friendRequests: doc.friendRequests })
+
+        const requests = []
+        for (let i = 0; i < doc.friendRequests.length; i++) {
+            let entry = await UsersModel.findById(doc.friendRequests[i]).orFail(() => {
+                throw "Requester Profile not found"
+            })
+
+            requests.push(entry)
+        }
+
+        return res.status(200).send({ success: true, friendRequests: requests })
     } catch (error) {
-        res.status(500).send({ success: false, error })
+        return res.status(500).send({ success: false, error })
     }
+
+    // res.status(200).json({friendRequests: getIncomingRequests()})
 })
 
 // modify incoming requests
@@ -26,7 +44,7 @@ router.post('/modifyrequest', async (req, res) => {
     let message = ""
 
     try {
-        const doc = await UsersModel.findById(req.body.receiver).orFail(() => {
+        const doc = await UsersModel.findById(req.body.id).orFail(() => {
             throw "Friend Request not found"
         })
         const friendRequest = doc.friendRequests.findIndex(sender => sender === req.body.sender)
@@ -38,6 +56,13 @@ router.post('/modifyrequest', async (req, res) => {
             if (req.body.action === "accept") {
                 doc.friends.push(friendId)
                 message = "Friend was successfully added"
+
+                const friendDoc = await UsersModel.findById(req.body.sender).orFail(() => {
+                    throw "Friend ID not found"
+                })
+                friendDoc.friends.push(req.body.id)
+                await friendDoc.save()
+
             } else if (req.body.action === "delete") {
                 message = "Friend request removed"
             }
@@ -45,12 +70,12 @@ router.post('/modifyrequest', async (req, res) => {
             await doc.save()
 
             // add return value of splice
-            res.status(200).json({ success: true, friendId, message })
+            return res.status(200).json({ success: true, friendId, message })
         } else {
             throw "Friend Request Not Found"
         }
     } catch (error) {
-        res.status(500).json({ success: false, error })
+        return res.status(500).json({ success: false, error })
     }
 })
 
@@ -60,10 +85,20 @@ router.get('/friendlist', async (req, res) => {
         const doc = await UsersModel.findById(req.body.id).orFail(() => {
             throw "ID not found"
         })
-        res.status(200).json({ success: true, id: req.body.id, friends: doc.friends })
+
+        const friends = []
+        for (let i = 0; i < doc.friends.length; i++) {
+            let entry = await UsersModel.findById(doc.friends[i]).orFail(() => {
+                throw "Requester Profile not found"
+            })
+
+            friends.push(entry)
+        }
+
+        return res.status(200).json({ success: true, id: req.body.id, friends })
     } catch (error) {
         console.log(error)
-        res.status(500).json({ success: false, error })
+        return res.status(500).json({ success: false, error })
     }
 })
 
@@ -95,14 +130,15 @@ router.post('/deletefriend', async (req, res) => {
 })
 
 // search a profile
-router.get('/search', async (req, res) => {
+router.post('/search', async (req, res) => {
     try {
-        const doc = await UsersModel.findById(req.body.searchId).orFail(() => {
-            throw "ID not found"
+        const doc = await UsersModel.findOne({ "login.username": req.body.searchId }).orFail(() => {
+            throw "Profile Not Found"
         })
-        res.status(200).send({ success: true, profile: doc })
+        res.status(200).send({ success: true, profile: doc, message: "Profile Found" })
+
     } catch (error) {
-        res.status(500).send({ success: false, error })
+        res.status(500).send({ success: false, error, message: "Profile Not Found" })
     }
 })
 
@@ -113,16 +149,20 @@ router.post('/sendrequest', async (req, res) => {
             throw "ID not found"
         })
 
-        if (req.body.id !== undefined && !doc.friendRequests.includes(req.body.id)) {
-            doc.friendRequests.push(req.body.id)
-            await doc.save()
-            res.status(200).send({ success: true, message: "Friend Request sent", friend: req.body.searchId })
+        if (!doc.friendRequests.includes(req.body.id)) {
+            if (!doc.friends.includes(req.body.id)) {
+                doc.friendRequests.push(req.body.id)
+                await doc.save()
+                res.status(200).send({ success: true, message: "Friend Request sent", friend: req.body.searchId })
+            } else {
+                throw "User already in friendlist"
+            }
         } else {
-            throw "Request already sent Or Id not provided"
+            throw "Request already sent"
         }
 
     } catch (error) {
-        res.status(500).send({ success: false, error })
+        res.status(500).send({ success: false, message: error })
     }
 })
 
