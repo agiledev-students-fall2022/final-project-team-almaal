@@ -54,7 +54,7 @@ const menu = (
             <Link to="friends">Friends</Link>
         </Menu.Item>
         <Menu.Item key="4" icon={<ApartmentOutlined />}>
-            <Link to="groups">Groups</Link>
+            <Link to="groups">Feed</Link>
         </Menu.Item>
         <Menu.Item key="5" icon={<ContainerOutlined />}>
             <Link to="news">News</Link>
