@@ -1,3 +1,4 @@
+const { default: InternalPreviewGroup } = require('antd/lib/image/PreviewGroup')
 const mongoose = require('mongoose')
 
 const UsersSchema = new mongoose.Schema({
@@ -14,6 +15,30 @@ const UsersSchema = new mongoose.Schema({
         "last": {
             "type": "String"
         }
+    },
+    "portfolio":{
+        "type": {
+            "stock_code":{
+                "type": "String",
+                "required": "true"
+            },
+            "amount":{
+                "type": "Number",
+                "required": "true"
+            }
+        }
+    },
+    "investment_visibility": {
+        "type": "Boolean",
+        "required": "true"
+    },
+    "profile_visibility":{
+        "type":  "Boolean",
+        "required": "true"
+    },
+    "feeds":{
+        "type":"Array",
+        "required":"true"
     },
     "email": {
         "type": "String"
