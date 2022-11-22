@@ -162,9 +162,9 @@ export default function PortfolioMonitor() {
 
     return (
     
-    // <Space direction="verticle" size="middle" style={{
-    //   display: 'flex',
-    // }}>
+    <Space direction="verticle" size="middle" style={{
+      display: 'flex',
+    }}>
       <div>
         <Table
           scroll={{x: "100vh", y: "60vh"}}
@@ -172,14 +172,14 @@ export default function PortfolioMonitor() {
           dataSource={originData}
           onChange={handleTableChange} />
       </div>
-    //   <div>
-    //     <DemoLine/>
-    //   </div>
-        
+     <div>
+        <DemoLine/>
+     </div>
+      
       
     
 
-    // </Space>
+     </Space>
 
 
     );
