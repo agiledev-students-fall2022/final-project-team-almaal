@@ -390,6 +390,8 @@ const defaultColumns = [
 
       <Form form={form} component={false}>
       <Table
+        size='small'
+        scroll={{x: "50vh"}}
         components={components}
         bordered
         dataSource={data}
