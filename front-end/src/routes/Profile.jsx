@@ -142,7 +142,7 @@ const Profile = () => {
                         <Card style={{ Width: "50%" }} title="Total Friends">{totalFriends}</Card>
                     </Col>
                     <Col md={12} xl={6}>
-                        <Card style={{ Width: "50%" }} title="Total Groups">{totalGroups}</Card>
+                        <Card style={{ Width: "50%" }} title="Total Feeds">{totalGroups}</Card>
                     </Col>
                     <Col md={12} xl={6}>
                         <Card style={{ Width: "50%" }} title="Total Investment">{totalInvestment}</Card>
