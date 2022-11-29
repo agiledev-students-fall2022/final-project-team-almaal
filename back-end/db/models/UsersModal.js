@@ -93,7 +93,23 @@ const UsersSchema = new mongoose.Schema({
         }
     },
     "friends": [],
-    "friendRequests": []
+    "friendRequests": [],
+    "total_profit": {
+        "type": "String",
+        "default": "$0"
+    },
+    "total_invested": {
+        "type": "String",
+        "default": "+0"
+    },
+    "investment_visibility": {
+        "type": "Boolean",
+        "default": "true"
+    },
+    "profile_visibility": {
+        "type": "Boolean",
+        "default": "false"
+    }
 })
 
 const UsersModel = mongoose.model("Users", UsersSchema)

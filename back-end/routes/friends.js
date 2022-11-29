@@ -9,12 +9,6 @@ const getIncomingRequests = async () => {
     return response.data.results;
 }
 
-router.use((req, res, next) => {
-    req.body.id = "637820a5a5376540710ee44f"
-    // console.log("here", req.body.id)
-    next()
-})
-
 // view requests
 router.get('/', async (req, res) => {
     try {
