@@ -169,7 +169,7 @@ export default function PortfolioMonitor() {
 
     return (
     
-    <Space direction="vertical" size="middle" style={{
+    <Space direction="verticle" size="middle" style={{
       display: 'flex',
     }}>
       <div>
@@ -179,14 +179,14 @@ export default function PortfolioMonitor() {
           dataSource={stocks}
           onChange={handleTableChange} />
       </div>
-      <div>
+     <div>
         <DemoLine/>
-      </div>
-        
+     </div>
+      
       
     
 
-    </Space>
+     </Space>
 
 
     );
