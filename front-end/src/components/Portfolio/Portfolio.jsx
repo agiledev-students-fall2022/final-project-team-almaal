@@ -96,7 +96,7 @@ const Portfolio = () => {
         body: JSON.stringify(newData[index]),
     };
   //POST request to the database to add a new stock
-    await fetch(`${process.env.REACT_APP_SERVER_HOSTNAME}/home/`, requestOptions)
+    await fetch(`http://localhost:3001/home/`, requestOptions)
     .then(response=>response.json)
     .then(data=>console.log(data) )         
 

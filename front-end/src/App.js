@@ -16,11 +16,16 @@ import NewsContextProvider from './routes/NewsContext';
 import axios from "axios";
 // import NewsContext from './routes/NewsContext';
 
+
+
 import {
   BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
+
+// require('dotenv').config();
+// console.log(process.env)
 
 function App() {
   return (
