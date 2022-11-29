@@ -3,6 +3,8 @@ import { Input, Table, Divider, Space} from 'antd';
 import './PortfolioMonitor.css';
 import axios from 'axios'
 import DemoLine from './DemoLine'
+// require('dotenv').config({path: 'front-end\.env'})
+
 // import { get } from 'react-scroll/modules/mixins/scroller';
 const originData = [];
 
@@ -75,10 +77,15 @@ export default function PortfolioMonitor() {
         //GET request to the database to fetch the stock which are already in our portfolio
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_SERVER_HOSTNAME}/home/portfolioData`);
+                const response = await axios.get(`http://localhost:3001/home/portfolioData`);
                 //const result = await response.json();
                 //Validates that the database is not empty
                 if (response) {
+                  response.data = response.data.map(res => {
+                    res.key = res.ticker
+                    return res
+                  })
+
                   setStocks(response.data);
                     
                 }
@@ -93,19 +100,19 @@ export default function PortfolioMonitor() {
   }, [setStocks]);
 
  
-  stocks.map((item)=>(
-  // <handleFetch details={item}/>
-  originData.push({
-    key:item.id,
-    ticker: item.ticker,
-    position:item.position,
-    quantity:item.quantity,
-    price:item.price,
-    marketprice:item.marketprice,
-    profitloss:item.profitloss,
-  })
- ));
-  console.log("Hurray: "+originData.map(item=>(item.ticker))+"   ");
+//   stocks.map((item)=>(
+//   // <handleFetch details={item}/>
+//   originData.push({
+//     key:item.id,
+//     ticker: item.ticker,
+//     position:item.position,
+//     quantity:item.quantity,
+//     price:item.price,
+//     marketprice:item.marketprice,
+//     profitloss:item.profitloss,
+//   })
+//  ));
+  // console.log("Hurray: "+originData.map(item=>(item.ticker))+"   ");
 
 
 
@@ -162,24 +169,24 @@ export default function PortfolioMonitor() {
 
     return (
     
-    // <Space direction="verticle" size="middle" style={{
-    //   display: 'flex',
-    // }}>
+    <Space direction="vertical" size="middle" style={{
+      display: 'flex',
+    }}>
       <div>
         <Table
           scroll={{x: "100vh", y: "60vh"}}
           columns={columns}
-          dataSource={originData}
+          dataSource={stocks}
           onChange={handleTableChange} />
       </div>
-    //   <div>
-    //     <DemoLine/>
-    //   </div>
+      <div>
+        <DemoLine/>
+      </div>
         
       
     
 
-    // </Space>
+    </Space>
 
 
     );

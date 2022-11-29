@@ -15,7 +15,7 @@ const session = require('express-session')
 const Posts = require('./db/models/PostsModal')
 
 
-require('dotenv').config({path: './config.env'});
+require('dotenv').config();
 
 mongoose.connect(`${process.env.DB_URL}`).then(connection => console.log('Connected to MongoDB'),
     err => console.log(err));

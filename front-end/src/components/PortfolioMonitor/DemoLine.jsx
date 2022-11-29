@@ -12,8 +12,8 @@ const DemoLine = () => {
     asyncFetch();
   }, []);
 
-  const asyncFetch = async() => {
-    
+  const asyncFetch = async () => {
+
     /*Sprint-1 part*/
     // await fetch('https://my.api.mockaroo.com/chart_data.json?key=8052c770')
     //   .then((response) => response.json())
@@ -21,19 +21,19 @@ const DemoLine = () => {
     //   .catch((error) => {
     //     console.log('fetch data failed', error);
     //   });
-/*Sprint-1 part ends*/
-      
+    /*Sprint-1 part ends*/
+
     try {
-        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOSTNAME}/home/portfolioChartData`);
-        //Validates that the database is not empty
-        if (response) {
-          setData(response.data);
-          }
-      } catch (error) {
-                /*The option how to handle the error is totally up to you. 
-                Ideally, you can send notification to the user */
-                console.log('fetch data for graph failed', error);
-            }
+      const response = await axios.get(`http://localhost:3001/home/portfolioChartData`);
+      //Validates that the database is not empty
+      if (response) {
+        setData(response.data);
+      }
+    } catch (error) {
+      /*The option how to handle the error is totally up to you. 
+      Ideally, you can send notification to the user */
+      console.log('fetch data for graph failed', error);
+    }
   };
   const COLOR_PLATE_10 = [
     '#5B8FF9',

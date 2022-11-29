@@ -34,26 +34,26 @@ const Profile = () => {
 
     const handleUsernameButton = () => {
         setAllowUsernameEdit(~allowUsernameEdit);
-        if(~allowUsernameEdit){
+        if (~allowUsernameEdit) {
             setUsername(document.getElementById('exampleInputEmail1').value)
-            axios.post(URL+"profile/update", {username: username})
+            axios.post(URL + "profile/update", { username: username })
                 .then(() => {
-                    console.log("successfully updated username to "+username)
+                    console.log("successfully updated username to " + username)
                 })
                 .catch(err => {
                     console.log(err);
                 })
         }
-       
+
     }
 
     const handlePasswordButton = () => {
         setAllowPasswordEdit(~allowPasswordEdit);
-        if(~allowPasswordEdit){
+        if (~allowPasswordEdit) {
             setPassword(document.getElementById('exampleInputPassword1').value)
-            axios.post(URL+"profile/update", {password: password})
+            axios.post(URL + "profile/update", { password: password })
                 .then(() => {
-                    console.log("successfully updated username to "+password)
+                    console.log("successfully updated username to " + password)
                 })
                 .catch(err => {
                     console.log(err);
@@ -63,20 +63,20 @@ const Profile = () => {
 
     const handleInvestmentSwitch = () => {
         setInvestmentVisibility(~investmentVisibility);
-        axios.post(URL+"profile/update", {investment_visibility: investmentVisibility})
+        axios.post(URL + "profile/update", { investment_visibility: investmentVisibility })
             .then(() => {
-                console.log("successfully updated investment visibility to "+investmentVisibility)
+                console.log("successfully updated investment visibility to " + investmentVisibility)
             })
             .catch(err => {
                 console.log(err);
-            }) 
+            })
     }
 
     const handleProfileSwitch = () => {
         setProfileVisibility(~profileVisibility);
-        axios.post(URL+"profile/update", {profile_visibility: profileVisibility})
+        axios.post(URL + "profile/update", { profile_visibility: profileVisibility })
             .then(() => {
-                console.log("successfully updated profile visibility to "+profileVisibility)
+                console.log("successfully updated profile visibility to " + profileVisibility)
             })
             .catch(err => {
                 console.log(err);
@@ -84,9 +84,9 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        const getProfile = async() => {
-            const response = await fetch(URL+"profile",{
-                method:"GET"
+        const getProfile = async () => {
+            const response = await fetch(URL + "profile", {
+                method: "GET"
             })
             const data = await response.json();
             console.log(data)
@@ -95,7 +95,7 @@ const Profile = () => {
 
         getProfile();
         console.log(username);
-    },[])
+    }, [])
 
     return (
         <div>
@@ -109,13 +109,13 @@ const Profile = () => {
                     </Space>
                     <Space direction="vertical">
                         <Space className={styles.input}>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled={allowUsernameEdit} placeholder={username}/>
+                            <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled={allowUsernameEdit} placeholder={username} />
                             <Tooltip>
                                 <Button icon={<EditOutlined />} onClick={handleUsernameButton} />
                             </Tooltip>
                         </Space>
                         <Space className={styles.input}>
-                        <input type="password" class="form-control" id="exampleInputPassword1" disabled={allowPasswordEdit} placeholder={password}/>
+                            <input type="password" className="form-control" id="exampleInputPassword1" disabled={allowPasswordEdit} placeholder={password} />
                             <Tooltip>
                                 <Button icon={<EditOutlined />} onClick={handlePasswordButton} />
                             </Tooltip>
