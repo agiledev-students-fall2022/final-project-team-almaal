@@ -34,6 +34,13 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use((req, res, next) => {
+    req.body.id = "637820a5a5376540710ee44f"
+    // console.log("here", req.body.id)
+    next()
+})
+
+
 app.use('/home', home);
 app.use('/groups', groups);
 app.use('/news', news);

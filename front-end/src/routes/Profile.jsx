@@ -12,6 +12,7 @@ const URL = "http://localhost:3001/"
 const Profile = () => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
+    const [picture, setPicture] = useState(null);
     const [investmentVisibility, setInvestmentVisibility] = useState();
     const [profileVisibility, setProfileVisibility] = useState();
     const [totalFriends, setTotalFriends] = useState();
@@ -22,12 +23,13 @@ const Profile = () => {
     const [allowPasswordEdit, setAllowPasswordEdit] = useState(false);
 
     const updateInformation = data => {
-        setUsername(data.username)
-        setPassword(data.password)
+        setUsername(data.login.username)
+        setPassword(data.login.password)
+        setPicture(data.picture.thumbnail)
         setInvestmentVisibility(data.investment_visibility)
         setProfileVisibility(data.profile_visibility)
-        setTotalFriends(data.total_friends)
-        setTotalGroups(data.total_groups)
+        setTotalFriends(data.friends.length)
+        // setTotalGroups(data.total_groups)
         setTotalInvestment(data.total_invested)
         setTotalPl(data.total_profit)
     }
@@ -94,14 +96,13 @@ const Profile = () => {
         }
 
         getProfile();
-        console.log(username);
     }, [])
 
     return (
         <div>
             {/* <Title level={2} className={styles.title}>Your Almaal Profile</Title> */}
             <Space className={styles.container} direction="vertical" size="large" align="center" style={{ display: 'flex' }}>
-                <Avatar className={styles.profilePic} size={96} icon={<UserOutlined />} />
+                <Avatar className={styles.profilePic} size={96} src={picture} icon={<UserOutlined />} />
                 <Space align="center">
                     <Space direction="vertical">
                         <Typography className={styles.inputLabel}>Username</Typography>
@@ -141,9 +142,9 @@ const Profile = () => {
                     <Col md={12} xl={6}>
                         <Card style={{ Width: "50%" }} title="Total Friends">{totalFriends}</Card>
                     </Col>
-                    <Col md={12} xl={6}>
+                    {/* <Col md={12} xl={6}>
                         <Card style={{ Width: "50%" }} title="Total Feeds">{totalGroups}</Card>
-                    </Col>
+                    </Col> */}
                     <Col md={12} xl={6}>
                         <Card style={{ Width: "50%" }} title="Total Investment">{totalInvestment}</Card>
                     </Col>

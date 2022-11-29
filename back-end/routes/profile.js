@@ -16,7 +16,7 @@ var user = {
 
 // define the profile page route
 router.get('/', async (req, res) => {
-    User.find({}, (err, found) => {
+    User.findById(req.body.id, (err, found) => {
         if (!err) {
             return res.status(200).json(found);
         }
