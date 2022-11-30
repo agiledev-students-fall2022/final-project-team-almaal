@@ -3,6 +3,7 @@ const router = express.Router()
 const home = express() // instantiate an Express object
 const path = require("path")
 
+const Portfolio = require('../db/models/PortfolioModal')
 // import some useful middleware
 const multer = require("multer") // middleware to handle HTTP POST requests with file uploads
 const axios = require("axios") // middleware for making requests to APIs
@@ -57,17 +58,21 @@ let storeData=[];
 router.post("/", async(req, res) => {
   // now do something amazing with the data we received from the client
   //console.log(req.body)
-  const data = {
+
+  const data = new Portfolio({
       key:req.body.key,
       ticker: req.body.ticker,
       position: req.body.position,
       quantity: req.body.quantity,
       price: req.body.price,
-  }
-  storeData.push(data)
+  })
+  data.save()
+  .then(result=>{res.json(result)})
+  .catch(err=>console.log(err))
+  //storeData.push(data)
   //console.log(data)
   // ... then send a response of some kind to client
-  res.json(storeData)
+  //res.json(storeData)
   //console.log(storeData)
   //res.send(storeData)
 })

@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3001
 const mongoose = require('mongoose')
+const bodyParser=require('body-parser')
 
 const home = require('./routes/home')
 const friends = require('./routes/friends')
@@ -13,6 +14,7 @@ const login = require('./routes/login')
 const session = require('express-session')
 
 const Posts = require('./db/models/PostsModal')
+const Portfolio = require('./db/models/PortfolioModal')
 
 
 require('dotenv').config();
