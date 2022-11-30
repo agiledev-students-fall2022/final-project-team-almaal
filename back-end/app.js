@@ -17,7 +17,8 @@ const Posts = require('./db/models/PostsModal')
 
 require('dotenv').config();
 
-mongoose.connect(`${process.env.DB_URL}`).then(connection => console.log('Connected to MongoDB'),
+mongoose.connect(`${process.env.DB_URL}`)
+            .then(connection => console.log('Connected to MongoDB'),
     err => console.log(err));
 
 const db = mongoose.connection
