@@ -1,0 +1,39 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+env:
+  DB_URL: "mongodb+srv://team-almaal:team-almaal123@cluster0.euf8pot.mongodb.net/?retryWrites=true&w=majority"
+  FRONTEND_PORT: "3000"
+  BACKEND_PORT: "3001"
+  DB_USER: "team-almaal"
+  DB_PASSWORD: "team-almaal123"
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+    defaults:
+      run:
+        working-directory: ./back-end
+      
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install
+    - run: npm test
