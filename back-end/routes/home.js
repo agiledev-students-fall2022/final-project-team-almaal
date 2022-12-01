@@ -69,10 +69,10 @@ router.post("/", async(req, res) => {
   data.save()
   .then(result=>{res.json(result)})
   .catch(err=>console.log(err))
-  //storeData.push(data)
+  storeData.push(data)
   //console.log(data)
   // ... then send a response of some kind to client
-  //res.json(storeData)
+  res.json(storeData)
   //console.log(storeData)
   //res.send(storeData)
 })
@@ -80,9 +80,10 @@ router.post("/", async(req, res) => {
 
 // receive POST data from the client
 router.get("/", async(req, res) => {
-  // now do something amazing with the data we received from the client
-
-  res.send(storeData)
+  Portfolio.find()
+  .then(result=>{res.sent(result)})
+  .catch(err=>console.log(err))
+  
 })
 
 module.exports = router
