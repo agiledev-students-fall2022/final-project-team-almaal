@@ -38,7 +38,7 @@ router.post('/update', async (req, res) => {
     console.log(req)
     const response = {}
     // if(req.body.username) {
-    //     await User.findByIdAndUpdate(req.body.id, {login.username = req.body.username}, (err,found)=>{
+    //     await User.findByIdAndUpdate(req.body.id, {login.username : req.body.username}, (err,found)=>{
     //         if(err){
     //             console.log("Error occured, " + err)
     //             return res.status(401)
@@ -49,7 +49,7 @@ router.post('/update', async (req, res) => {
     //     })
     // }
     // if(req.body.password){
-    //     await User.findByIdAndUpdate(req.body.id, {login.password = req.body.password}, (err,found)=>{
+    //     await User.findByIdAndUpdate(req.body.id, {login.password : req.body.password}, (err,found)=>{
     //         if(err){
     //             console.log("Error occured, " + err)
     //             return res.status(401)
@@ -61,7 +61,14 @@ router.post('/update', async (req, res) => {
     // }
 
     if(req.body.investment_visibility){
-        await User.findByIdAndUpdate(req.body.id, {investment_visibility : req.body.investment_visibility}
+        try{
+            User.findByIdAndUpdate(req.body.id,{investment_visibility : req.body.investment_visibility})
+            console.log("investment visibility switched to "+req.body.investment_visibility)
+        }catch(err){
+            console.log("Error occured, " + err)
+        }
+
+        // await User.findByIdAndUpdate(req.body.id, {investment_visibility : req.body.investment_visibility}
             // , (err,found)=>{
             // if(err){
             //     console.log("Error occured, " + err)
@@ -71,11 +78,18 @@ router.post('/update', async (req, res) => {
             //     response.investment_visibility = req.body.investment_visibility
             // }
         // }
-        ).catch(err => console.log("Error occured, " + err));
+        // ).catch(err => console.log("Error occured, " + err));
     }
 
     if(req.body.profile_visibility){
-        await User.findByIdAndUpdate(req.body.id, {profile_visibility : req.body.profile_visibility}
+        try{
+            User.findByIdAndUpdate(req.body.id,{profile_visibility : req.body.profile_visibility})
+            console.log("profile visibility switched to "+req.body.profile_visibility)
+        }catch(err){
+            console.log("Error occured, " + err)
+        }
+
+        // await User.findByIdAndUpdate(req.body.id, {profile_visibility : req.body.profile_visibility}
         //     , (err,found)=>{
         //     if(err){
         //         console.log("Error occured, " + err)
@@ -85,7 +99,7 @@ router.post('/update', async (req, res) => {
         //         response.profile_visibility = req.body.profile_visibility
         //     }
         // }
-        ).catch(err => console.log("Error occured, " + err));
+        // ).catch(err => console.log("Error occured, " + err));
     }
 
     return res.status(200).json(response)

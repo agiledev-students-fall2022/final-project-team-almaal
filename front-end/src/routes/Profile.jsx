@@ -13,10 +13,9 @@ const Profile = () => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [picture, setPicture] = useState(null);
-    const [investmentVisibility, setInvestmentVisibility] = useState();
-    const [profileVisibility, setProfileVisibility] = useState();
+    const [investmentVisibility, setInvestmentVisibility] = useState(true);
+    const [profileVisibility, setProfileVisibility] = useState(false);
     const [totalFriends, setTotalFriends] = useState();
-    const [totalGroups, setTotalGroups] = useState();
     const [totalInvestment, setTotalInvestment] = useState();
     const [totalPl, setTotalPl] = useState();
     const [allowUsernameEdit, setAllowUsernameEdit] = useState(false);
@@ -29,14 +28,13 @@ const Profile = () => {
         setInvestmentVisibility(data.investment_visibility)
         setProfileVisibility(data.profile_visibility)
         setTotalFriends(data.friends.length)
-        // setTotalGroups(data.total_groups)
         setTotalInvestment(data.total_invested)
         setTotalPl(data.total_profit)
     }
 
     const handleUsernameButton = () => {
-        setAllowUsernameEdit(~allowUsernameEdit);
-        if (~allowUsernameEdit) {
+        setAllowUsernameEdit(!allowUsernameEdit);
+        if (!allowUsernameEdit) {
             setUsername(document.getElementById('exampleInputEmail1').value)
             axios.post(URL + "profile/update", { username: username })
                 .then(() => {
@@ -50,8 +48,8 @@ const Profile = () => {
     }
 
     const handlePasswordButton = () => {
-        setAllowPasswordEdit(~allowPasswordEdit);
-        if (~allowPasswordEdit) {
+        setAllowPasswordEdit(!allowPasswordEdit);
+        if (!allowPasswordEdit) {
             setPassword(document.getElementById('exampleInputPassword1').value)
             axios.post(URL + "profile/update", { password: password })
                 .then(() => {
@@ -64,7 +62,7 @@ const Profile = () => {
     }
 
     const handleInvestmentSwitch = () => {
-        setInvestmentVisibility(~investmentVisibility);
+        setInvestmentVisibility(!investmentVisibility);
         axios.post(URL + "profile/update", { investment_visibility: investmentVisibility })
             .then(() => {
                 console.log("successfully updated investment visibility to " + investmentVisibility)
@@ -75,7 +73,7 @@ const Profile = () => {
     }
 
     const handleProfileSwitch = () => {
-        setProfileVisibility(~profileVisibility);
+        setProfileVisibility(!profileVisibility);
         axios.post(URL + "profile/update", { profile_visibility: profileVisibility })
             .then(() => {
                 console.log("successfully updated profile visibility to " + profileVisibility)
