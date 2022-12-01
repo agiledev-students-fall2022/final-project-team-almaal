@@ -35,6 +35,7 @@ router.get('/logout', async (req, res) => {
 
 // update profile information
 router.post('/update', async (req, res) => {
+    console.log('checkcheck')
     console.log(req)
     const response = {}
     // if(req.body.username) {

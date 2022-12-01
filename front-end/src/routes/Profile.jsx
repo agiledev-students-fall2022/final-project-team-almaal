@@ -7,7 +7,7 @@ import axios from "axios";
 
 const { Title } = Typography;
 
-const URL = "http://localhost:3001/"
+const URL = "http://localhost:3001/";
 
 const Profile = () => {
     const [username, setUsername] = useState();
@@ -70,6 +70,10 @@ const Profile = () => {
             .catch(err => {
                 console.log(err);
             })
+        // fetch(URL + 'profile/update', {
+        //     method:'POST',
+        //     body: JSON.stringify({investment_visibility: investmentVisibility})
+        // })
     }
 
     const handleProfileSwitch = () => {
