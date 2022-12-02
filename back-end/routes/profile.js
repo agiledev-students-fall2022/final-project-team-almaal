@@ -16,16 +16,23 @@ var user = {
 
 // define the profile page route
 router.get('/', async (req, res) => {
-    User.findById(req.body.id, (err, found) => {
-        if (!err) {
-            return res.status(200).json(found);
+    User.findById(req.body.id, (err,found) => {
+        if(err){
+            throw err
+        }else{
+            return res.status(200).json(found) 
         }
-        // console.log(err);
-        // res.send("Please login first.")
-        // res.status(401).redirect('/login')
-    }).catch(err => console.log("Error occured, " + err));
-    // const response = user
-    // res.status(200).json(response)
+    })
+    // User.findById(req.body.id, (err, found) => {
+    //     if (!err) {
+    //         return res.status(200).json(found);
+    //     }
+    //     // console.log(err);
+    //     // res.send("Please login first.")
+    //     // res.status(401).redirect('/login')
+    // }).catch(err => console.log("Error occured, " + err));
+    // // const response = user
+    // // res.status(200).json(response)
 })
 
 // logout route
@@ -35,35 +42,110 @@ router.get('/logout', async (req, res) => {
 
 // update profile information
 router.post('/update', async (req, res) => {
-    User.find({}, (err, found) => {
-        if (err) {
-            console.log(err);
-            res.send("Please login first.")
-            return res.status(401).redirect('/login')
+    console.log(req)
+    const response = {}
+    if(req.body.username) {
+        
+        // await User.findByIdAndUpdate(req.body.id, {login.username : req.body.username}, (err,found)=>{
+        //     if(err){
+        //         console.log("Error occured, " + err)
+        //         return res.status(401)
+        //     }else{
+        //         console.log("Successfully updated username to "+req.body.username)
+        //         response.username = req.body.username
+        //     }
+        // })
+    }
+    if(req.body.password){
+        // await User.findByIdAndUpdate(req.body.id, {login.password : req.body.password}, (err,found)=>{
+        //     if(err){
+        //         console.log("Error occured, " + err)
+        //         return res.status(401)
+        //     }else{
+        //         console.log("Successfully updated password to "+req.body.password)
+        //         response.password = req.body.password
+        //     }
+        // })
+    }
+
+    if(req.body.investment_visibility){
+        try{
+            await User.findByIdAndUpdate(req.body.id,{investment_visibility : req.body.investment_visibility})
+            response.investment_visibility = req.body.investment_visibility
+            console.log("investment visibility switched to "+req.body.investment_visibility)
+        }catch(err){
+            console.log("Error occured, " + err)
         }
 
-    }).catch(err => console.log("Error occured, " + err));
+        
 
-    const response = {}
+        // await User.findByIdAndUpdate(req.body.id, {investment_visibility : req.body.investment_visibility}
+            // , (err,found)=>{
+            // if(err){
+            //     console.log("Error occured, " + err)
+            //     return res.status(401)
+            // }else{
+            //     console.log("Successfully updated investment_visibility to "+req.body.investment_visibility)
+            //     response.investment_visibility = req.body.investment_visibility
+            // }
+        // }
+        // ).catch(err => console.log("Error occured, " + err));
+    }
 
-    if (req.body.username) {
-        found.username = req.body.username
-        response.username = req.body.username
+    if(req.body.profile_visibility){
+        try{
+            await User.findByIdAndUpdate(req.body.id,{profile_visibility : req.body.profile_visibility})
+            response.profile_visibility = req.body.profile_visibility
+            console.log("profile visibility switched to "+req.body.profile_visibility)
+        }catch(err){
+            console.log("Error occured, " + err)
+        }
+
+        // await User.findByIdAndUpdate(req.body.id, {profile_visibility : req.body.profile_visibility}
+        //     , (err,found)=>{
+        //     if(err){
+        //         console.log("Error occured, " + err)
+        //         return res.status(401)
+        //     }else{
+        //         console.log("Successfully updated profile_visibility to "+req.body.profile_visibility)
+        //         response.profile_visibility = req.body.profile_visibility
+        //     }
+        // }
+        // ).catch(err => console.log("Error occured, " + err));
     }
-    if (req.body.password) {
-        found.password = req.body.password
-        response.password = req.body.password
-    }
-    if (req.body.investment_visibility) {
-        found.investment_visibility = req.body.investment_visibility
-        response.investment_visibility = req.body.investment_visibility
-    }
-    if (req.body.profile_visibility) {
-        found.profile_visibility = req.body.profile_visibility
-        response.profile_visibility = req.body.profile_visibility
-    }
-    await found.save();
-    res.status(200).json(response)
+    
+    return res.status(200).json(response)
+    
+    // await User.findByIdAndUpdate(req.body.id, (err, found) => {
+    //     if (!err) {
+    //         const response = {}
+            
+    //         if (req.body.username) {
+    //             found.login.username = req.body.username
+    //             response.username = req.body.username
+    //         }
+    //         if (req.body.password) {
+    //             found.login.password = req.body.password
+    //             response.password = req.body.password
+    //         }
+    //         if (req.body.investment_visibility) {
+    //             found.investment_visibility = req.body.investment_visibility
+    //             response.investment_visibility = req.body.investment_visibility
+    //         }
+    //         if (req.body.profile_visibility) {
+    //             found.profile_visibility = req.body.profile_visibility
+    //             response.profile_visibility = req.body.profile_visibility
+    //         }
+
+    //         found.save();
+    //         res.status(200).json(response)
+
+    //         return res.status(401).redirect('/login')
+    //     }
+
+    // }).catch(err => console.log("Error occured, " + err));
+
+    
 })
 
 module.exports = router
