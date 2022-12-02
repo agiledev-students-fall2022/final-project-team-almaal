@@ -190,7 +190,7 @@ export default function PortfolioMonitor() {
 
 
     );
-}kkkkkkkkk
+}
 
 
 

@@ -11,15 +11,7 @@ const { Option } = Select;
 
 
 const originData = [];
-for (let i = 0; i < 2; i++) {
-  originData.push({
-    key: i.toString(),
-    ticker: 'Apple Inc',
-    position: 'BUY',
-    quantity: 10,
-    price: i*150,
-  });
-}
+
 const EditableCell = ({
   editing,
   dataIndex,
@@ -62,7 +54,7 @@ const Portfolio = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState(originData);
   const [loading, setLoading] = useState(false);
-  const [count, setCount] = useState(2);
+  const [count, setCount] = useState(0); //initially count is 0
   const [editingKey, setEditingKey] = useState('');
   const isEditing = (record) => record.key === editingKey;
   const edit = (record) => {
@@ -89,7 +81,7 @@ const Portfolio = () => {
           ...item,
           ...row,
         });
-      console.log(newData[index]);
+      //console.log(newData[index]);
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -98,9 +90,7 @@ const Portfolio = () => {
   //POST request to the database to add a new stock
     await fetch(`http://localhost:3001/home/`, requestOptions)
     .then(response=>response.json)
-    .then(data=>console.log(data) )         
-
-        
+    .then(data=>console.log(data) )                 
         setData(newData);
         setEditingKey('');
       } else {
@@ -141,7 +131,7 @@ const Portfolio = () => {
     const newData = data.filter((item) => item.key !== key);
     setData(newData);
   };
-//default columns at the beg of the form, not to be updated 
+//default columns at the beginning of the form, not to be updated 
 const defaultColumns = [
   {
     title: 'Ticker',

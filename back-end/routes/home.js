@@ -70,7 +70,7 @@ router.post("/", async(req, res) => {
   .then(result=>{res.json(result)})
   .catch(err=>console.log(err))
   storeData.push(data)
-  //console.log(data)
+  console.log(data)
   // ... then send a response of some kind to client
   res.json(storeData)
   //console.log(storeData)
@@ -78,13 +78,13 @@ router.post("/", async(req, res) => {
 })
 
 
-// receive POST data from the client
-router.get("/", async(req, res) => {
-  Portfolio.find()
-  .then(result=>{res.sent(result)})
-  .catch(err=>console.log(err))
+// // receive POST data from the client
+// router.get("/", async(req, res) => {
+//   Portfolio.find()
+//   .then(result=>{res.sent(result)})
+//   .catch(err=>console.log(err))
   
-})
+// })
 
 module.exports = router
 //module.exports = home
