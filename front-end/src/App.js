@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -10,32 +8,49 @@ import Friends from './routes/Friends';
 import Groups from './routes/Feed';
 import Profile from './routes/Profile';
 import Login from './routes/Login';
+import Register from './routes/Register';
 import CreateAccount from './routes/CreateAccount';
 // import News from './routes/News';
 import NewsContextProvider from './routes/NewsContext';
 import axios from 'axios';
+import setAuthToken from './utils/setAuthToken';
+
+import { Provider } from 'react-redux';
+import store from './store';
+import { loadUser } from './action/auth';
 // import NewsContext from './routes/NewsContext';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Fragment, useEffect } from 'react';
 
 // require('dotenv').config();
 // console.log(process.env)
 
+if (localStorage.token) {
+    setAuthToken(localStorage.token);
+}
+
 function App() {
+    useEffect(() => {
+        store.dispatch(loadUser());
+    }, []);
     return (
         <div className='App'>
-            <BrowserRouter>
-                <Navbar />
-                <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/friends' element={<Friends />} />
-                    <Route path='/groups' element={<Groups />} />
-                    <Route path='/profile' element={<Profile />} />
-                    <Route path='/login' element={<Login />} />
-                </Routes>
-            </BrowserRouter>
-            <div className='spacer' style={{ height: '3rem' }}></div>
-            <Footer />
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Navbar />
+                    <Routes>
+                        <Route path='/' element={<Home />} />
+                        <Route path='/friends' element={<Friends />} />
+                        <Route path='/groups' element={<Groups />} />
+                        <Route path='/profile' element={<Profile />} />
+                        <Route path='/login' element={<Login />} />
+                        <Route path='/register' element={<Register />} />
+                    </Routes>
+                </BrowserRouter>
+                <div className='spacer' style={{ height: '3rem' }}></div>
+                <Footer />
+            </Provider>
         </div>
     );
 }
