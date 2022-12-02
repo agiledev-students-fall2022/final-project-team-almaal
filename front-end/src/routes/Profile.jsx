@@ -53,7 +53,7 @@ const Profile = () => {
             setPassword(document.getElementById('exampleInputPassword1').value)
             axios.post(URL + "profile/update", { password: password })
                 .then(() => {
-                    console.log("successfully updated username to " + password)
+                    console.log("successfully updated password to " + password)
                 })
                 .catch(err => {
                     console.log(err);
