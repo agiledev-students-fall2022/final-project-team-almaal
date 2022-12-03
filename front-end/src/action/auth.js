@@ -12,6 +12,7 @@ import {
 
 import setAuthToken from '../utils/setAuthToken';
 
+axios.defaults.baseURL = 'http://127.0.0.1:8000/';
 // Load User
 
 export const loadUser = () => async (dispatch) => {
@@ -54,7 +55,6 @@ export const register =
             dispatch(loadUser());
         } catch (err) {
             const errors = err.response.data.errors;
-
             if (errors) {
                 errors.forEach((error) =>
                     dispatch(setAlert(error.msg, 'danger'))
@@ -97,6 +97,6 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 // Logout/clear profile
-export const logout = () => dispatch =>{
-    dispatch({type: LOGOUT});
-}
+export const logout = () => (dispatch) => {
+    dispatch({ type: LOGOUT });
+};

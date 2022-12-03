@@ -1,69 +1,78 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
-import { Space, Button, Input, Avatar, Typography } from 'antd'
-import { RadarChartOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons'
-import styles from './Login.module.css';
-import axios from "axios";
+import React, { Fragment, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../action/auth';
 
-const { Title } = Typography;
+const Login = ({ login, isAuthenticated }) => {
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
+    const { email, password } = formData;
+    const onChange = (e) =>
+        setFormData({ ...formData, [e.target.name]: e.target.value });
 
-function login(e) {
-    e.preventDefault();
-    let request = {
-        email: document.getElementById('exampleInputEmail1').value,
-        password: document.getElementById('exampleInputPassword1').value
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        login(email, password);
+    };
+
+    // redirect if logged in
+    if (isAuthenticated) {
+        return <Navigate to='/dashboard'></Navigate>;
     }
-    axios.post("http://localhost:3001/login", request)
-        .then(resp => {
-            alert(resp.data.message);
-        })
-        .catch(err => {
-            console.log(err);
-        })
-}
-
-const Login = () => {
     return (
-        <div>
-            {/* <Title level={2} className={styles.title}>Log In With Almaal Account</Title> */}
-            <Space direction="vertical" align="center" className={styles.container}>
-                <Avatar size="large" icon={<RadarChartOutlined />}></Avatar>
-                <Button shape="round" icon={<GoogleOutlined />} block>
-                    Continue with Google
-                </Button>
-                <Button shape="round" icon={<FacebookOutlined />} block >
-                    Continue with Facebook
-                </Button>
-                <Title Level={5} className={styles.sectionTitle}>OR</Title>
-                {/* <Input placeholder="Email" size="large" block />
-                <Input placeholder="Password" size="large" />
-                <Button type="primary" shape="round">
-                    <Link to="/">Log In</Link>
-                </Button>
-                <Button type="link">
-                    <Link to="/createaccount">No account yet? Create one!</Link>
-                </Button> */}
-                {/* </Space> */}
-                <form onSubmit={(e) => login(e)}>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        <Fragment>
+            <section className='container'>
+                <h1 className='large text-primary'>Sign In</h1>
+                <p className='lead'>
+                    <i className='fas fa-user'></i> Sign Into Your Account
+                </p>
+                <form className='form' onSubmit={(e) => onSubmit(e)}>
+                    <div className='form-group'>
+                        <input
+                            type='email'
+                            placeholder='Email Address'
+                            name='email'
+                            value={email}
+                            onChange={(e) => onChange(e)}
+                            required
+                        />
                     </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" />
+                    <div className='form-group'>
+                        <input
+                            type='password'
+                            placeholder='Password'
+                            name='password'
+                            value={password}
+                            onChange={(e) => onChange(e)}
+                            required
+                            minLength='6'
+                        />
                     </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">login!</button>
+                    <input
+                        type='submit'
+                        className='btn btn-primary'
+                        value='Login'
+                    />
                 </form>
-            </Space>
-        </div>
+                <p className='my-1'>
+                    Don't have an account? <Link to='/Register'>Sign Up</Link>
+                </p>
+            </section>
+        </Fragment>
     );
-}
+};
 
+Login.propTypes = {
+    login: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+};
 
-export default Login
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);

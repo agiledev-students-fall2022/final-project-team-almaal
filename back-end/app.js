@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3001;
+const port = 8000;
 const mongoose = require('mongoose');
 
 const home = require('./routes/home');
@@ -22,6 +22,10 @@ mongoose.connect(`${process.env.DB_URL}`).then(
 );
 
 const db = mongoose.connection;
+
+// user database
+const connectDB = require('./config/db');
+connectDB();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.text());
@@ -53,14 +57,16 @@ app.use('/news', news);
 app.use('/friends', friends);
 app.use('/profile', profile);
 app.use('/login', login);
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/auth', require('./routes/api/auth'));
 
 app.get('/', (req, res) => {
     console.log('hello world');
     res.send('Hello World!!!');
 });
 
-// app.listen(port, () => {
-//     console.log(`App listening on port ${port}`)
-// })
+module.exports = app.listen(port, () => {
+    console.log(`App listening on port ${port}`);
+});
 
-module.exports = app.listen(port);
+// module.exports = app.listen(port);
