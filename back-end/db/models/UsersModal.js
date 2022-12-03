@@ -27,6 +27,7 @@ const UsersSchema = new mongoose.Schema({
             }
         }
     },
+     "investment":[],
     "investment_visibility": {
         "type": "Boolean",
         "required": "true"

@@ -4,6 +4,7 @@ const home = express() // instantiate an Express object
 const path = require("path")
 
 const Portfolio = require('../db/models/PortfolioModal')
+const UsersModel = require('../db/models/UsersModal');
 // import some useful middleware
 const multer = require("multer") // middleware to handle HTTP POST requests with file uploads
 const axios = require("axios") // middleware for making requests to APIs

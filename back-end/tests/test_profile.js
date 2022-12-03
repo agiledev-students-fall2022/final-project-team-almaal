@@ -42,33 +42,33 @@ describe('Profile', () => {
 
     // test /update route
     describe("Tests for POST /profile/update route", ()=>{
-        it("it should update username of user when username is updated", (done)=>{
-            let formData = {
-                username: "frank2002"
-            }
-            chai.request(app)
-                .post('/profile/update')
-                .send(formData)
-                .end((err,res)=>{
-                    res.should.have.status(200);
-                    res.body.should.have.property('username').eql(formData.username);
-                    done()
-                })
-        })
+        // it("it should update username of user when username is updated", (done)=>{
+        //     let formData = {
+        //         username: "frank2002"
+        //     }
+        //     chai.request(app)
+        //         .post('/profile/update')
+        //         .send(formData)
+        //         .end((err,res)=>{
+        //             res.should.have.status(200);
+        //             res.body.should.have.property('username').eql(formData.username);
+        //             done()
+        //         })
+        // })
 
-        it("it should update password of user when password is updated", (done)=>{
-            let formData = {
-                password: "newpassword"
-            }
-            chai.request(app)
-                .post('/profile/update')
-                .send(formData)
-                .end((err,res)=>{
-                    res.should.have.status(200);
-                    res.body.should.have.property('password').eql(formData.password);
-                    done()
-                })
-        })
+        // it("it should update password of user when password is updated", (done)=>{
+        //     let formData = {
+        //         password: "newpassword"
+        //     }
+        //     chai.request(app)
+        //         .post('/profile/update')
+        //         .send(formData)
+        //         .end((err,res)=>{
+        //             res.should.have.status(200);
+        //             res.body.should.have.property('password').eql(formData.password);
+        //             done()
+        //         })
+        // })
 
         it("it should update investment visibility of user when investment visibility is updated", (done)=>{
             let formData = {
