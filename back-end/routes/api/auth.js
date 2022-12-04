@@ -15,7 +15,7 @@ const { JsonWebTokenError } = require('jsonwebtoken');
 // @access  Public
 router.get('/', auth, async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select('-password');
+        const user = await User.findById(req.user.id);
         res.json(user);
     } catch (err) {
         console.error(err.message);
@@ -42,6 +42,9 @@ router.post(
         const { email, password } = req.body;
         try {
             let user = await User.findOne({ email });
+            const id = user.id
+
+            user = user.toObject()
 
             if (!user) {
                 return res
@@ -51,7 +54,8 @@ router.post(
 
             // make sure the password is correct
 
-            const isMatch = await bcrypt.compare(password, user.password);
+            // console.log(user)
+            const isMatch = await bcrypt.compare(password, user.login.password);
 
             if (!isMatch) {
                 return res
@@ -61,22 +65,21 @@ router.post(
 
             const payload = {
                 user: {
-                    id: user.id,
+                    id,
                 },
             };
 
+            console.log(payload)
+
             jwt.sign(
                 payload,
-                config.get('jwtSecret'),
+                process.env.JWT_SECRET,
                 { expiresIn: 360000 },
                 (err, token) => {
                     if (err) throw err;
                     res.json({ token });
                 }
             );
-            // res.send('user registered');
-            // return jsonwebtoken
-            console.log(req.body);
         } catch (err) {
             console.error(err.message);
             res.status(500).send('Server error');
