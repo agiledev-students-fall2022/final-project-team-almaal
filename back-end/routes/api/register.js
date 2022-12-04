@@ -50,7 +50,7 @@ router.post(
                 name,
                 email,
                 picture: {
-                    medium: avatar
+                    medium: "https:" + avatar
                 },
             });
             // encrypt password
