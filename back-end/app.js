@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 8000;
+const port = 3001;
 const mongoose = require('mongoose');
 
 const home = require('./routes/home');
@@ -9,7 +9,7 @@ const groups = require('./routes/groups');
 const news = require('./routes/news');
 const profile = require('./routes/profile');
 const axios = require('axios');
-const login = require('./routes/login');
+const register = require('./routes/api/register');
 const session = require('express-session');
 
 const Posts = require('./db/models/PostsModal');
@@ -24,8 +24,8 @@ mongoose.connect(`${process.env.DB_URL}`).then(
 const db = mongoose.connection;
 
 // user database
-const connectDB = require('./config/db');
-connectDB();
+// const connectDB = require('./config/db');
+// connectDB();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.text());
@@ -57,8 +57,8 @@ app.use('/groups', groups);
 app.use('/news', news);
 app.use('/friends', friends);
 app.use('/profile', profile);
-app.use('/login', login);
-app.use('/api/users', require('./routes/api/users'));
+// app.use('/login', login);
+app.use('/register', register);
 app.use('/api/auth', require('./routes/api/auth'));
 
 app.get('/', (req, res) => {

@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 
-const User = require('../../models/User');
+const User = require('../../db/models/UsersModal');
 const { JsonWebTokenError } = require('jsonwebtoken');
 
 // @route   POST api/users
@@ -49,13 +49,15 @@ router.post(
             user = new User({
                 name,
                 email,
-                avatar,
-                password,
+                picture: {
+                    medium: avatar
+                },
             });
             // encrypt password
             const salt = await bcrypt.genSalt(10);
 
-            user.password = await bcrypt.hash(password, salt);
+            user.login.username = email
+            user.login.password = await bcrypt.hash(password, salt);
 
             await user.save();
 
@@ -67,7 +69,7 @@ router.post(
 
             jwt.sign(
                 payload,
-                config.get('jwtSecret'),
+                process.env.JWT_SECRET,
                 { expiresIn: 360000 },
                 (err, token) => {
                     if (err) throw err;

@@ -5,15 +5,8 @@ const UsersSchema = new mongoose.Schema({
         type: 'String',
     },
     name: {
-        title: {
-            type: 'String',
-        },
-        first: {
-            type: 'String',
-        },
-        last: {
-            type: 'String',
-        },
+        type: 'String',
+        required: 'true'
     },
     portfolio: {
         type: {
@@ -53,15 +46,6 @@ const UsersSchema = new mongoose.Schema({
             type: 'String',
         },
         salt: {
-            type: 'String',
-        },
-        md5: {
-            type: 'String',
-        },
-        sha1: {
-            type: 'String',
-        },
-        sha256: {
             type: 'String',
         },
     },
