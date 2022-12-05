@@ -68,7 +68,7 @@ app.use('/news', news);
 app.use('/friends', friends);
 app.use('/profile', profile);
 // app.use('/login', login);
-app.use('/register', register);
+app.use('/api/register', register);
 app.use('/api/auth', require('./routes/api/auth'));
 
 app.get('/', (req, res) => {

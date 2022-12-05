@@ -56,7 +56,7 @@ const Login = ({setToken, login}) => {
                     />
                 </form>
                 <p className='my-1'>
-                    Don't have an account? <Link to='/Register'>Sign Up</Link>
+                    Don't have an account? <Link to='/register'>Sign Up</Link>
                 </p>
             </section>
         </Fragment>

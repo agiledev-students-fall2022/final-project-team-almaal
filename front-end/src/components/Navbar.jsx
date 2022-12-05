@@ -35,36 +35,37 @@ const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
 const { Paragraph } = Typography;
 
-
-const menu = (
-    <Menu
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        // mode="inline"
-        theme="dark"
-
-    >
-        <Menu.Item key="1" icon={<DesktopOutlined />}>
-            <Link to="/">Home</Link>
-        </Menu.Item>
-        <Menu.Item key="2" icon={<UserOutlined />}>
-            <Link to="profile">Profile</Link>
-        </Menu.Item>
-        <Menu.Item key="3" icon={<TeamOutlined />}>
-            <Link to="friends">Friends</Link>
-        </Menu.Item>
-        <Menu.Item key="4" icon={<ApartmentOutlined />}>
-            <Link to="groups">Feed</Link>
-        </Menu.Item>
-        <Menu.Item key="5" icon={<ContainerOutlined />}>
-            <Link to="news">News</Link>
-        </Menu.Item>
-        <Menu.Item key="6" icon={<RadarChartOutlined />}>
-            <Link to="login">Logout</Link>
-        </Menu.Item>
-    </Menu>
-
-);
+const nav = (setToken) =>{
+    const menu = (
+        <Menu
+            defaultSelectedKeys={['1']}
+            defaultOpenKeys={['sub1']}
+            // mode="inline"
+            theme="dark"
+            onClick={()=>{console.log("key clicked")}}
+        >
+            <Menu.Item key="1" icon={<DesktopOutlined />}>
+                <Link to="/">Home</Link>
+            </Menu.Item>
+            <Menu.Item key="2" icon={<UserOutlined />}>
+                <Link to="profile">Profile</Link>
+            </Menu.Item>
+            <Menu.Item key="3" icon={<TeamOutlined />}>
+                <Link to="friends">Friends</Link>
+            </Menu.Item>
+            <Menu.Item key="4" icon={<ApartmentOutlined />}>
+                <Link to="groups">Feed</Link>
+            </Menu.Item>
+            <Menu.Item key="5" icon={<ContainerOutlined />}>
+                <Link to="news">News</Link>
+            </Menu.Item>
+            <Menu.Item key="6" icon={<RadarChartOutlined />}>
+                <Link to="" onClick={()=>{localStorage.clear(); sessionStorage.clear(); setToken(null)}}>Logout</Link>
+            </Menu.Item>
+        </Menu>  
+    );
+    return menu;
+}
 
 const login_menu = (
     <Menu
@@ -90,7 +91,7 @@ const login_menu = (
  * @returns The contents of this component, in JSX form.
  */
 
-const Navbar = ({flag}) => {
+const Navbar = ({setToken, flag}) => {
 
     const [collapsed, setCollapsed] = useState(false);
     const toggleCollapsed = () => {
@@ -139,8 +140,8 @@ const Navbar = ({flag}) => {
                 className="site-page-header"
                 // tags={<Tag color="blue">Running</Tag>}
                 extra={notlogin && [
-                    <Dropdown key="1" overlay={menu} trigger={['click']} placement="bottomRight">
-                        <a onClick={(e) => e.preventDefault()}>
+                    <Dropdown key="1" overlay={nav(setToken)} trigger={['click']} placement="bottomRight">
+                        <a onClick={(e) => {e.preventDefault(); console.log("Clicked")}}>
                             <Space className={styles.button}>
                                 <Button
                                     type="primary"

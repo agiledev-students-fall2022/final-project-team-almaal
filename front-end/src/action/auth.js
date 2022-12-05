@@ -47,7 +47,7 @@ export const register =
             const body = JSON.stringify({ name, email, password });
 
             try {
-                const res = await axios.post('/api/users', body, config);
+                const res = await axios.post('/api/register', body, config);
 
                 dispatch({
                     type: REGISTER_SUCCESS,
@@ -69,7 +69,6 @@ export const register =
 
 // login User
 export const login = (email, password, setToken) => async (dispatch) => {
-    console.log("MUJI");
     const config = {
         headers: {
             'Content-Type': 'application/json',

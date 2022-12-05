@@ -2,8 +2,15 @@ import React, { useState } from 'react'
 import './MessageSender.css'
 import {Avatar} from "@material-ui/core"
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-
+import axios from 'axios';
 const URL = "http://localhost:3001/";
+
+let headers = {}
+if (localStorage.token) {
+    headers = {
+        'x-auth-token': localStorage.token
+    }
+}
 
 function MessageSender({session_user, callback}) {
     const [input, setInput] = useState('');
@@ -22,15 +29,21 @@ function MessageSender({session_user, callback}) {
             formData.append('post_text', input);
         }
 
-        fetch(URL+'groups/feedpost', {
-            method: 'POST',
-            body: formData
-        })
+        axios.post(URL+'groups/feedpost', formData, {
+            headers: { "Content-Type": "multipart/form-data" }
+        }).then(
+            console.log("REQ SENT"),
+            setImage(null),
+            setInput(""),
+            callback(false)
+        )
+        // fetch(URL+'groups/feedpost', {
+        //     method: 'POST',
+        //     body: formData,
+        //     headers: headers
+        // })
       }
       //db stuff
-      setImage(null);
-      setInput("");
-      callback(false);
     };
 
     const uploadHandler = (event) => {

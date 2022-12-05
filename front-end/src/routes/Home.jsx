@@ -6,6 +6,11 @@ import { Col, Row, Space, Button } from 'antd';
 import './Home.css'
 import Portfolio from '../components/Portfolio/Portfolio';
 import PortfolioMonitor from '../components/PortfolioMonitor/PortfolioMonitor';
+import setAuthToken from '../utils/setAuthToken';
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const Home = () => {
   const [letterClass, setLetterClass] = useState('text-animate')
