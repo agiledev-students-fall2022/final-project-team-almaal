@@ -23,4 +23,5 @@ jobs:
     - name: Run npm test in back-end directory
       run: |
         echo "Running tests"
+        pwd
         npm test
