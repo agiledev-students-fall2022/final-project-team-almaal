@@ -10,6 +10,7 @@ const multer = require("multer") // middleware to handle HTTP POST requests with
 const axios = require("axios") // middleware for making requests to APIs
 require("dotenv").config({ silent: true }) // load environmental variables from a hidden file named .env
 const morgan = require("morgan") // middleware for nice logging of incoming HTTP requests
+const auth = require('../middleware/auth')
 
 /**
  * Typically, all middlewares would be included before routes
@@ -30,7 +31,7 @@ router.use("/static", express.static("public"))
 
 
 // using async/await in this route to show another way of dealing with asynchronous requests to an external API or database
-router.get("/portfolioData", (req, res, next) => {
+router.get("/portfolioData", auth, (req, res, next) => {
     axios
         .get("https://my.api.mockaroo.com/stock_data.json?key=8052c770")
         .then(apiResponse => apiResponse.data) // pass data along directly to client
@@ -40,7 +41,7 @@ router.get("/portfolioData", (req, res, next) => {
 })
 
 // using async/await in this route to show another way of dealing with asynchronous requests to an external API or database
-router.get("/portfolioChartData", (req, res, next) => {
+router.get("/portfolioChartData", auth, (req, res, next) => {
     axios
         .get("https://my.api.mockaroo.com/chart_data.json?key=8052c770")
         .then(apiChartResponse => apiChartResponse.data) // pass data along directly to client
@@ -49,14 +50,14 @@ router.get("/portfolioChartData", (req, res, next) => {
     
 })
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
     res.send('Profile page')
 })
 
 
 let storeData=[];
 // receive POST data from the client
-router.post("/", async(req, res) => {
+router.post("/", auth, async(req, res) => {
   // now do something amazing with the data we received from the client
   //console.log(req.body)
 
@@ -79,13 +80,12 @@ router.post("/", async(req, res) => {
 })
 
 
-// // receive POST data from the client
-// router.get("/", async(req, res) => {
-//   Portfolio.find()
-//   .then(result=>{res.sent(result)})
-//   .catch(err=>console.log(err))
-  
-// })
+// receive POST data from the client
+router.get("/", auth, async(req, res) => {
+  // now do something amazing with the data we received from the client
+
+  res.send(storeData)
+})
 
 module.exports = router
 //module.exports = home

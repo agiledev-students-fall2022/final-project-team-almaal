@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const fs = require('fs');
 const path = require('path');
 // define the home page route
-
+const auth = require('../middleware/auth')
 const Posts = require('../db/models/PostsModal')
 
 let data = {feed : [{
@@ -59,7 +59,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage});
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
     Posts.find({}).sort({timestamp: -1}).exec((err, obj)=>{
         if(!err){
             res.status(200).json({session_user: session, feed: obj});
@@ -74,7 +74,7 @@ router.get('/', (req, res) => {
     //res.status(200).json({feed: [temp_data]});
 })
 
-router.post("/feedpost", upload.single('post_img'), (req, res) => {
+router.post("/feedpost", auth, upload.single('post_img'), (req, res) => {
     console.log(req.query, req.body);
     setTimeout(()=>{
         const temp_data = new Posts(
@@ -118,7 +118,7 @@ router.post("/feedpost", upload.single('post_img'), (req, res) => {
 
 })
 
-router.post("/postcomment", (req, res) => {
+router.post("/postcomment", auth, (req, res) => {
     setTimeout(()=>{
         const temp = JSON.parse(req.body);
         const comment_data = {uid: session.user_id, username: session.username, comment: temp.user_comment, profilePic: session.user_pp}
@@ -142,7 +142,7 @@ router.post("/postcomment", (req, res) => {
     }, 0000);
 })
 
-router.post("/postlike", (req, res)=>{
+router.post("/postlike", auth, (req, res)=>{
     const temp = JSON.parse(req.body);
 
     if(temp.like){
@@ -168,7 +168,7 @@ router.post("/postlike", (req, res)=>{
     // return res.status(200).json({result:true, message:'like received'});
 })
 
-router.post('/deletepost', (req, res)=>{
+router.post('/deletepost', auth, (req, res)=>{
     const temp = JSON.parse(req.body);
 
     Posts.deleteOne({_id: temp.post_id}).then(

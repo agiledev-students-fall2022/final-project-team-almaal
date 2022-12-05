@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const User = require('../db/models/UsersModal')
+const auth = require('../middleware/auth')
 
 var user = {
     username: "@frankwu2002",
@@ -15,7 +16,7 @@ var user = {
 };
 
 // define the profile page route
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     User.findById(req.body.id, (err,found) => {
         if(err){
             throw err
@@ -26,12 +27,12 @@ router.get('/', async (req, res) => {
 })
 
 // logout route
-router.get('/logout', async (req, res) => {
+router.get('/logout', auth, async (req, res) => {
     res.status(200).redirect('/login')
 })
 
 // update profile information
-router.post('/update', async (req, res) => {
+router.post('/update', auth, async (req, res) => {
     console.log(req)
     const response = {}
     if(req.body.username) {

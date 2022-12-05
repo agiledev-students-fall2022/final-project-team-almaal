@@ -66,13 +66,31 @@ const menu = (
 
 );
 
+const login_menu = (
+    <Menu
+        defaultSelectedKeys={['1']}
+        defaultOpenKeys={['sub1']}
+        // mode="inline"
+        theme="dark"
+
+    >
+        <Menu.Item key="1" icon={<DesktopOutlined />}>
+            <Link to="/">Login</Link>
+        </Menu.Item>
+        <Menu.Item key="2" icon={<RadarChartOutlined />}>
+            <Link to="register">Register</Link>
+        </Menu.Item>
+    </Menu>
+
+);
+
 /**
  * A React component that is used for the navigation bar displayed at the top of every page of the site.
  * @param {*} param0 an object holding any props passed to this component from its parent component
  * @returns The contents of this component, in JSX form.
  */
 
-const Navbar = () => {
+const Navbar = ({flag}) => {
 
     const [collapsed, setCollapsed] = useState(false);
     const toggleCollapsed = () => {
@@ -81,6 +99,39 @@ const Navbar = () => {
     const location = useLocation();
     const notlogin = location.pathname !== "/login" && location.pathname !== '/createaccount';
 
+    if(flag){
+        return(
+        
+            <div className={styles.container}>
+                <PageHeader
+                    title="Almaal"  //how to get page name here?
+                    className="site-page-header"
+                    // tags={<Tag color="blue">Running</Tag>}
+                    extra={notlogin && [
+                        <Dropdown key="1" overlay={login_menu} trigger={['click']} placement="bottomRight">
+                            <a onClick={(e) => e.preventDefault()}>
+                                <Space className={styles.button}>
+                                    <Button
+                                        type="primary"
+                                        onClick={toggleCollapsed}
+                                    >
+                                        {collapsed ? <MenuUnfoldOutlined style={{ fontSize: 20, }} /> : <MenuFoldOutlined style={{ fontSize: 20, }} />}
+                                    </Button>
+
+                                </Space>
+                            </a>
+                        </Dropdown>
+                    ]}
+                    avatar={{
+                        // src: 'https://www.vecteezy.com/vector-art/563714-finance-logo-and-symbols-vector-concept',
+                        icon: <RadarChartOutlined style={{ fontSize: '30px', alignSelf: 'right' }} />
+                    }}
+
+                >
+                </PageHeader>
+            </div>
+        )
+    }
     return (
         <div className={styles.container}>
             <PageHeader

@@ -34,6 +34,7 @@ router.post(
         check('password', 'Password is required').exists(),
     ],
     async (req, res) => {
+        console.log("HERE!")
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -69,12 +70,12 @@ router.post(
                 },
             };
 
-            console.log(payload)
-
+            console.log("PRINT", payload)
+            console.log("JWT: ", process.env.JWT_SECRET);
             jwt.sign(
                 payload,
                 process.env.JWT_SECRET,
-                { expiresIn: 360000 },
+                { expiresIn: 60 },
                 (err, token) => {
                     if (err) throw err;
                     res.json({ token });

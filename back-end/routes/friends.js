@@ -2,6 +2,7 @@ const express = require('express')
 const axios = require('axios');   
 const UsersModel = require('../db/models/UsersModal');
 const router = express.Router()
+const auth = require('../middleware/auth')
 
 const getIncomingRequests = async () => {
     const response = await axios.get("https://randomuser.me/api?results=5");
@@ -10,7 +11,7 @@ const getIncomingRequests = async () => {
 }
 
 // view requests
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const doc = await UsersModel.findById(req.body.id).orFail(() => {
             throw "ID not found"
@@ -34,7 +35,7 @@ router.get('/', async (req, res) => {
 })
 
 // modify incoming requests
-router.post('/modifyrequest', async (req, res) => {
+router.post('/modifyrequest', auth, async (req, res) => {
     let message = ""
     try {
         const doc = await UsersModel.findById(req.body.id).orFail(() => {
@@ -73,7 +74,7 @@ router.post('/modifyrequest', async (req, res) => {
 })
 
 // view all friends
-router.get('/friendlist', async (req, res) => {
+router.get('/friendlist', auth, async (req, res) => {
     try {
         const doc = await UsersModel.findById(req.body.id).orFail(() => {
             throw "ID not found"
@@ -95,7 +96,7 @@ router.get('/friendlist', async (req, res) => {
     }
 })
 
-router.get('/viewprofile', async (req, res) => {
+router.get('/viewprofile', auth, async (req, res) => {
     try {
         const doc = await UsersModel.findById(req.body.id).orFail(() => {
             throw "ID not found"
@@ -107,7 +108,7 @@ router.get('/viewprofile', async (req, res) => {
     }
 })
 
-router.post('/deletefriend', async (req, res) => {
+router.post('/deletefriend', auth, async (req, res) => {
     try {
         const user = await UsersModel.findById(req.body.id).orFail(() => {
             throw "ID not found"
@@ -123,7 +124,7 @@ router.post('/deletefriend', async (req, res) => {
 })
 
 // search a profile
-router.post('/search', async (req, res) => {
+router.post('/search', auth, async (req, res) => {
     try {
         const doc = await UsersModel.findOne({ "login.username": req.body.searchId }).orFail(() => {
             throw "Profile Not Found"
@@ -136,7 +137,7 @@ router.post('/search', async (req, res) => {
 })
 
 // send friend request
-router.post('/sendrequest', async (req, res) => {
+router.post('/sendrequest', auth, async (req, res) => {
     try {
         const doc = await UsersModel.findById(req.body.searchId).orFail(() => {
             throw "ID not found"
@@ -159,7 +160,7 @@ router.post('/sendrequest', async (req, res) => {
     }
 })
 
-router.get('/populate', async (req, res) => {
+router.get('/populate', auth, async (req, res) => {
     try {
         const apiResponse = await axios.get("https://randomuser.me/api?results=5");
         const entries = []
