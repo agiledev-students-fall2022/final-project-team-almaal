@@ -7,8 +7,16 @@ import Drawer from "react-bottom-drawer";
 import './Post.css'
 import AddDrawer from './AddDrawer';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 const URL = "http://localhost:3001/";
+
+let headers = {}
+if (localStorage.token) {
+    headers = {
+        'x-auth-token': localStorage.token
+    }
+}
 
 function Post({callback, sid, pid, uid, profilePic, image, username, timestamp, message, likes, comments}) {
     const [comment, setComment] = useState('');
@@ -26,6 +34,7 @@ function Post({callback, sid, pid, uid, profilePic, image, username, timestamp, 
 
 
     console.log("LIKES", test);
+    
     const handleSubmit = (e, username) =>{
         e.preventDefault();
         if(comment){            
@@ -33,28 +42,36 @@ function Post({callback, sid, pid, uid, profilePic, image, username, timestamp, 
                 return
             }
 
-            fetch(URL+ 'groups/postcomment', {
-                method: 'POST',
-                body: JSON.stringify({post_id: pid, user_comment: comment}) //Backend: usercomment_id: req.session.uid, username: req.session.user, usercomment_pp: ''
-            })
+            axios.post(URL+ 'groups/postcomment',{post_id: pid, user_comment: comment}).then(
+                setComment(""),
+                callback(false)
+            )
+            // fetch(URL+ 'groups/postcomment', {
+            //     method: 'POST',
+            //     body: JSON.stringify({post_id: pid, user_comment: comment}), //Backend: usercomment_id: req.session.uid, username: req.session.user, usercomment_pp: ''
+            // })
         }
           //db stuff
-        setComment("");
-        callback(false);
+        // setComment("");
+        // callback(false);
     }
 
     const handleLike = (username, likeflag) =>{
-        fetch(URL+ 'groups/postLike', {
-            method: 'POST',
-            body: JSON.stringify({post_id: pid, like: likeflag})
-        })
+        axios.post(URL+ 'groups/postLike', {post_id: pid, like: likeflag});
+        // fetch(URL+ 'groups/postLike', {
+        //     method: 'POST',
+        //     body: JSON.stringify({post_id: pid, like: likeflag}),
+        //     headers: headers
+        // })
     }
 
     const handleDelete = ()=>{
-        fetch(URL+ 'groups/deletepost', {
-            method: 'POST',
-            body: JSON.stringify({post_id: pid})
-        })
+        axios.post(URL+ 'groups/deletepost', {post_id: pid});
+        // fetch(URL+ 'groups/deletepost', {
+        //     method: 'POST',
+        //     body: JSON.stringify({post_id: pid}),
+        //     headers: headers
+        // })
     }
 
     if(image != undefined){

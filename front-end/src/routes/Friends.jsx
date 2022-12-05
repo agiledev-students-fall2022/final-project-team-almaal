@@ -13,6 +13,13 @@ const Context = React.createContext({ name: 'Default' });
 
 const URL = "http://localhost:3001/"
 
+let headers = {}
+if (localStorage.token) {
+    headers = {
+        'x-auth-token': localStorage.token
+    }
+}
+
 const Friends = () => {
     const [searchItem, setItem] = useState('');
     const [showCard, setShowCard] = useState(false);
@@ -43,9 +50,7 @@ const Friends = () => {
                     action: type,
                     sender: friend._id
                 }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: headers
             }).then(res => res.json())
                 .then(res => {
                     openNotification("topLeft", res.message)
@@ -55,9 +60,7 @@ const Friends = () => {
             fetch(URL + "friends/modifyrequest", {
                 method: 'POST',
                 body: JSON.stringify({ action: type, sender: friend._id }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: headers
             }).then(res => res.json())
                 .then(res => openNotification("topLeft", res.message))
 
@@ -67,9 +70,7 @@ const Friends = () => {
             fetch(URL + "friends/sendrequest", {
                 method: 'POST',
                 body: JSON.stringify({ searchId: friend._id }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: headers
             }).then(res => res.json())
                 .then(res => openNotification("topLeft", res.message))
         }
@@ -80,9 +81,7 @@ const Friends = () => {
         fetch(URL + "friends/search", {
             method: 'POST',
             body: JSON.stringify({ searchId: value }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         }).then(res => res.json())
             .then(data => {
                 setLoaderBool(false);
@@ -107,7 +106,8 @@ const Friends = () => {
     useEffect(() => {
         const getIncomingRequests = async () => {
             const response = await fetch("http://localhost:3001/friends", {
-                method: "GET"
+                method: "GET",
+                headers: headers
             })
             const data = await response.json();
 
@@ -116,7 +116,8 @@ const Friends = () => {
 
         const getFriendList = async () => {
             const response = await fetch("http://localhost:3001/friends/friendlist", {
-                method: "GET"
+                method: "GET"   ,
+                headers: headers             
             })
             const data = await response.json();
             setFriends(data.friends);

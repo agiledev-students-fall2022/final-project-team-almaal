@@ -60,6 +60,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});
 
 router.get('/', auth, (req, res) => {
+    console.log(req.user);
     Posts.find({}).sort({timestamp: -1}).exec((err, obj)=>{
         if(!err){
             res.status(200).json({session_user: session, feed: obj});
@@ -120,12 +121,17 @@ router.post("/feedpost", auth, upload.single('post_img'), (req, res) => {
 
 router.post("/postcomment", auth, (req, res) => {
     setTimeout(()=>{
-        const temp = JSON.parse(req.body);
+        const temp = req.body;
+        console.log('xx-->', temp);
         const comment_data = {uid: session.user_id, username: session.username, comment: temp.user_comment, profilePic: session.user_pp}
         
-        Posts.updateOne({_id: temp.post_id}, {$push: {comments: comment_data}}).then(
+        console.log(comment_data);
+        Posts.updateOne({_id: temp.post_id}, {$push: {comments: comment_data}}, (err, docs) => {
+            if(err){
+                res.status(400).json({result: false, message:'Something went wring!'});
+            }
             res.status(200).json({result:true, message:'comment saved successfully'})
-        )
+        })
 
         // Posts.find({_id: temp.post_id}, (err, obj)=>{
         //     if(!err){
@@ -143,7 +149,7 @@ router.post("/postcomment", auth, (req, res) => {
 })
 
 router.post("/postlike", auth, (req, res)=>{
-    const temp = JSON.parse(req.body);
+    const temp = req.body;
 
     if(temp.like){
         Posts.updateOne({_id: temp.post_id}, {$push: {likes: session.user_id}}).then(
@@ -169,7 +175,7 @@ router.post("/postlike", auth, (req, res)=>{
 })
 
 router.post('/deletepost', auth, (req, res)=>{
-    const temp = JSON.parse(req.body);
+    const temp = (req.body);
 
     Posts.deleteOne({_id: temp.post_id}).then(
         res.status(200).json({'message': 'Succesfully Deleted'})

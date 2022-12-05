@@ -4,10 +4,21 @@ import { EditOutlined, UserOutlined } from '@ant-design/icons';
 import styles from './Profile.module.css'
 import { useEffect } from 'react'
 import axios from "axios";
+import setAuthToken from '../utils/setAuthToken';
+import fetcher from '../utils/setFetchToken';
 
 const { Title } = Typography;
 
 const URL = "http://localhost:3001/";
+
+let headers = {}
+if (localStorage.token) {
+    console.log("TRUE");
+    headers = {
+        'x-auth-token': localStorage.token
+    }
+    setAuthToken(localStorage.token);
+}
 
 const Profile = () => {
     const [username, setUsername] = useState();
@@ -89,12 +100,16 @@ const Profile = () => {
 
     useEffect(() => {
         const getProfile = async () => {
-            const response = await fetch(URL + "profile", {
-                method: "GET"
-            })
-            const data = await response.json();
-            console.log(data)
-            updateInformation(data)
+            axios.get(URL + "profile").then(
+                function(response){
+                    updateInformation(response.data)
+                
+                }
+            )
+            // const response = await fetcher(URL + "profile", {headers})
+            // const data = await response.json();
+            // console.log("Here", data)
+            // updateInformation(data)
         }
 
         getProfile();
