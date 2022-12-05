@@ -23,29 +23,53 @@ import { loadUser } from './action/auth';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Fragment, useEffect } from 'react';
 
+import useToken from './useToken';
+
 // require('dotenv').config();
 // console.log(process.env)
+
+console.log('ls_token', localStorage.token);
 
 if (localStorage.token) {
     setAuthToken(localStorage.token);
 }
 
 function App() {
+    const { token, setToken } = useToken();
+    
     useEffect(() => {
         store.dispatch(loadUser());
     }, []);
+
+    if(!localStorage.token){
+        return(
+            <div className='App'>
+                <Provider store={store}>
+                    <BrowserRouter>
+                        <Navbar flag={true}/>
+                        <Routes>
+                            <Route path='/' element={<Login setToken={setToken}/>} />
+                            <Route path='/register' element={<Register />} />
+                        </Routes>
+                    </BrowserRouter>
+                    <div className='spacer' style={{ height: '3rem' }}></div>
+                    <Footer />
+                </Provider>
+            </div>
+        )
+    }
+
     return (
         <div className='App'>
             <Provider store={store}>
                 <BrowserRouter>
-                    <Navbar />
+                    <Navbar flag={false}/>
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/friends' element={<Friends />} />
                         <Route path='/groups' element={<Groups />} />
                         <Route path='/profile' element={<Profile />} />
                         <Route path='/login' element={<Login />} />
-                        <Route path='/register' element={<Register />} />
                     </Routes>
                 </BrowserRouter>
                 <div className='spacer' style={{ height: '3rem' }}></div>
