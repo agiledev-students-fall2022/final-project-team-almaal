@@ -26,7 +26,9 @@ const IncomingRequest = ({ request, type, handleRemove }) => {
                             />
                         </div>
                         <div>
-                            <p className={styles.title} style={{ paddingBottom: "0", marginBottom: "0", marginTop: "0.5rem" }}>{request.name.first + " " + request.name.last}</p>
+                            <p className={styles.title} style={{ paddingBottom: "0", marginBottom: "0", marginTop: "0.5rem" }}>
+                                {/* {request.name.first ? (request.name.first + " " + request.name.last) : request.name} */}
+                            </p>
                             01/01/2022
                         </div>
                     </div>
