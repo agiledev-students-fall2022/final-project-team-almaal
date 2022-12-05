@@ -13,6 +13,7 @@ const register = require('./routes/api/register');
 const session = require('express-session');
 
 const Posts = require('./db/models/PostsModal');
+const auth = require('./middleware/auth');
 
 require('dotenv').config();
 
@@ -51,6 +52,8 @@ app.use(function (req, res, next) {
     // );
     next();
 });
+
+//app.use(auth);
 
 app.use((req, res, next) => {
     req.body.id = "637820a5a5376540710ee44f"

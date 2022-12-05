@@ -68,7 +68,8 @@ export const register =
         };
 
 // login User
-export const login = (email, password) => async (dispatch) => {
+export const login = (email, password, setToken) => async (dispatch) => {
+    console.log("MUJI");
     const config = {
         headers: {
             'Content-Type': 'application/json',
@@ -78,7 +79,8 @@ export const login = (email, password) => async (dispatch) => {
 
     try {
         const res = await axios.post('/api/auth', body, config);
-
+        console.log("HERE2")
+        setToken(res.data);
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data,

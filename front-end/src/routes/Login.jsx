@@ -5,24 +5,21 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../action/auth';
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({setToken, login}) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
     const { email, password } = formData;
+    
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        login(email, password);
+        login(email, password, setToken);
     };
 
-    // redirect if logged in
-    if (isAuthenticated) {
-        return <Navigate to='/dashboard'></Navigate>;
-    }
     return (
         <Fragment>
             <section className='container'>
@@ -68,6 +65,7 @@ const Login = ({ login, isAuthenticated }) => {
 
 Login.propTypes = {
     login: PropTypes.func.isRequired,
+    setToken: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
 };
 
