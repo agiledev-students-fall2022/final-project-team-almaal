@@ -36,7 +36,6 @@ router.get('/', async (req, res) => {
 // modify incoming requests
 router.post('/modifyrequest', async (req, res) => {
     let message = ""
-
     try {
         const doc = await UsersModel.findById(req.body.id).orFail(() => {
             throw "Friend Request not found"

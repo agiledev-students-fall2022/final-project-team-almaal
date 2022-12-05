@@ -1,49 +1,45 @@
-import React, { useState } from 'react';
-import { Button, Form, Input, Modal, Radio } from 'antd';
-const CollectionCreateForm = ({ open, onCreate, onCancel, data, setData, setEditingKey }) => {
+import React, { useState } from "react";
+import { Button, Form, InputNumber, Input, Modal } from "antd";
+const CollectionCreateForm = ({
+  open,
+  onCreate,
+  onCancel,
+  count,
+  setData,
+  setCount,
+  data,
+}) => {
   const [form] = Form.useForm();
-
-  const save = async (key) => {
-    try {
-      const row = await form.validateFields();
-      const newData = [...data];
-      const index = newData.findIndex((item) => key === item.key);
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, {
-          ...item,
-          ...row,
-        });
-      //console.log(newData[index]);
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newData[index]),
-    };
-  //POST request to the database to add a new stock
-    await fetch(`http://localhost:3001/home/`, requestOptions)
-    .then(response=>response.json)
-    .then(data=>console.log(data) )                 
-        setData(newData);
-        setEditingKey('');
-      } else {
-        newData.push(row);
-        setData(newData);
-        setEditingKey('');
-      }
-    } catch (errInfo) {
-      console.err('Validate Failed:', errInfo);
-    }
-  };
-
+  //Function that handles the new stock additions to our portfolio
   return (
     <Modal
       open={open}
-      title="Add a new investment"
-      okText="Save"
+      title="Create a new investment"
+      okText="Create"
       cancelText="Cancel"
       onCancel={onCancel}
-      onOk={() => {    
+      onOk={async () => {
+        const newStock = {
+          key: count + 1,
+          ticker: form.getFieldValue("ticker"),
+          position: form.getFieldValue("position"),
+          quantity: form.getFieldValue("quantity"),
+          price: form.getFieldValue("price"),
+        };
+        setData(newStock);
+        setCount(count + 1);
+        console.log("IN FORM 1:", newStock);
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newStock),
+        };
+        //POST request to the database to add a new stock
+        await fetch(`http://localhost:3001/home/`, requestOptions)
+          .then((response) => response.json)
+          .then((data) => console.log(data));
+        console.log("in form 2:", newStock);
+
         form
           .validateFields()
           .then((values) => {
@@ -51,7 +47,7 @@ const CollectionCreateForm = ({ open, onCreate, onCancel, data, setData, setEdit
             onCreate(values);
           })
           .catch((info) => {
-            console.log('Validate Failed:', info);
+            console.log("Validate Failed:", info);
           });
       }}
     >
@@ -60,40 +56,75 @@ const CollectionCreateForm = ({ open, onCreate, onCancel, data, setData, setEdit
         layout="vertical"
         name="form_in_modal"
         initialValues={{
-          modifier: 'public',
+          modifier: "public",
         }}
       >
         <Form.Item
-          name="title"
-          label="Title"
+          name="ticker"
+          label="Ticker"
           rules={[
             {
               required: true,
-              message: 'Please input the title of collection!',
+              message: "Please input a ticker name like AAPL for Apple",
             },
           ]}
         >
           <Input />
         </Form.Item>
-        <Form.Item name="description" label="Description">
-          <Input type="textarea" />
+        <Form.Item
+          name="quantity"
+          label="Quantity"
+          rules={[
+            {
+              required: true,
+              message: "Please input the value",
+              //min:0,
+              //validator: checkPrice
+            },
+          ]}
+        >
+          <InputNumber />
         </Form.Item>
-        <Form.Item name="modifier" className="collection-create-form_last-form-item">
-          <Radio.Group>
-            <Radio value="public">Public</Radio>
-            <Radio value="private">Private</Radio>
-          </Radio.Group>
+        <Form.Item
+          name="price"
+          label="Price"
+          rules={[
+            {
+              required: true,
+              message: "Please input the value",
+            },
+          ]}
+        >
+          <InputNumber />
         </Form.Item>
+        <Form.Item
+          name="position"
+          label="Position"
+          rules={[
+            {
+              required: true,
+              message: "Please input BUY or SELL",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="modifier"
+          className="collection-create-form_last-form-item"
+        ></Form.Item>
       </Form>
     </Modal>
   );
 };
-const PortfolioForm = ({data, setData, setEditingKey}) => {
+const PortfolioForm = ({ setCount, count, setData, data }) => {
   const [open, setOpen] = useState(false);
+  //const[data,setData]=useState('');
   const onCreate = (values) => {
-    console.log('Received values of form: ', values);
+    console.log("Received values of form: ", values);
     setOpen(false);
   };
+
   return (
     <div>
       <Button
@@ -102,7 +133,7 @@ const PortfolioForm = ({data, setData, setEditingKey}) => {
           setOpen(true);
         }}
       >
-        New Collection
+        New Investment
       </Button>
       <CollectionCreateForm
         open={open}
@@ -110,9 +141,10 @@ const PortfolioForm = ({data, setData, setEditingKey}) => {
         onCancel={() => {
           setOpen(false);
         }}
-        data={data}
+        setCount={setCount}
+        count={count}
         setData={setData}
-        setEditingKey={setEditingKey}
+        data={data}
       />
     </div>
   );

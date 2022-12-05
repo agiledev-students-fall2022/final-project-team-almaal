@@ -71,7 +71,7 @@ router.post("/", async(req, res) => {
   .then(result=>{res.json(result)})
   .catch(err=>console.log(err))
   storeData.push(data)
-  console.log(data)
+  console.log("IN BACKEND",data)
   // ... then send a response of some kind to client
   res.json(storeData)
   //console.log(storeData)
