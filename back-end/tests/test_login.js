@@ -15,14 +15,14 @@ describe("Login", () => {
      * test the POST /login route
      */
     const formData = {
-        email: 'abc@gmail.com',
-        password: 'password'
+        email: 'dsdsdf@gmail.com',
+        password: '12345678'
     } // mock form data with correct credentials
-    describe("POST /login with correct username/password", () => {
-        it("it should return a 401 HTTP response code", done => {
+    describe("POST /api/auth with correct username/password", () => {
+        it("it should return a 200 HTTP response code", done => {
             chai
                 .request(app)
-                .post("/login")
+                .post("/api/auth")
                 .type("json")
                 .send(formData)
                 .end((err, res) => {

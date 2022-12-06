@@ -16,7 +16,7 @@ const { JsonWebTokenError } = require('jsonwebtoken');
 router.get('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
-        res.json(user);
+        res.status(200).json(user);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error');
@@ -77,7 +77,7 @@ router.post(
                 { expiresIn: 60 },
                 (err, token) => {
                     if (err) throw err;
-                    res.json({ token });
+                    res.status(200).json({ token });
                 }
             );
         } catch (err) {
