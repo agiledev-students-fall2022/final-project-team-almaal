@@ -2,22 +2,30 @@ import React, {useState, useEffect} from 'react'
 import './Feed.module.css'
 import MessageSender from '../components/Feed/MessageSender'
 import Post from '../components/Feed/Post'
+import setAuthToken from '../utils/setAuthToken'
+import axios from 'axios';
 
 const URL = "http://localhost:3001/";
+
+let headers = {}
+if (localStorage.token) {
+    headers = {
+        'x-auth-token': localStorage.token
+    }
+    setAuthToken(localStorage.token);
+}
 
 function Feed() {
     const [backendData, setBackendData] = useState([{}])
     const [dataFlag, setDataFlag] = useState(false)
 
     useEffect(()=>{
-        fetch(URL + "groups").then(
-            response => response.json()
-        ).then(
-            data => {
-                setBackendData(data);
+        axios.get(URL + "groups").then(
+           function(response){
+                setBackendData(response.data);
                 setDataFlag(true);
-            }
-        )
+            
+        })
     }, [backendData]);
 
 

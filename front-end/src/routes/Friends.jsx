@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styles from './Friends.module.css'
 
+import axios from 'axios'
+
 import { Input, Space, Card, Col, Row, Image, Divider, Button, notification } from 'antd';
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons"
 import IncomingRequest from '../components/IncomingRequest';
@@ -12,6 +14,13 @@ const { Search } = Input;
 const Context = React.createContext({ name: 'Default' });
 
 const URL = "http://localhost:3001/"
+
+let headers = {}
+if (localStorage.token) {
+    headers = {
+        'x-auth-token': localStorage.token
+    }
+}
 
 const Friends = () => {
     const [searchItem, setItem] = useState('');
@@ -37,53 +46,32 @@ const Friends = () => {
         if (type !== "send") setIncomingRequests(incomingRequests.filter(request => request.login.uuid !== friend.login.uuid))
         console.log(friend)
         if (type === "accept") {
-            fetch(URL + "friends/modifyrequest", {
-                method: 'POST',
-                body: JSON.stringify({
-                    action: type,
-                    sender: friend._id
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => res.json())
+            axios.post(URL + "friends/modifyrequest", {
+                action: type,
+                sender: friend._id
+            }).then(res => res.data)
                 .then(res => {
                     openNotification("topLeft", res.message)
                 })
 
         } else if (type === "delete") {
-            fetch(URL + "friends/modifyrequest", {
-                method: 'POST',
-                body: JSON.stringify({ action: type, sender: friend._id }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => res.json())
+            axios.post(URL + "friends/modifyrequest", { action: type, sender: friend._id })
+                .then(res => res.data)
                 .then(res => openNotification("topLeft", res.message))
 
             console.log(type)
         } else if (type === "send") {
             // setShowCard(false);
-            fetch(URL + "friends/sendrequest", {
-                method: 'POST',
-                body: JSON.stringify({ searchId: friend._id }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => res.json())
+            axios.post(URL + "friends/sendrequest", { searchId: friend._id })
+                .then(res => res.data)
                 .then(res => openNotification("topLeft", res.message))
         }
     }
 
     const searchFriend = (value) => {
         setLoaderBool(true);
-        fetch(URL + "friends/search", {
-            method: 'POST',
-            body: JSON.stringify({ searchId: value }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json())
+        axios.post(URL + "friends/search", { searchId: value })
+            .then(res => res.data)
             .then(data => {
                 setLoaderBool(false);
                 console.log(data)
@@ -106,19 +94,15 @@ const Friends = () => {
 
     useEffect(() => {
         const getIncomingRequests = async () => {
-            const response = await fetch("http://localhost:3001/friends", {
-                method: "GET"
-            })
-            const data = await response.json();
+            const response = await axios.get("http://localhost:3001/friends")
+            const data = response.data;
 
             setIncomingRequests(data.friendRequests);
         }
 
         const getFriendList = async () => {
-            const response = await fetch("http://localhost:3001/friends/friendlist", {
-                method: "GET"
-            })
-            const data = await response.json();
+            const response = await axios.get("http://localhost:3001/friends/friendlist")
+            const data = response.data;
             setFriends(data.friends);
         }
 
