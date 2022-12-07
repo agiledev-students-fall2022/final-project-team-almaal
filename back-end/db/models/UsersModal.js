@@ -20,7 +20,7 @@ const UsersSchema = new mongoose.Schema({
             },
         },
     },
-     "investment":[],
+    investment:[],
     investment_visibility: {
         type: 'Boolean',
         required: 'true',

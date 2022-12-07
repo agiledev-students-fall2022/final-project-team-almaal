@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const Schema=mongoose.Schema
 
 const PortfolioSchema = new Schema({
-    //key:Schema.Types.ObjectId,
-    key:Number,
+    user_id:Schema.Types.ObjectId, //this is the id of the session user who's adding investment
+    //key:Number,
     ticker: {
         type:String,
         required: true,
@@ -21,8 +21,11 @@ const PortfolioSchema = new Schema({
         type:Number,
         required: true,
         //default: '$0',
-    }
-},{timestamps:true}
+    },
+    //time is stored in day/month/year format
+    //timestamp: String,
+    timestamp:Date,
+}
 )
 
 const Portfolio = mongoose.model("Portfolio", PortfolioSchema)

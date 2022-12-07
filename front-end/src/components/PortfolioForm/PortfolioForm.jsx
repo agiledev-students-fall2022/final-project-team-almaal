@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, InputNumber, Input, Modal } from "antd";
+import axios from "axios";
+
 const CollectionCreateForm = ({
   open,
   onCreate,
@@ -19,12 +21,17 @@ const CollectionCreateForm = ({
       cancelText="Cancel"
       onCancel={onCancel}
       onOk={async () => {
+        const current = new Date();
+        const date = `${current.getDate()}/${
+          current.getMonth() + 1
+        }/${current.getFullYear()}`;
         const newStock = {
           key: count + 1,
           ticker: form.getFieldValue("ticker"),
           position: form.getFieldValue("position"),
           quantity: form.getFieldValue("quantity"),
           price: form.getFieldValue("price"),
+          timestamp: date, //time is stored in day/month/year format
         };
         setData(newStock);
         setCount(count + 1);
@@ -39,6 +46,13 @@ const CollectionCreateForm = ({
           .then((response) => response.json)
           .then((data) => console.log(data));
         console.log("in form 2:", newStock);
+        // const result = await axios
+        //   .post(`http://localhost:3001/home/`, newStock)
+        //   //.then((response) => response.json)
+        //   //.then((data) => console.log(data))
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
 
         form
           .validateFields()
