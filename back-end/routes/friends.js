@@ -1,5 +1,5 @@
 const express = require('express')
-const axios = require('axios');
+const axios = require('axios');   
 const UsersModel = require('../db/models/UsersModal');
 const router = express.Router()
 const auth = require('../middleware/auth')
@@ -37,7 +37,6 @@ router.get('/', auth, async (req, res) => {
 // modify incoming requests
 router.post('/modifyrequest', auth, async (req, res) => {
     let message = ""
-
     try {
         const doc = await UsersModel.findById(req.user.id).orFail(() => {
             throw "Friend Request not found"

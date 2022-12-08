@@ -28,30 +28,30 @@ if (localStorage.token) {
     setAuthToken(localStorage.token);    
 }
 
-function ret_Login(setToken){
-    return(
-        <div className='App'>
-            <Provider store={store}>
-                <BrowserRouter>
-                    <Navbar flag={true}/>
-                    <Routes>
-                        <Route path='/' element={<Login setToken={setToken}/>} />
-                        <Route path='/register' element={<Register />} />
-                        <Route path="*"  element={
-                                            <div style={{display:'flex', justifyContent:'center', marginTop:'25%'}}>
-                                                <h2>404 Page not found</h2>
-                                            </div>
-                        }/>
-                        {/* <Route path='/' element={<Login setToken={setToken}/>} />
-                        <Route path='/register' element={<Register />} /> */}
-                    </Routes>
-                </BrowserRouter>
-                <div className='spacer' style={{ height: '3rem' }}></div>
-                <Footer />
-            </Provider>
-        </div>
-    )
-}
+// function ret_Login(setToken){
+//     return(
+//         <div className='App'>
+//             <Provider store={store}>
+//                 <BrowserRouter>
+//                     <Navbar flag={true}/>
+//                     <Routes>
+//                         <Route path='/' element={<Login setToken={setToken}/>} />
+//                         <Route path='/register' element={<Register />} />
+//                         <Route path="*"  element={
+//                                             <div style={{display:'flex', justifyContent:'center', marginTop:'25%'}}>
+//                                                 <h2>404 Page not found</h2>
+//                                             </div>
+//                         }/>
+//                         {/* <Route path='/' element={<Login setToken={setToken}/>} />
+//                         <Route path='/register' element={<Register />} /> */}
+//                     </Routes>
+//                 </BrowserRouter>
+//                 <div className='spacer' style={{ height: '3rem' }}></div>
+//                 <Footer />
+//             </Provider>
+//         </div>
+//     )
+// }
 
 function App({ isAuthenticated }) {
     const state = useSelector(state => state)
@@ -67,14 +67,14 @@ function App({ isAuthenticated }) {
     }, []);
 
 
-    if(!localStorage.token){
-        return (ret_Login(setToken));
-    }
+    // if(!localStorage.token){
+    //     //return (ret_Login(setToken));
+    // }
 
     return (
         <div className='App'>
             <BrowserRouter>
-                <p>Authenticated: {state.auth.isAuthenticated.toString()}</p>
+                {/* <p>Authenticated: {state.auth.isAuthenticated.toString()}</p> */}
                 <Navbar setToken={setToken} flag={false} />
                 <Routes>
 

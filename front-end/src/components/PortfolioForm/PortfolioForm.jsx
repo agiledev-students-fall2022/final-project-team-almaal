@@ -1,118 +1,166 @@
-import React, { useState } from 'react';
-import DATABASE from '../utils/database';
-import './PortfolioForm.css';
+import React, { useState } from "react";
+import { Button, Form, InputNumber, Input, Modal } from "antd";
+import axios from "axios";
 
-//Initial state of our form
-const INITIAL_STATE = {
-    ticker: '',
-    position: 'BUY',
-    quantity: 10,
-    price: 50,
+const CollectionCreateForm = ({
+  open,
+  onCreate,
+  onCancel,
+  count,
+  setData,
+  setCount,
+  data,
+}) => {
+  const [form] = Form.useForm();
+  //Function that handles the new stock additions to our portfolio
+  return (
+    <Modal
+      open={open}
+      title="Create a new investment"
+      okText="Create"
+      cancelText="Cancel"
+      onCancel={onCancel}
+      onOk={async () => {
+        const current = new Date();
+        const date = `${current.getDate()}/${
+          current.getMonth() + 1
+        }/${current.getFullYear()}`;
+        const newStock = {
+          key: count + 1,
+          ticker: form.getFieldValue("ticker"),
+          position: form.getFieldValue("position"),
+          quantity: form.getFieldValue("quantity"),
+          price: form.getFieldValue("price"),
+          timestamp: date, //time is stored in day/month/year format
+        };
+        setData(newStock);
+        setCount(count + 1);
+        console.log("IN FORM 1:", newStock);
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newStock),
+        };
+        //POST request to the database to add a new stock
+        await fetch(`http://localhost:3001/home/`, requestOptions)
+          .then((response) => response.json)
+          .then((data) => console.log(data));
+        console.log("in form 2:", newStock);
+        // const result = await axios
+        //   .post(`http://localhost:3001/home/`, newStock)
+        //   //.then((response) => response.json)
+        //   //.then((data) => console.log(data))
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+
+        form
+          .validateFields()
+          .then((values) => {
+            form.resetFields();
+            onCreate(values);
+          })
+          .catch((info) => {
+            console.log("Validate Failed:", info);
+          });
+      }}
+    >
+      <Form
+        form={form}
+        layout="vertical"
+        name="form_in_modal"
+        initialValues={{
+          modifier: "public",
+        }}
+      >
+        <Form.Item
+          name="ticker"
+          label="Ticker"
+          rules={[
+            {
+              required: true,
+              message: "Please input a ticker name like AAPL for Apple",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="quantity"
+          label="Quantity"
+          rules={[
+            {
+              required: true,
+              message: "Please input the value",
+              //min:0,
+              //validator: checkPrice
+            },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
+        <Form.Item
+          name="price"
+          label="Price"
+          rules={[
+            {
+              required: true,
+              message: "Please input the value",
+            },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
+        <Form.Item
+          name="position"
+          label="Position"
+          rules={[
+            {
+              required: true,
+              message: "Please input BUY or SELL",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="modifier"
+          className="collection-create-form_last-form-item"
+        ></Form.Item>
+      </Form>
+    </Modal>
+  );
 };
+const PortfolioForm = ({ setCount, count, setData, data }) => {
+  const [open, setOpen] = useState(false);
+  //const[data,setData]=useState('');
+  const onCreate = (values) => {
+    console.log("Received values of form: ", values);
+    setOpen(false);
+  };
 
-export default function PortfolioForm({ setStocks, setInputVisibility }) {
-    //This is the initial state of our inputs
-    const [formValues, setFormValues] = useState(INITIAL_STATE);
-
-    //Function that handles the inputs and their new values
-    const handleChange = (event) => {
-        setFormValues((formValues) => ({
-            ...formValues,
-            [event.target.name]: event.target.value,
-        }));
-    };
-
-    //Function that handles the new stock additions to our portfolio
-    const handleSubmitNewStock = async (e) => {
-        //Prevents the default behavior of the event to refresh the page
-        e.preventDefault();
-        try {
-            //Basic validation if user entered a ticker, price and quantity above 0
-            if (
-                formValues.ticker &&
-                formValues.price > 0 &&
-                formValues.quantity > 0
-            ) {
-                const newStock = {
-                    ticker: formValues.ticker,
-                    position: formValues.position,
-                    quantity: formValues.quantity,
-                    price: formValues.price,
-                };
-
-                //POST request to the database to add a new stock
-                const response = await fetch(`https://${DATABASE}.json`, {
-                    method: 'POST',
-                    'Content-Type': 'application/json',
-                    body: JSON.stringify(newStock),
-                });
-
-                const data = await response.json();
-
-                //Validates the stock is saved
-                if (data.name) {
-                    //Updates state with the new stock
-                    setStocks((stocks) => [
-                        ...stocks,
-                        { id: data.name, ...newStock },
-                    ]);
-                   setFormValues(INITIAL_STATE);
-                   setInputVisibility(false);
-                }
-            }
-        } catch (error) {
-            /*The option how to handle the error is totally up to you. 
-            Ideally, you can send notification to the user */
-            console.log(error);
-        }
-    };
-
-    return (
-        <div className='add-more-wrapper'>
-            <form className='add-more-form'>
-                <div className='add-more-row'>
-                    <input
-                        type='text'
-                        name='ticker'
-                        value={formValues.ticker}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className='add-more-row'>
-                    <select
-                        name='position'
-                        onChange={handleChange}
-                        value={formValues.position}
-                    >
-                        <option value='BUY'>BUY</option>
-                        <option value='SELL'>SELL</option>
-                    </select>
-                </div>
-                <div className='add-more-row'>
-                    <input
-                        type='number'
-                        name='quantity'
-                        min='0'
-                        value={formValues.quantity}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className='add-more-row'>
-                    <input
-                        type='number'
-                        name='price'
-                        min='0'
-                        value={formValues.price}
-                        onChange={handleChange}
-                    />
-                </div>
-                <button
-                    className='add-new-stock-button'
-                    onClick={handleSubmitNewStock}
-                >
-                    <span>+</span>
-                </button>
-            </form>
-        </div>
-    );
-}
+  return (
+    <div>
+      <Button
+        type="primary"
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        New Investment
+      </Button>
+      <CollectionCreateForm
+        open={open}
+        onCreate={onCreate}
+        onCancel={() => {
+          setOpen(false);
+        }}
+        setCount={setCount}
+        count={count}
+        setData={setData}
+        data={data}
+      />
+    </div>
+  );
+};
+export default PortfolioForm;
