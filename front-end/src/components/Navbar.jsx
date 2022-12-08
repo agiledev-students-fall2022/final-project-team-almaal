@@ -27,7 +27,7 @@ import { Space } from 'antd';
 import { useState } from 'react';
 import { PageHeader, Typography } from 'antd';
 
-
+import { logout } from '../action/auth';
 
 
 
@@ -35,14 +35,14 @@ const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
 const { Paragraph } = Typography;
 
-const nav = (setToken) =>{
+const nav = (setToken) => {
     const menu = (
         <Menu
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
             // mode="inline"
             theme="dark"
-            onClick={()=>{console.log("key clicked")}}
+            onClick={() => { console.log("key clicked") }}
         >
             <Menu.Item key="1" icon={<DesktopOutlined />}>
                 <Link to="/">Home</Link>
@@ -60,9 +60,14 @@ const nav = (setToken) =>{
                 <Link to="news">News</Link>
             </Menu.Item>
             <Menu.Item key="6" icon={<RadarChartOutlined />}>
-                <Link to="" onClick={()=>{localStorage.clear(); sessionStorage.clear(); setToken(null)}}>Logout</Link>
+                <Link to="" onClick={() => {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    setToken(null)
+                    logout()
+                }}>Logout</Link>
             </Menu.Item>
-        </Menu>  
+        </Menu>
     );
     return menu;
 }
@@ -91,7 +96,7 @@ const login_menu = (
  * @returns The contents of this component, in JSX form.
  */
 
-const Navbar = ({setToken, flag}) => {
+const Navbar = ({ setToken, flag }) => {
 
     const [collapsed, setCollapsed] = useState(false);
     const toggleCollapsed = () => {
@@ -100,9 +105,9 @@ const Navbar = ({setToken, flag}) => {
     const location = useLocation();
     const notlogin = location.pathname !== "/login" && location.pathname !== '/createaccount';
 
-    if(flag){
-        return(
-        
+    if (flag) {
+        return (
+
             <div className={styles.container}>
                 <PageHeader
                     title="Almaal"  //how to get page name here?
@@ -141,7 +146,7 @@ const Navbar = ({setToken, flag}) => {
                 // tags={<Tag color="blue">Running</Tag>}
                 extra={notlogin && [
                     <Dropdown key="1" overlay={nav(setToken)} trigger={['click']} placement="bottomRight">
-                        <a onClick={(e) => {e.preventDefault(); console.log("Clicked")}}>
+                        <a onClick={(e) => { e.preventDefault(); console.log("Clicked") }}>
                             <Space className={styles.button}>
                                 <Button
                                     type="primary"
