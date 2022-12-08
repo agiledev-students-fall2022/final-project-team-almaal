@@ -45,10 +45,10 @@ router.post('/update', auth, async (req, res) => {
     const response = {}
     if(req.body.username) {
         try{
-            await User.findByIdAndUpdate(req.body.id, {"User.login.username" : req.body.username})
+            await User.findByIdAndUpdate(req.user.id, {"User.login.username" : req.body.username})
             // await User.updateOne(
             //     {
-            //         "_id": req.body.id
+            //         "_id": req.user.id
             //         // ,"login.uuid":req.body.uuid
             //     },
             //     {
@@ -60,7 +60,7 @@ router.post('/update', auth, async (req, res) => {
             //     // ,
             //     // {
             //     //     arrayFilters: [
-            //     //         {"id": req.body.id},
+            //     //         {"id": req.user.id},
             //     //         {"uuid": req.body.uuid}
             //     //     ]
             //     // }
@@ -73,7 +73,7 @@ router.post('/update', auth, async (req, res) => {
     }
     if(req.body.password){
         try{
-            await User.findByIdAndUpdate(req.body.id, {"User.login.password" : req.body.password})
+            await User.findByIdAndUpdate(req.user.id, {"User.login.password" : req.body.password})
             response.password = req.body.password
             console.log("Successfully updated password to "+req.body.password) 
         }catch(err){
@@ -83,7 +83,7 @@ router.post('/update', auth, async (req, res) => {
 
     if(req.body.investment_visibility){
         try{
-            await User.findByIdAndUpdate(req.body.id,{investment_visibility : req.body.investment_visibility})
+            await User.findByIdAndUpdate(req.user.id,{investment_visibility : req.body.investment_visibility})
             response.investment_visibility = req.body.investment_visibility
             console.log("investment visibility switched to "+req.body.investment_visibility)
         }catch(err){
@@ -93,7 +93,7 @@ router.post('/update', auth, async (req, res) => {
 
     if(req.body.profile_visibility){
         try{
-            await User.findByIdAndUpdate(req.body.id,{profile_visibility : req.body.profile_visibility})
+            await User.findByIdAndUpdate(req.user.id,{profile_visibility : req.body.profile_visibility})
             response.profile_visibility = req.body.profile_visibility
             console.log("profile visibility switched to "+req.body.profile_visibility)
         }catch(err){

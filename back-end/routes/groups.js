@@ -7,46 +7,20 @@ const path = require('path');
 // define the home page route
 const auth = require('../middleware/auth')
 const Posts = require('../db/models/PostsModal')
-
-let data = {feed : [{
-    profilePic:'https://randomuser.me/api/',
-    message: 'Hello World!',
-    timestamp:'59 secs ago',
-    username:'User1',
-    image:'https://picsum.photos/500/300',
-    likes: '20',
-    comments:[{username: 'Alice', comment:'Wow!', profilePic: ''},{username: 'Bob', comment:'Interesting :)', profilePic: ''}]
-}, 
-{
-    profilePic:'https://randomuser.me/api/',
-    message: 'Lovely!',
-    timestamp:'2 mins ago',
-    username:'User2',
-    image:'https://random.imagecdn.app/500/300',
-    likes: '69',
-    comments:[]
-},
-{
-    profilePic:'https://randomuser.me/api/',
-    message: 'Lorem Ipsum',
-    timestamp:'2 days sgo',
-    username:'User3',
-    image:'https://picsum.photos/500/350',
-    likes: '155',
-    comments:[]
-}
-]};
-
-
-
-const session = {
-    user_id : '637820a5a5376540710ee451',
-    username: 'Fathi Kruijs',
-    user_pp: 'https://randomuser.me/api/portraits/thumb/men/16.jpg'
-}
+const Users = require('../db/models/UsersModal')
 
 
 //const temp_data = new Posts({user_id: ('637820a5a5376540710ee44f'), profilePic:'https://randomuser.me/api/portraits/thumb/men/27.jpg', username: 'Cladius Grief', timestamp: new Date(), post_text: "This is my first post!", post_img: null, likes: [1,2,3], comments: {user_id: '637820a5a5376540710ee453', user: "Melissa Myers", comment: "Welcome!", profilePic: 'https://randomuser.me/api/portraits/thumb/women/38.jpg', timestamp: new Date()}})
+
+function check_PP(arr){
+    try{
+        const temp= arr[0].picture.medium;
+        return temp;
+    }catch(e){
+        return null;
+    }
+}
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "./feed_posts");
@@ -60,12 +34,55 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});
 
 router.get('/', auth, (req, res) => {
-    console.log(req.user);
-    Posts.find({}).sort({timestamp: -1}).exec((err, obj)=>{
+    const user_id = req.user.id;
+    let friend_list = [];
+    let feed_posts = [];
+
+    Users.find({_id:  mongoose.Types.ObjectId(user_id)}).exec(async (err, result)=>{
         if(!err){
-            res.status(200).json({session_user: session, feed: obj});
+            friend_list.push(...result[0].friends);
+            
+            await new Promise((resolve, reject) => {
+                let expected_cnt = friend_list.length;
+                let cnt = 0;
+                
+                friend_list.map(async (val) =>{
+                    Posts.find({user_id:  mongoose.Types.ObjectId(val)}).sort({timestamp: -1}).exec((err, obj)=>{
+                        if(!err){
+                            feed_posts.push(...obj);
+
+                            cnt++;
+
+                            if (cnt === expected_cnt) {
+                                resolve();
+                            }
+                        }
+                    })
+
+                    
+                });
+            })
+            
+            console.log("A")
+            const session = {
+                user_id : user_id,
+                username: result[0].name,
+                user_pp : check_PP(result)
+                //(typeof(result[0].picture.medium) == undefined ? null :  result[0].picture.medium)
+            };
+            Posts.find({'user_id': mongoose.Types.ObjectId(user_id)}).sort({timestamp: -1}).exec(async (err, result) =>{
+                if(!err){
+                    feed_posts.push(...result);
+                    res.status(200).json({session_user: session, feed: feed_posts.sort((a, b) => {
+                        return b.timestamp - a.timestamp;
+                    })});
+                }
+
+            })
         }
     })
+
+
     // temp_data.save((err)=>{
     //     if(!err){
     //         console.log("muni");
@@ -76,30 +93,41 @@ router.get('/', auth, (req, res) => {
 })
 
 router.post("/feedpost", auth, upload.single('post_img'), (req, res) => {
-    console.log(req.query, req.body);
     setTimeout(()=>{
-        const temp_data = new Posts(
-            {user_id: session.user_id, 
-            profilePic: session.user_pp, 
-            username: session.username, 
-            timestamp: new Date(), 
-            post_text: req.body.post_text, 
-            post_img: req.file == undefined ? null :({
-                data: fs.readFileSync(path.join(path.dirname('groups.js').split(path.sep).pop() + '/feed_posts/' + req.file.originalname)),
-                contentType: 'image/png'
-            }), 
-            likes: [], 
-            comments: []}
-        );
+        const user_id = req.user.id;
+        let req_pp;
+        let req_username;
 
-        temp_data.save((err)=>{
+        Users.find({_id: user_id}).exec((err, result)=>{
             if(!err){
-                res.status(200).json({result:true, message:'post saved successfully'});
-            }
-            else{
-                res.status(400);
+                req_pp = check_PP(result);
+                req_username = result[0].name;
+
+                const temp_data = new Posts(
+                    {user_id: user_id, 
+                    profilePic: req_pp, 
+                    username: req_username, 
+                    timestamp: new Date(), 
+                    post_text: req.body.post_text, 
+                    post_img: req.file == undefined ? null :({
+                        data: fs.readFileSync(path.join(path.dirname('groups.js').split(path.sep).pop() + '/feed_posts/' + req.file.originalname)),
+                        contentType: 'image/png'
+                    }), 
+                    likes: [], 
+                    comments: []}
+                );
+        
+                temp_data.save((err)=>{
+                    if(!err){
+                        res.status(200).json({result:true, message:'post saved successfully'});
+                    }
+                    else{
+                        res.status(400);
+                    }
+                })
             }
         })
+    
         // data.feed.push({
         //     profilePic:'https://randomuser.me/api/',
         //     message: req.body.message,
@@ -122,15 +150,24 @@ router.post("/feedpost", auth, upload.single('post_img'), (req, res) => {
 router.post("/postcomment", auth, (req, res) => {
     setTimeout(()=>{
         const temp = req.body;
-        console.log('xx-->', temp);
-        const comment_data = {uid: session.user_id, username: session.username, comment: temp.user_comment, profilePic: session.user_pp}
-        
-        console.log(comment_data);
-        Posts.updateOne({_id: temp.post_id}, {$push: {comments: comment_data}}, (err, docs) => {
-            if(err){
-                res.status(400).json({result: false, message:'Something went wring!'});
+
+        const user_id = req.user.id;
+        let req_pp;
+        let req_username;
+
+        Users.find({_id: user_id}).exec((err, result)=>{
+            if(!err){
+                req_pp = check_PP(result);//typeof(result[0].picture.medium) == undefined ? null :  result[0].picture.medium;
+                req_username = result[0].name;
+
+                const comment_data = {uid: user_id, username: req_username, comment: temp.user_comment, profilePic: req_pp}
+                Posts.updateOne({_id: temp.post_id}, {$push: {comments: comment_data}}, (err, docs) => {
+                    if(err){
+                        res.status(400).json({result: false, message:'Something went wring!'});
+                    }
+                    res.status(200).json({result:true, message:'comment saved successfully'})
+                })
             }
-            res.status(200).json({result:true, message:'comment saved successfully'})
         })
 
         // Posts.find({_id: temp.post_id}, (err, obj)=>{
@@ -152,12 +189,12 @@ router.post("/postlike", auth, (req, res)=>{
     const temp = req.body;
 
     if(temp.like){
-        Posts.updateOne({_id: temp.post_id}, {$push: {likes: session.user_id}}).then(
+        Posts.updateOne({_id: temp.post_id}, {$push: {likes: req.user.id}}).then(
             res.status(200).json({result:true, message:'like received'})
         )
     }
     else{
-        Posts.updateOne({_id: temp.post_id}, {$pull: {likes: session.user_id}}).then(
+        Posts.updateOne({_id: temp.post_id}, {$pull: {likes: req.user.id}}).then(
             res.status(200).json({result:true, message:'like unreceived'})
         )
     }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styles from './Friends.module.css'
+import { useHistory } from 'react-router-dom';
 
 import axios from 'axios'
 
@@ -14,13 +15,6 @@ const { Search } = Input;
 const Context = React.createContext({ name: 'Default' });
 
 const URL = "http://localhost:3001/"
-
-let headers = {}
-if (localStorage.token) {
-    headers = {
-        'x-auth-token': localStorage.token
-    }
-}
 
 const Friends = () => {
     const [searchItem, setItem] = useState('');
@@ -111,7 +105,12 @@ const Friends = () => {
 
     }, []);
 
-
+    axios.interceptors.response.use((response) => response, (error) => {
+        if (error.response.status === 401) {
+            window.location.replace("/")
+        }
+        throw error;
+    })
 
     return (
         <>
