@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
-const User = require('../../models/User');
+const User = require('../../db/models/UsersModal');
 const jwt = require('jsonwebtoken');
-const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
-const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 const { JsonWebTokenError } = require('jsonwebtoken');
@@ -16,7 +14,7 @@ const { JsonWebTokenError } = require('jsonwebtoken');
 router.get('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
-        res.json(user);
+        res.status(200).json(user);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error');
@@ -77,7 +75,7 @@ router.post(
                 { expiresIn: 300 },
                 (err, token) => {
                     if (err) throw err;
-                    res.json({ token });
+                    res.status(200).json({ token });
                 }
             );
         } catch (err) {

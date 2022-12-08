@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../action/auth';
 
-const Login = ({setToken, login}) => {
+const Login = ({ setToken, login }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
     const { email, password } = formData;
-    
+
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
 
