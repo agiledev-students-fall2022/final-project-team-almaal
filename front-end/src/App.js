@@ -41,30 +41,30 @@ function App() {
         store.dispatch(loadUser());
     }, []);
 
-    // if(!localStorage.token){
-    //     return(
-    //         <div className='App'>
-    //             <Provider store={store}>
-    //                 <BrowserRouter>
-    //                     <Navbar flag={true}/>
-    //                     <Routes>
-    //                         <Route path='/' element={<Login setToken={setToken}/>} />
-    //                         <Route path='/register' element={<Register />} />
-    //                         <Route path="*"  element={
-    //                                             <div style={{display:'flex', justifyContent:'center', marginTop:'25%'}}>
-    //                                                 <h2>404 Page not found</h2>
-    //                                             </div>
-    //                         }/>
-    //                         {/* <Route path='/' element={<Login setToken={setToken}/>} />
-    //                         <Route path='/register' element={<Register />} /> */}
-    //                     </Routes>
-    //                 </BrowserRouter>
-    //                 <div className='spacer' style={{ height: '3rem' }}></div>
-    //                 <Footer />
-    //             </Provider>
-    //         </div>
-    //     )
-    // }
+    if(!localStorage.token){
+        return(
+            <div className='App'>
+                <Provider store={store}>
+                    <BrowserRouter>
+                        <Navbar flag={true}/>
+                        <Routes>
+                            <Route path='/' element={<Login setToken={setToken}/>} />
+                            <Route path='/register' element={<Register />} />
+                            <Route path="*"  element={
+                                                <div style={{display:'flex', justifyContent:'center', marginTop:'25%'}}>
+                                                    <h2>404 Page not found</h2>
+                                                </div>
+                            }/>
+                            {/* <Route path='/' element={<Login setToken={setToken}/>} />
+                            <Route path='/register' element={<Register />} /> */}
+                        </Routes>
+                    </BrowserRouter>
+                    <div className='spacer' style={{ height: '3rem' }}></div>
+                    <Footer />
+                </Provider>
+            </div>
+        )
+    }
 
     return (
         <div className='App'>

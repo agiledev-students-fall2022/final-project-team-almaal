@@ -1,15 +1,22 @@
-import { Button, Form, Input, Popconfirm, Table, InputNumber,Typography} from 'antd';
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import{Select} from 'antd';
-import PortfolioForm from '../PortfolioForm/PortfolioForm';
-import axios from 'axios'
+import {
+  Button,
+  Form,
+  Input,
+  Popconfirm,
+  Table,
+  InputNumber,
+  Typography,
+} from "antd";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Select } from "antd";
+import PortfolioForm from "../PortfolioForm/PortfolioForm";
+import axios from "axios";
 //Importing the database endpoint as string to be used
-import './Portfolio.css';
-import { ErrorResponse } from '@remix-run/router';
+import "./Portfolio.css";
+import { ErrorResponse } from "@remix-run/router";
 
 //These components are for the Portfolio
 const { Option } = Select;
-
 
 const originData = [];
 
@@ -23,7 +30,7 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
-  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+  const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
   return (
     <td {...restProps}>
       {editing ? (
@@ -48,15 +55,12 @@ const EditableCell = ({
   );
 };
 
-
-
 const Portfolio = () => {
-
   const [form] = Form.useForm();
   const [data, setData] = useState(originData);
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0); //initially count is 0
-  const [editingKey, setEditingKey] = useState('');
+  const [editingKey, setEditingKey] = useState("");
   const isEditing = (record) => record.key === editingKey;
   // const edit = (record) => {
   //   form.setFieldsValue({
@@ -91,7 +95,7 @@ const Portfolio = () => {
   // //POST request to the database to add a new stock
   //   await fetch(`http://localhost:3001/home/`, requestOptions)
   //   .then(response=>response.json)
-  //   .then(data=>console.log(data) )                 
+  //   .then(data=>console.log(data) )
   //       setData(newData);
   //       setEditingKey('');
   //     } else {
@@ -104,12 +108,8 @@ const Portfolio = () => {
   //   }
   // };
 
-
-
-
-
   //const [data, setData] = useState();
-  
+
   // const [tableParams, setTableParams] = useState({
   //   pagination: {
   //     current: 1,
@@ -126,136 +126,135 @@ const Portfolio = () => {
   //     Price: 200,
   //   },
   // ]);
-  
-   
+
   const handleDelete = (key) => {
     const newData = data.filter((item) => item.key !== key);
     setData(newData);
   };
-//default columns at the beginning of the form, not to be updated 
-// const defaultColumns = [
-//   {
-//     title: 'Ticker',
-//     dataIndex: 'ticker',
-//     key: 'ticker',
-//     width: '30%',
-//     editable: true,
-//     /*render: (text) => <a>{text}</a>,*/
-//   },
-//   {
-//     title: 'Position',
-//     dataIndex: 'position',
-//     key: 'position',
-//     width: '30%',
-//     render: (position) =>
-//     (<Select
-//       defaultValue="buy"
-//       style={{
-//         width: 120,
-//       }}
-//       // onChange={handleChange}
-//     >
-//       <Option value="buy">BUY</Option>
-//       <Option value="sell">SELL</Option>
-//     </Select>)
-//   },
-//   {
-//     title: 'Quantity',
-//     dataIndex: 'quantity',
-//     key: 'quantity',
-//     width: '30%',
-//     editable: true,
-//   },
-//   {
-//     title: 'Price ($)',
-//     key: 'price',
-//     dataIndex: 'price',
-//     width: '30%',
-//     editable: true,
-//   },
-//   {
-//     title: 'Action',
-//     key: 'action',
-//     dataIndex: 'action',
-//     render: (_, record) =>
-//     data.length >= 1 ? (
-//           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-//             <a>Delete</a>
-//           </Popconfirm>
-//         ) : null,
-//   },
-//     {
-//       title: 'Operation',
-//       key: 'operation',
-//       dataIndex: 'operation',
-//       render: (_, record) => {
-//         const editable = isEditing(record);
-//         return editable ? (
-//           <span>
-//             <Typography.Link
-//               onClick={() => save(record.key)}
-//               style={{
-//                 marginRight: 8,
-//               }}
-//             >
-//               Save
-//             </Typography.Link>
-//             <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-//               <a>Cancel</a>
-//             </Popconfirm>
-//           </span>
-//         ) : (
-//           <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
-//             Edit
-//           </Typography.Link>
-//         );
-//       },
-//     },
-//   ];
-//   const mergedColumns = defaultColumns.map((col) => {
-//     if (!col.editable) {
-//       return col;
-//     }
-//     return {
-//       ...col,
-//       onCell: (record) => ({
-//         record,
-//         inputType: col.dataIndex === 'price' ? 'number' : 'text',
-//         dataIndex: col.dataIndex,
-//         title: col.title,
-//         editing: isEditing(record),
-//       }),
-//     };
-//   });
- 
+  //default columns at the beginning of the form, not to be updated
+  // const defaultColumns = [
+  //   {
+  //     title: 'Ticker',
+  //     dataIndex: 'ticker',
+  //     key: 'ticker',
+  //     width: '30%',
+  //     editable: true,
+  //     /*render: (text) => <a>{text}</a>,*/
+  //   },
+  //   {
+  //     title: 'Position',
+  //     dataIndex: 'position',
+  //     key: 'position',
+  //     width: '30%',
+  //     render: (position) =>
+  //     (<Select
+  //       defaultValue="buy"
+  //       style={{
+  //         width: 120,
+  //       }}
+  //       // onChange={handleChange}
+  //     >
+  //       <Option value="buy">BUY</Option>
+  //       <Option value="sell">SELL</Option>
+  //     </Select>)
+  //   },
+  //   {
+  //     title: 'Quantity',
+  //     dataIndex: 'quantity',
+  //     key: 'quantity',
+  //     width: '30%',
+  //     editable: true,
+  //   },
+  //   {
+  //     title: 'Price ($)',
+  //     key: 'price',
+  //     dataIndex: 'price',
+  //     width: '30%',
+  //     editable: true,
+  //   },
+  //   {
+  //     title: 'Action',
+  //     key: 'action',
+  //     dataIndex: 'action',
+  //     render: (_, record) =>
+  //     data.length >= 1 ? (
+  //           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+  //             <a>Delete</a>
+  //           </Popconfirm>
+  //         ) : null,
+  //   },
+  //     {
+  //       title: 'Operation',
+  //       key: 'operation',
+  //       dataIndex: 'operation',
+  //       render: (_, record) => {
+  //         const editable = isEditing(record);
+  //         return editable ? (
+  //           <span>
+  //             <Typography.Link
+  //               onClick={() => save(record.key)}
+  //               style={{
+  //                 marginRight: 8,
+  //               }}
+  //             >
+  //               Save
+  //             </Typography.Link>
+  //             <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+  //               <a>Cancel</a>
+  //             </Popconfirm>
+  //           </span>
+  //         ) : (
+  //           <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+  //             Edit
+  //           </Typography.Link>
+  //         );
+  //       },
+  //     },
+  //   ];
+  //   const mergedColumns = defaultColumns.map((col) => {
+  //     if (!col.editable) {
+  //       return col;
+  //     }
+  //     return {
+  //       ...col,
+  //       onCell: (record) => ({
+  //         record,
+  //         inputType: col.dataIndex === 'price' ? 'number' : 'text',
+  //         dataIndex: col.dataIndex,
+  //         title: col.title,
+  //         editing: isEditing(record),
+  //       }),
+  //     };
+  //   });
 
-  
+  //   const handleAdd = async() => {
+  //     const newData = {
+  //       key: count,
+  //       ticker: 'Apple',
+  //       position: 'BUY',
+  //       quantity: 10,
+  //       price: 200,
+  //     };
+  //     setData([...data, newData]);
+  //     setCount(count + 1);
+  //   };
 
-//   const handleAdd = async() => {
-//     const newData = {
-//       key: count,
-//       ticker: 'Apple',
-//       position: 'BUY',
-//       quantity: 10,
-//       price: 200,
-//     };
-//     setData([...data, newData]);
-//     setCount(count + 1);
-//   };
+  //   const components = {
+  //     body: {
+  //       cell: EditableCell,
+  //     },
+  //   };
 
-
-//   const components = {
-//     body: {
-//       cell: EditableCell,
-//     },
-//   };
-
-
-console.log("in Portfolio",data);
+  console.log("in Portfolio", data);
   return (
     <div>
-      <PortfolioForm setCount={setCount} count={count} setData={setData} data={data}/>
-    
+      <PortfolioForm
+        setCount={setCount}
+        count={count}
+        setData={setData}
+        data={data}
+      />
+
       {/* <Table
         size='small'
         scroll={{x: "50vh"}}
@@ -269,58 +268,11 @@ console.log("in Portfolio",data);
           onChange: cancel,
         }}
       /> */}
-
     </div>
   );
-}
+};
 
-export default Portfolio
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default Portfolio;
 
 // import { Button, Form, Input, Popconfirm, Table, InputNumber,Typography} from 'antd';
 // import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -332,7 +284,6 @@ export default Portfolio
 
 // //These components are for the Portfolio
 // const { Option } = Select;
-
 
 // const originData = [];
 
@@ -370,8 +321,6 @@ export default Portfolio
 //     </td>
 //   );
 // };
-
-
 
 // const Portfolio = () => {
 
@@ -414,7 +363,7 @@ export default Portfolio
 //   //POST request to the database to add a new stock
 //     await fetch(`http://localhost:3001/home/`, requestOptions)
 //     .then(response=>response.json)
-//     .then(data=>console.log(data) )                 
+//     .then(data=>console.log(data) )
 //         setData(newData);
 //         setEditingKey('');
 //       } else {
@@ -427,12 +376,8 @@ export default Portfolio
 //     }
 //   };
 
-
-
-
-
 //   //const [data, setData] = useState();
-  
+
 //   // const [tableParams, setTableParams] = useState({
 //   //   pagination: {
 //   //     current: 1,
@@ -449,13 +394,12 @@ export default Portfolio
 //   //     Price: 200,
 //   //   },
 //   // ]);
-  
-   
+
 //   const handleDelete = (key) => {
 //     const newData = data.filter((item) => item.key !== key);
 //     setData(newData);
 //   };
-// //default columns at the beginning of the form, not to be updated 
+// //default columns at the beginning of the form, not to be updated
 // const defaultColumns = [
 //   {
 //     title: 'Ticker',
@@ -550,7 +494,6 @@ export default Portfolio
 //       }),
 //     };
 //   });
- 
 
 //   // const handleNew = (newData) => {
 //   //   // const newData = {
@@ -564,12 +507,11 @@ export default Portfolio
 //   //     Ticker: newData.Ticker,
 //   //     Position: newData.Position,
 //   //     Quantity: newData.Quantity,
-//   //     Price: newData.Price,    
+//   //     Price: newData.Price,
 //   //   }
 //   //   setDataSource([...dataSource, addData]);
 //   //   setCount(count + 1);
 //   // };
-
 
 //   const handleAdd = async() => {
 
@@ -585,11 +527,11 @@ export default Portfolio
 //         //       .post(`${process.env.REACT_APP_SERVER_HOSTNAME}/`)
 //         //       .then(response => {
 //         //         handleNew(response.data)
-               
+
 //         //       })
 //         //     }
 //         // } catch (error) {
-//         //     /*The option how to handle the error is totally up to you. 
+//         //     /*The option how to handle the error is totally up to you.
 //         //     Ideally, you can send notification to the user */
 //         //     console.log(error);
 //         // }
@@ -603,8 +545,6 @@ export default Portfolio
 //     setData([...data, newData]);
 //     setCount(count + 1);
 //   };
-
-
 
 //   // //parses and saves the newly added data
 //   // const handleSave = (row) => {
@@ -625,7 +565,6 @@ export default Portfolio
 //   //   },
 //   // };
 
-
 //   // const columns = defaultColumns.map((col) => {
 //   //   if (!col.editable) {
 //   //     return col;
@@ -642,7 +581,6 @@ export default Portfolio
 //   //   };
 //   // });
 
-  
 //   // const handleTableChange = (pagination, filters, sorter) => {
 //   //   setTableParams({
 //   //     pagination,
@@ -650,7 +588,7 @@ export default Portfolio
 //   //     ...sorter,
 //   //   });
 //   // };
-  
+
 //     //   useEffect(() => {
 //     //     //GET request to the mock API database to fetch the stock
 //     //     const fetchData = async () => {
@@ -671,7 +609,7 @@ export default Portfolio
 //     //                 setStocks(dataModified);
 //     //             }
 //     //         } catch (error) {
-//     //             /*The option how to handle the error is totally up to you. 
+//     //             /*The option how to handle the error is totally up to you.
 //     //             Ideally, you can send notification to the user */
 //     //             console.log(error);
 //     //         }
@@ -680,15 +618,11 @@ export default Portfolio
 //     //     fetchData();
 //     // }, [setStocks]);
 
-
-
 //   const components = {
 //     body: {
 //       cell: EditableCell,
 //     },
 //   };
-
-
 
 //   return (
 //     <div>
@@ -717,12 +651,12 @@ export default Portfolio
 //         }}
 //       />
 //     </Form>
-      
+
 //       {/* <Table
 //         components={components}
 //         rowClassName={() => 'editable-row'}
 //         dataSource={dataSource}
-        
+
 //         onChange={handleTableChange}
 //         bordered
 //         columns={columns}
@@ -732,26 +666,6 @@ export default Portfolio
 // }
 
 // export default Portfolio
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // // const columns = [
 // //   {
@@ -780,12 +694,8 @@ export default Portfolio
 // //     key: 'action',
 // //     dataIndex: 'action',
 
-
 // //   },
 // // ];
-
-
-
 
 // // export default function Portfolio({ stocks, setStocks }) {
 // //     const [inputVisibility, setInputVisibility] = useState(false);
@@ -810,7 +720,7 @@ export default Portfolio
 // //                     setStocks(dataModified);
 // //                 }
 // //             } catch (error) {
-// //                 /*The option how to handle the error is totally up to you. 
+// //                 /*The option how to handle the error is totally up to you.
 // //                 Ideally, you can send notification to the user */
 // //                 console.log(error);
 // //             }
@@ -831,7 +741,7 @@ export default Portfolio
 // //             //Updates state by removing this stock
 // //             setStocks((stocks) => stocks.filter((s) => s.id !== stockId));
 // //         } catch (error) {
-// //             /*The option how to handle the error is totally up to you. 
+// //             /*The option how to handle the error is totally up to you.
 // //             Ideally, you can send notification to the user */
 // //             console.log(error);
 // //         }
@@ -873,7 +783,6 @@ export default Portfolio
 // //             ) : null}
 // //             <p>
 
-                            
 // //             </p>
 // //             <button
 // //                 className='add-more-button'
@@ -884,4 +793,3 @@ export default Portfolio
 // //         </div>
 // //     );
 // // }
-
