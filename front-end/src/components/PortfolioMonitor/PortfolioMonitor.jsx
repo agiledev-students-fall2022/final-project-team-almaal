@@ -37,7 +37,7 @@ const columns = [
   {
     title: "marketprice",
     key: "marketprice",
-    dataIndex: "price",
+    dataIndex: "marketprice",
     width: "30%",
   },
   {
