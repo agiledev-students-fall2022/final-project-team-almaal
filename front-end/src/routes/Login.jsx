@@ -4,13 +4,16 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../action/auth';
+import styles from './Login.module.css'
 
-const Login = ({ setToken, login }) => {
+const Login = ({ setToken, login, invalidLink }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
     const { email, password } = formData;
+
+    const [errorMessage, setErrorMessage] = useState('Please Login First.')
 
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,6 +26,11 @@ const Login = ({ setToken, login }) => {
     return (
         <Fragment>
             <section className='container'>
+                {
+                    invalidLink && (
+                        <p className={styles.error}>{errorMessage}</p>
+                    )
+                }
                 <h1 className='large text-primary'>Sign In</h1>
                 <p className='lead'>
                     <i className='fas fa-user'></i> Sign Into Your Account
