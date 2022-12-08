@@ -11,6 +11,7 @@ const axios = require("axios") // middleware for making requests to APIs
 require("dotenv").config({ silent: true }) // load environmental variables from a hidden file named .env
 const morgan = require("morgan") // middleware for nice logging of incoming HTTP requests
 const auth = require('../middleware/auth')
+//const { db } = require('../db/models/PortfolioModal')
 
 /**
  * Typically, all middlewares would be included before routes
@@ -53,8 +54,8 @@ router.use("/static", express.static("public"))
 
 // using async/await in this route to show another way of dealing with asynchronous requests to an external API or database
 router.get("/portfolioData", auth, async(req, res, next) => {
-    try {
-        const doc = await UsersModel.findById(req.body.id).orFail(() => {
+   try {
+        const doc = await UsersModel.findById(req.user.id).orFail(() => {
             throw "ID not found"
         })
       const newInvestment=[]
@@ -62,7 +63,9 @@ router.get("/portfolioData", auth, async(req, res, next) => {
         let entry = doc.investment[i]
         newInvestment.push(entry)
       }
-        res.status(200).json({ success: true, id: req.body.id, newInvestment })//responsing with an array of json objects
+      console.log("data",newInvestment)
+        //res.status(200).json({ success: true, newInvestment })//responsing with an array of json objects
+        res.status(200).json(newInvestment)
     } catch (error) {
         console.log(error)
         res.status(500).json({ success: false, error })
@@ -91,13 +94,13 @@ router.post("/", auth, async(req, res) => {
   // now do something amazing with the data we received from the client
   //console.log(req.body)
   try{
-    const doc = await UsersModel.findById(req.body.id).orFail(() => {
+    const doc = await UsersModel.findById(req.user.id).orFail(() => {
             throw "No user registered"
         })
 
       const newdata ={
-      user_id:req.body.id,
-      //key:req.body.key,
+      //user_id:req.user.id,
+      key:req.body.key,
       ticker: req.body.ticker,
       position: req.body.position,
       quantity: req.body.quantity,

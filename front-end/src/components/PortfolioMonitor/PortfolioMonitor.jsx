@@ -77,15 +77,18 @@ export default function PortfolioMonitor() {
         const response = await axios.get(
           `http://localhost:3001/home/portfolioData`
         );
+        const retrived = response.data;
+        console.log(retrived);
         //const result = await response.json();
         //Validates that the database is not empty
-        if (response) {
-          response.data = response.data.map((res) => {
-            res.key = res.ticker;
-            return res;
-          });
-          setStocks(response.data);
-        }
+        // if (response) {
+        //   response.data = response.data.map((res) => {
+        //     res.key = res.ticker;
+        //     return res;
+        //   });
+        //   setStocks(response.data);
+        // }
+        setStocks(response.data);
       } catch (error) {
         /*The option how to handle the error is totally up to you. 
                 Ideally, you can send notification to the user */
