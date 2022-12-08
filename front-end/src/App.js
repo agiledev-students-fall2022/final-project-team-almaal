@@ -21,49 +21,57 @@ import { loadUser } from './action/auth';
 // import NewsContext from './routes/NewsContext';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Fragment, useEffect } from 'react';
-
+import { Fragment, useEffect, useState } from 'react';
 import useToken from './useToken';
 
 // require('dotenv').config();
 // console.log(process.env)
 
 console.log('ls_token', localStorage.token);
+const URL = "http://localhost:3001/";
 
 if (localStorage.token) {
-    setAuthToken(localStorage.token);
+    setAuthToken(localStorage.token);    
+}
+
+function ret_Login(setToken){
+    return(
+        <div className='App'>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Navbar flag={true}/>
+                    <Routes>
+                        <Route path='/' element={<Login setToken={setToken}/>} />
+                        <Route path='/register' element={<Register />} />
+                        <Route path="*"  element={
+                                            <div style={{display:'flex', justifyContent:'center', marginTop:'25%'}}>
+                                                <h2>404 Page not found</h2>
+                                            </div>
+                        }/>
+                        {/* <Route path='/' element={<Login setToken={setToken}/>} />
+                        <Route path='/register' element={<Register />} /> */}
+                    </Routes>
+                </BrowserRouter>
+                <div className='spacer' style={{ height: '3rem' }}></div>
+                <Footer />
+            </Provider>
+        </div>
+    )
 }
 
 function App() {
     const { token, setToken } = useToken();
-    
+    const [render, rerender] = useState(false);
+
+    //const navigate = useNavigate();
+
     useEffect(() => {
         store.dispatch(loadUser());
     }, []);
 
+
     if(!localStorage.token){
-        return(
-            <div className='App'>
-                <Provider store={store}>
-                    <BrowserRouter>
-                        <Navbar flag={true}/>
-                        <Routes>
-                            <Route path='/' element={<Login setToken={setToken}/>} />
-                            <Route path='/register' element={<Register />} />
-                            <Route path="*"  element={
-                                                <div style={{display:'flex', justifyContent:'center', marginTop:'25%'}}>
-                                                    <h2>404 Page not found</h2>
-                                                </div>
-                            }/>
-                            {/* <Route path='/' element={<Login setToken={setToken}/>} />
-                            <Route path='/register' element={<Register />} /> */}
-                        </Routes>
-                    </BrowserRouter>
-                    <div className='spacer' style={{ height: '3rem' }}></div>
-                    <Footer />
-                </Provider>
-            </div>
-        )
+        return (ret_Login(setToken));
     }
 
     return (
