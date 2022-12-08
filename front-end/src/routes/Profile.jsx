@@ -10,7 +10,7 @@ import fetcher from '../utils/setFetchToken';
 const { Title } = Typography;
 
 const URL = "http://localhost:3001/";
-console.log("profile starts here")
+
 let headers = {}
 if (localStorage.token) {
     console.log("TRUE");
@@ -21,6 +21,7 @@ if (localStorage.token) {
 }
 
 const Profile = () => {
+    console.log("profile starts here")
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [picture, setPicture] = useState(null);

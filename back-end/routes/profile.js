@@ -4,27 +4,18 @@ const mongoose = require('mongoose')
 const User = require('../db/models/UsersModal')
 const auth = require('../middleware/auth')
 
-var user = {
-    username: "@frankwu2002",
-    password: "fakepassword",
-    investment_visibility: false,
-    profile_visibility: false,
-    total_friends: 10,
-    total_groups: 7,
-    total_invested: "$5000",
-    total_profit: "+10.5%"
-};
 
 // define the profile page route
 router.get('/', auth, async (req, res) => {
-    try {
-        const user = await User.findById(req.user.id);
-        res.json(user);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
-    }
-    return res
+    // console.log("got here"+req.body.id)
+    // try {
+    //     const user = await User.findById("637820a5a5376540710ee44f");
+    // } catch (err) {
+    //     console.error(err.message);
+    //     res.status(500).send('Server error');
+    // }
+    // return res.status(200).json(user)
+    return res.status(200)
     // User.findById(req.body.id, (err,found) => {
     //     if(err){
     //         throw err

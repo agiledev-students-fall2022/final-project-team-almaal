@@ -25,6 +25,7 @@ mongoose.connect(`${process.env.DB_URL}`).then(
 
 const db = mongoose.connection;
 
+
 // user database
 // const connectDB = require('./config/db');
 // connectDB();
