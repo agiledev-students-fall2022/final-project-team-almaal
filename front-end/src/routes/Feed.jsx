@@ -18,18 +18,20 @@ if (localStorage.token) {
 function Feed() {
     const [backendData, setBackendData] = useState([{}])
     const [dataFlag, setDataFlag] = useState(false)
+    const [runFlag, setRunFlag] = useState(false)
 
     useEffect(()=>{
         axios.get(URL + "groups").then(
            function(response){
                 setBackendData(response.data);
-                setDataFlag(true);
-            
+                if((response.data.feed).length > backendData.length){
+                    setRunFlag(true);
+                }
         })
     }, [backendData]);
 
 
-    
+if(runFlag){
   return (
 
     <div className='feed'>
@@ -59,6 +61,7 @@ function Feed() {
     )}
     </div>
   )
+}
 }
 
 export default Feed

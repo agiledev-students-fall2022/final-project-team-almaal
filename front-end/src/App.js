@@ -17,18 +17,40 @@ import store from './store';
 import { loadUser } from './action/auth';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Fragment, useEffect } from 'react';
-
-import axios from 'axios';
-
+import { Fragment, useEffect, useState } from 'react';
+import useToken from './useToken';
 import { connect } from 'react-redux';
 
-import useToken from './useToken';
-
 console.log('ls_token', localStorage.token);
+const URL = "http://localhost:3001/";
 
 if (localStorage.token) {
-    setAuthToken(localStorage.token);
+    setAuthToken(localStorage.token);    
+}
+
+function ret_Login(setToken){
+    return(
+        <div className='App'>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Navbar flag={true}/>
+                    <Routes>
+                        <Route path='/' element={<Login setToken={setToken}/>} />
+                        <Route path='/register' element={<Register />} />
+                        <Route path="*"  element={
+                                            <div style={{display:'flex', justifyContent:'center', marginTop:'25%'}}>
+                                                <h2>404 Page not found</h2>
+                                            </div>
+                        }/>
+                        {/* <Route path='/' element={<Login setToken={setToken}/>} />
+                        <Route path='/register' element={<Register />} /> */}
+                    </Routes>
+                </BrowserRouter>
+                <div className='spacer' style={{ height: '3rem' }}></div>
+                <Footer />
+            </Provider>
+        </div>
+    )
 }
 
 function App({ isAuthenticated }) {
@@ -37,31 +59,17 @@ function App({ isAuthenticated }) {
     console.log(store.getState())
     const { token, setToken } = useToken();
 
+    const [render, rerender] = useState(false);
+
+    //const navigate = useNavigate();
     useEffect(() => {
         store.dispatch(loadUser());
     }, []);
 
-    // if (!localStorage.token) {
-    //     return (
-    //         <div className='App'>
-    //             <p>Authenticated: {isAuthenticated.toString()}</p>
-    //             <BrowserRouter>
-    //                 <Navbar flag={true} />
-    //                 <Routes>
-    //                     <Route path='/' element={<Login setToken={setToken} />} />
-    //                     <Route path='/register' element={<Register />} />
-    //                     <Route path="*" element={
-    //                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25%' }}>
-    //                             <h2>404 Page not found</h2>
-    //                         </div>
-    //                     } />
-    //                 </Routes>
-    //             </BrowserRouter>
-    //             <div className='spacer' style={{ height: '3rem' }}></div>
-    //             <Footer />
-    //         </div>
-    //     )
-    // }
+
+    if(!localStorage.token){
+        return (ret_Login(setToken));
+    }
 
     return (
         <div className='App'>

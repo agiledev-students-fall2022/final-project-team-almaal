@@ -32,9 +32,6 @@ function Post({callback, sid, pid, uid, profilePic, image, username, timestamp, 
         setTest(likes.length)
     }, [likes])
 
-
-    console.log("LIKES", test);
-    
     const handleSubmit = (e, username) =>{
         e.preventDefault();
         if(comment){            
