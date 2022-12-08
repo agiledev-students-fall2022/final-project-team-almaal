@@ -21,6 +21,7 @@ if (localStorage.token) {
 }
 
 const Profile = () => {
+    console.log("profile starts here")
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [picture, setPicture] = useState(null);

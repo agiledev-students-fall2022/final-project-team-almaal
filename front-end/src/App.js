@@ -87,8 +87,9 @@ function App({ isAuthenticated }) {
                                 <Route path='/profile' element={<Profile />} />
                                 {/* <Route path='/news' element={<News />} /> */}
                             </> : <>
-                                <Route path='/' element={<Login setToken={setToken} />} />
                                 <Route path='/register' element={<Register />} />
+                                <Route path='/' element={<Login setToken={setToken} invalidLink={false} />} />
+                                <Route path='/*' element={<Login setToken={setToken} invalidLink={true} />} />
                             </>
                     }
                     <Route path="*" element={
