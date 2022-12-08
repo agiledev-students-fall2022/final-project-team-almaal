@@ -8,8 +8,8 @@ import Groups from './routes/Feed';
 import Profile from './routes/Profile';
 import Login from './routes/Login';
 import Register from './routes/Register';
-import News from './components/News'
-
+import News from './components/News';
+import NewsContextProvider from './routes/NewsContext';
 import setAuthToken from './utils/setAuthToken';
 
 import { useSelector } from 'react-redux';
@@ -22,10 +22,10 @@ import useToken from './useToken';
 import { connect } from 'react-redux';
 
 console.log('ls_token', localStorage.token);
-const URL = "http://localhost:3001/";
+const URL = 'http://localhost:3001/';
 
 if (localStorage.token) {
-    setAuthToken(localStorage.token);    
+    setAuthToken(localStorage.token);
 }
 
 // function ret_Login(setToken){
@@ -54,9 +54,9 @@ if (localStorage.token) {
 // }
 
 function App({ isAuthenticated }) {
-    const state = useSelector(state => state)
+    const state = useSelector((state) => state);
 
-    console.log(store.getState())
+    console.log(store.getState());
     const { token, setToken } = useToken();
 
     const [render, rerender] = useState(false);
@@ -65,7 +65,6 @@ function App({ isAuthenticated }) {
     useEffect(() => {
         store.dispatch(loadUser());
     }, []);
-
 
     // if(!localStorage.token){
     //     //return (ret_Login(setToken));
@@ -77,25 +76,44 @@ function App({ isAuthenticated }) {
                 {/* <p>Authenticated: {state.auth.isAuthenticated.toString()}</p> */}
                 <Navbar setToken={setToken} flag={false} />
                 <Routes>
-
-                    {
-                        state.auth.isAuthenticated ?
-                            <>
-                                <Route path='/' element={<Home />} />
-                                <Route path='/friends' element={<Friends />} />
-                                <Route path='/groups' element={<Groups />} />
-                                <Route path='/profile' element={<Profile />} />
-                                {/* <Route path='/news' element={<News />} /> */}
-                            </> : <>
-                                <Route path='/' element={<Login setToken={setToken} />} />
-                                <Route path='/register' element={<Register />} />
-                            </>
-                    }
-                    <Route path="*" element={
-                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25%' }}>
-                            <h2>404 Page not found</h2>
-                        </div>
-                    } />
+                    {state.auth.isAuthenticated ? (
+                        <>
+                            <Route path='/' element={<Home />} />
+                            <Route path='/friends' element={<Friends />} />
+                            <Route path='/groups' element={<Groups />} />
+                            <Route path='/profile' element={<Profile />} />
+                            <Route
+                                path='/news'
+                                element={
+                                    <NewsContextProvider>
+                                        <News />
+                                    </NewsContextProvider>
+                                }
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <Route
+                                path='/'
+                                element={<Login setToken={setToken} />}
+                            />
+                            <Route path='/register' element={<Register />} />
+                        </>
+                    )}
+                    <Route
+                        path='*'
+                        element={
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    marginTop: '25%',
+                                }}
+                            >
+                                <h2>404 Page not found</h2>
+                            </div>
+                        }
+                    />
                 </Routes>
             </BrowserRouter>
             <div className='spacer' style={{ height: '3rem' }}></div>
@@ -106,7 +124,7 @@ function App({ isAuthenticated }) {
 
 function mapStateToProps(state, ownProps) {
     return {
-        isAuthenticated: state.auth.isAuthenticated
+        isAuthenticated: state.auth.isAuthenticated,
     };
 }
 
