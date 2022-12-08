@@ -17,13 +17,21 @@ var user = {
 
 // define the profile page route
 router.get('/', auth, async (req, res) => {
-    User.findById(req.body.id, (err,found) => {
-        if(err){
-            throw err
-        }else{
-            return res.status(200).json(found) 
-        }
-    })
+    try {
+        const user = await User.findById(req.user.id);
+        res.json(user);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+    return res
+    // User.findById(req.body.id, (err,found) => {
+    //     if(err){
+    //         throw err
+    //     }else{
+    //         return res.status(200).json(found) 
+    //     }
+    // })
 })
 
 // logout route
