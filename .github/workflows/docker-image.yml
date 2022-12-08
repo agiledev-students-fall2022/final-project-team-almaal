@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ "master" ]
 
+  workflow_dispatch:
+  inputs:
+    version:
+      description: 'Almaal Test'
+      required: true
+
 jobs:
 
   build:
