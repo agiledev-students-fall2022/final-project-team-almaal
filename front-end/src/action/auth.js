@@ -19,19 +19,18 @@ export const loadUser = () => async (dispatch) => {
     if (localStorage.token) {
         setAuthToken(localStorage.token);
         console.log(localStorage.token)
-        console.log('i am here!!');
-    }
 
-    try {
-        const res = await axios.get('/api/auth');
-        dispatch({
-            type: USER_LOADED,
-            payload: res.data,
-        });
-    } catch (err) {
-        dispatch({
-            type: AUTH_ERROR,
-        });
+        try {
+            const res = await axios.get('/api/auth');
+            dispatch({
+                type: USER_LOADED,
+                payload: res.data,
+            });
+        } catch (err) {
+            dispatch({
+                type: AUTH_ERROR,
+            });
+        }
     }
 };
 
@@ -78,7 +77,6 @@ export const login = (email, password, setToken) => async (dispatch) => {
 
     try {
         const res = await axios.post('/api/auth', body, config);
-        console.log("HERE2")
         setToken(res.data);
         dispatch({
             type: LOGIN_SUCCESS,
