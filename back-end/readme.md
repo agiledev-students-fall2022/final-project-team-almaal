@@ -7,3 +7,8 @@
 5. Navigate to the front-end folder
 6. run **npm i** to install all dependencies
 7. run **npm start** to run the front-end
+
+## We have containerized front-end and back-end
+
+run **docker-compose up** to start
+run **docker-compose down** to stop
