@@ -7,10 +7,10 @@ on:
     branches: [ "master" ]
 
   workflow_dispatch:
-  inputs:
-    version:
-      description: 'Almaal Test'
-      required: true
+    inputs:
+      version:
+        description: 'Almaal Test'
+        required: true
 
 jobs:
 
