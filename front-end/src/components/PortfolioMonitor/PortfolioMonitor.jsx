@@ -6,6 +6,7 @@ import axios from "axios";
 // require('dotenv').config({path: 'front-end\.env'})
 
 // import { get } from 'react-scroll/modules/mixins/scroller';
+const URL = process.env.REACT_APP_BACKEND_URL
 const originData = [];
 
 //default columns at the beg of the form, not to be updated
@@ -75,7 +76,7 @@ export default function PortfolioMonitor() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/home/portfolioData`
+          URL + `/home/portfolioData`
         );
         const retrived = response.data;
         console.log(retrived);
