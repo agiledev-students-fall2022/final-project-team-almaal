@@ -22,7 +22,7 @@ api_key.apiKey = TOKEN
 const finnhubClient = new finnhub.DefaultApi()
 
 finnhubClient.quote("AAPL", (error, data, response) => {
-  console.log("current price",data.c)
+  //console.log("current price",data.c)
 });
 
 
@@ -54,7 +54,7 @@ router.get("/portfolioData", auth, async(req, res, next) => {
         const doc = await UsersModel.findById(req.user.id).orFail(() => {
             throw "ID not found"
         })
-      const newInvestment=[]
+      let newInvestment=[]
       for (let i = 0; i < doc.investment.length; i++) {
         let entry = doc.investment[i]
         newInvestment.push(entry)
@@ -73,17 +73,10 @@ router.get("/portfolioData", auth, async(req, res, next) => {
       //   newInvestment[i].profitloss=profitLossCalculator(newInvestment[i].price, newInvestment[i].marketprice, newInvestment[i].position, newInvestment[i].quantity)
       //   //console.log("current price of ticker and profitloss: ",newInvestment[i].ticker,newInvestment[i].marketprice,newInvestment[i].profitloss )
       // }
+    
+      stockFetcher(newInvestment)
 
-      //stockFetcher(newInvestment)
-      // for(let i=0;i<newInvestment.length;i++)
-      // {
-      //   res=axios.get(`https://finnhub.io/api/v1/quote?symbol=${newInvestment[i].ticker}&token=${TOKEN}`)
-      //               .then(apiResponse => apiResponse.data) // pass data along directly to client
-      //               .then(data=>(newInvestment[i].marketprice=data.c))
-      //               .then(data=>console.log("marketprice",newInvestment[i].marketprice))
-      //               .catch(err => next(err)) // pass any errors to express
-      // }
-      //console.log("data 2:",res.c)
+      console.log("data 2:",newInvestment)
         //res.status(200).json({ success: true, newInvestment })//responsing with an array of json objects
       res.status(200).json(newInvestment)
     } catch (error) {
@@ -164,9 +157,9 @@ router.post("/", auth, async(req, res) => {
   //newdata.save()
     doc.investment.push(newdata)
     console.log("New Data Added: ",newdata )
-    for (let i = 0; i < doc.investment.length; i++) {
-        console.log("New Data Added : ",i,doc.investment[i] )
-        }
+    // for (let i = 0; i < doc.investment.length; i++) {
+    //     console.log("New Data Added : ",i,doc.investment[i] )
+    //     }
     await doc.save()
     return res.status(200).json({ success: true })
 
@@ -206,16 +199,29 @@ router.get("/", auth, async(req, res) => {
 
 // //Function which fetches the current prices and updates our state with current prices and profit/loss
 const stockFetcher = (newInvestment) => {
-    newInvestment.forEach(async (s) => {
-        try {
-          let i=0
-           // const stockName = s.ticker.replace('', '');
-            const stockName = s.ticker
-            await axios.get(`https://finnhub.io/api/v1/quote?symbol=${stockName}&token=${TOKEN}`)
-                    .then(apiResponse => apiResponse.data) // pass data along directly to client
-                    .then(data=>(s.marketprice=data.c))
-                    .then(data=>console.log("marketprice",data.c))
+  const fetchData=async()=>
+  {
+      for(let i=0;i<newInvestment.length;i++)
+      {
+        response=await axios.get(`https://finnhub.io/api/v1/quote?symbol=${newInvestment[i].ticker}&token=${TOKEN}`)
+                    //.then(apiResponse => apiResponse.data) // pass data along directly to client
+                    .then(data=>(newInvestment[i].marketprice=data.c))
+                    .then(data=>console.log("marketprice 1",newInvestment[i].marketprice))
                     .catch(err => next(err)) // pass any errors to express
+      }
+  }
+  fetchData();
+  console.log("marketprice 2",newInvestment)
+    // newInvestment.forEach(async (s) => {
+    //     try {
+    //       let i=0
+    //        // const stockName = s.ticker.replace('', '');
+    //         const stockName = s.ticker
+    //         await axios.get(`https://finnhub.io/api/v1/quote?symbol=${stockName}&token=${TOKEN}`)
+    //                 .then(apiResponse => apiResponse.data) // pass data along directly to client
+    //                 .then(data=>(s.marketprice=data.c))
+    //                 .then(data=>console.log("marketprice",data.c))
+    //                 .catch(err => next(err)) // pass any errors to express
             // const response = await fetch(
             //      `${STOCK_API}/quote?symbol=${stockName}&token=${TOKEN}`
             //  );
@@ -241,13 +247,13 @@ const stockFetcher = (newInvestment) => {
             //     stockWithPrice,
             //     ...stocks.slice(indexOfStock + 1),
             // ]);
-            i++
-        } catch (error) {
-            /*The option how to handle the error is totally up to you. 
-                Ideally, you can send notification to the user */
-            console.log(error);
-        }
-    });
+    //         i++
+    //     } catch (error) {
+    //         /*The option how to handle the error is totally up to you. 
+    //             Ideally, you can send notification to the user */
+    //         console.log(error);
+    //     }
+    // });
 };
 
 // // using async/await in this route to show another way of dealing with asynchronous requests to an external API or database
