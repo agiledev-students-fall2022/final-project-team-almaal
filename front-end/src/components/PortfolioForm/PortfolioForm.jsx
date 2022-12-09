@@ -41,18 +41,18 @@ const CollectionCreateForm = ({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newStock),
         };
-        //POST request to the database to add a new stock
-        await fetch(`http://localhost:3001/home/`, requestOptions)
+        // //POST request to the database to add a new stock
+        // await fetch(`http://localhost:3001/home/`, requestOptions)
+        //   .then((response) => response.json)
+        //   .then((data) => console.log(data));
+        // console.log("in form 2:", newStock);
+        const result = await axios
+          .post(`http://localhost:3001/home/`, newStock)
           .then((response) => response.json)
-          .then((data) => console.log(data));
-        console.log("in form 2:", newStock);
-        // const result = await axios
-        //   .post(`http://localhost:3001/home/`, newStock)
-        //   //.then((response) => response.json)
-        //   //.then((data) => console.log(data))
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
+          //.then((data) => console.log(data))
+          .catch(function (error) {
+            console.log(error);
+          });
 
         form
           .validateFields()

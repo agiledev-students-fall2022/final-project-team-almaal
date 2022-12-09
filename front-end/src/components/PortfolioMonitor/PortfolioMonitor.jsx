@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Input, Table, Divider, Space } from "antd";
 import "./PortfolioMonitor.css";
 import axios from "axios";
-import DemoLine from "./DemoLine";
+//import DemoLine from "./DemoLine";
 // require('dotenv').config({path: 'front-end\.env'})
 
 // import { get } from 'react-scroll/modules/mixins/scroller';
@@ -177,9 +177,10 @@ export default function PortfolioMonitor() {
           onChange={handleTableChange}
         />
       </div>
-      <div>
+      {/* removed chart temporarily */}
+      {/* <div>
         <DemoLine />
-      </div>
+      </div> */}
     </Space>
   );
 }
