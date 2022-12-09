@@ -9,7 +9,7 @@ services:
     container_name: almaal_frontend
     volumes:
       - ./front-end:/frontend
-      # - /frontend/node_modules
+      - /frontend/node_modules
     ports:
       - 3000:3000
 
@@ -21,7 +21,7 @@ services:
     container_name: almaal_server
     volumes:
       - ./back-end:/server
-      # - /server/node_modules
+      - /server/node_modules
     ports:
       - 3001:3001
     pull_policy: never

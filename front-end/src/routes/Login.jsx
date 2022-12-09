@@ -31,7 +31,7 @@ const Login = ({ setToken, login, invalidLink }) => {
                         <p className={styles.error}>{errorMessage}</p>
                     )
                 }
-                <h1 className='large text-primary'>Sign In sdfsd</h1>
+                <h1 className='large text-primary'>Sign In</h1>
                 <p className='lead'>
                     <i className='fas fa-user'></i> Sign Into Your Account
                 </p>
