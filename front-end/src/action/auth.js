@@ -12,7 +12,8 @@ import {
 
 import setAuthToken from '../utils/setAuthToken';
 
-axios.defaults.baseURL = 'http://127.0.0.1:3001/';
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
+console.log(axios.defaults.baseURL)
 // Load User
 
 export const loadUser = () => async (dispatch) => {
