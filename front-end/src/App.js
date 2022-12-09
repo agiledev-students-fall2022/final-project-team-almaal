@@ -22,10 +22,10 @@ import useToken from './useToken';
 import { connect } from 'react-redux';
 
 console.log('ls_token', localStorage.token);
-const URL = "http://localhost:3001/";
+const URL = process.env.REACT_APP_BACKEND_URL;
 
 if (localStorage.token) {
-    setAuthToken(localStorage.token);    
+    setAuthToken(localStorage.token);
 }
 
 // function ret_Login(setToken){

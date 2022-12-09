@@ -7,13 +7,15 @@ import axios from "axios";
 
 const { Title } = Typography;
 
+const URL = process.env.REACT_APP_BACKEND_URL
+
 function login(e) {
     e.preventDefault();
     let request = {
         email: document.getElementById('exampleInputEmail1').value,
         password: document.getElementById('exampleInputPassword1').value
     }
-    axios.post("http://localhost:3001/login", request)
+    axios.post(URL + "/login", request)
         .then(resp => {
             alert(resp.data.message);
         })

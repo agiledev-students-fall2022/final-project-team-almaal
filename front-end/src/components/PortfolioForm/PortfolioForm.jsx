@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button, Form, InputNumber, Input, Modal } from "antd";
 import axios from "axios";
 
+const URL = process.env.REACT_APP_BACKEND_URL
+
 const CollectionCreateForm = ({
   open,
   onCreate,
@@ -22,9 +24,8 @@ const CollectionCreateForm = ({
       onCancel={onCancel}
       onOk={async () => {
         const current = new Date();
-        const date = `${current.getDate()}/${
-          current.getMonth() + 1
-        }/${current.getFullYear()}`;
+        const date = `${current.getDate()}/${current.getMonth() + 1
+          }/${current.getFullYear()}`;
         const newStock = {
           key: count + 1,
           ticker: form.getFieldValue("ticker"),
@@ -47,7 +48,7 @@ const CollectionCreateForm = ({
         //   .then((data) => console.log(data));
         // console.log("in form 2:", newStock);
         const result = await axios
-          .post(`http://localhost:3001/home/`, newStock)
+          .post(URL + `/home/`, newStock)
           .then((response) => response.json)
           //.then((data) => console.log(data))
           .catch(function (error) {
