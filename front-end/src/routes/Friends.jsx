@@ -14,7 +14,7 @@ const { Search } = Input;
 
 const Context = React.createContext({ name: 'Default' });
 
-const URL = "http://localhost:3001/"
+const URL = process.env.REACT_APP_BACKEND_URL
 
 const Friends = () => {
     const [searchItem, setItem] = useState('');
@@ -88,14 +88,14 @@ const Friends = () => {
 
     useEffect(() => {
         const getIncomingRequests = async () => {
-            const response = await axios.get("http://localhost:3001/friends")
+            const response = await axios.get(URL + "/friends")
             const data = response.data;
 
             setIncomingRequests(data.friendRequests);
         }
 
         const getFriendList = async () => {
-            const response = await axios.get("http://localhost:3001/friends/friendlist")
+            const response = await axios.get(URL + "/friends/friendlist")
             const data = response.data;
             setFriends(data.friends);
         }
