@@ -3,6 +3,8 @@ name: Docker Deploy
 on:
   push:
     branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -10,7 +12,7 @@ jobs:
 
     steps:
     - name: SSH into droplet
-    - uses: appleboy/ssh-action@v0.1.6
+      uses: appleboy/ssh-action@v0.1.6
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
