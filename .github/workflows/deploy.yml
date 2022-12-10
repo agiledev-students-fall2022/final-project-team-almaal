@@ -23,4 +23,6 @@ jobs:
           cd final-project-team-almaal
           git pull
           docker-compose down
+          docker rm $(docker ps -aq)
+          docker rmi $(docker images -aq)
           docker-compose up -d
