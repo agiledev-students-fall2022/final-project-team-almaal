@@ -21,13 +21,16 @@ function Feed() {
     const [runFlag, setRunFlag] = useState(false)
 
     useEffect(() => {
-        axios.get(URL + "groups").then(
-            function (response) {
-                setBackendData(response.data);
-                if ((response.data.feed).length > backendData.length) {
-                    setRunFlag(true);
+       setInterval(()=>{
+            axios.get(URL + "groups").then(
+                function (response) {
+                    setBackendData(response.data);
+                    if ((response.data.feed).length > backendData.length) {
+                        setRunFlag(true);
+                    }
                 }
-            })
+            )
+       }, 10000) 
     }, []);
 
 

@@ -63,7 +63,6 @@ router.get('/', auth, (req, res) => {
                 });
             })
             
-            console.log("A")
             const session = {
                 user_id : user_id,
                 username: result[0].name,
@@ -81,15 +80,6 @@ router.get('/', auth, (req, res) => {
             })
         }
     })
-
-
-    // temp_data.save((err)=>{
-    //     if(!err){
-    //         console.log("muni");
-    //         res.status(200).json({feed: [temp_data]});
-    //     }
-    // })
-    //res.status(200).json({feed: [temp_data]});
 })
 
 router.post("/feedpost", auth, upload.single('post_img'), (req, res) => {
