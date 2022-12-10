@@ -56,9 +56,9 @@ const nav = (setToken) => {
             <Menu.Item key="4" icon={<ApartmentOutlined />}>
                 <Link to="groups">Feed</Link>
             </Menu.Item>
-            {/* <Menu.Item key="5" icon={<ContainerOutlined />}>
+            <Menu.Item key="5" icon={<ContainerOutlined />}>
                 <Link to="news">News</Link>
-            </Menu.Item> */}
+            </Menu.Item>
             <Menu.Item key="6" icon={<RadarChartOutlined />}>
                 <Link to="" onClick={() => {
                     localStorage.clear();
