@@ -23,10 +23,10 @@ jobs:
           cd final-project-team-almaal
           git pull
           docker-compose down
-          docker system prune -a
-          docker stop $(docker ps -a -q)
-          docker rm almaal-server:v1
-          docker rm almaal-frontend:v1
-          docker rmi almaal-server:v1
-          docker rmi almaal-frontend:v1
+          # docker system prune -a
+          # docker stop $(docker ps -a -q)
+          # docker rm almaal-server:v1
+          # docker rm almaal-frontend:v1
+          # docker rmi almaal-server:v1
+          # docker rmi almaal-frontend:v1
           docker-compose up -d
