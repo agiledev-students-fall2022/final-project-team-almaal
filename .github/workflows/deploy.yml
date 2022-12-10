@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,4 +19,9 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
         script: |
-          echo "HELLO FROM GITHUB ACTIONS!!"
+          pwd
+          cd final-project-team-almaal
+          docker-compose down
+          docker rmi almaal-frontend:v1
+          docker rmi almaal-server:v1
+          docker-compose up -d
