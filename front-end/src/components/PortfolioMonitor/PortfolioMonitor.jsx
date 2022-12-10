@@ -76,10 +76,10 @@ export default function PortfolioMonitor() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          URL + `/home/portfolioData`
+          URL + `home/portfolioData`
         );
         const retrived = response.data;
-        console.log(retrived);
+        // console.log(retrived);
         //const result = await response.json();
         //Validates that the database is not empty
         // if (response) {
@@ -172,7 +172,7 @@ export default function PortfolioMonitor() {
     >
       <div>
         <Table
-          scroll={{ x: "100vh", y: "60vh" }}
+          scroll={{ x: true }}
           columns={columns}
           dataSource={stocks}
           onChange={handleTableChange}

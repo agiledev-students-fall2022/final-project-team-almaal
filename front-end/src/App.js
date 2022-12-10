@@ -21,7 +21,6 @@ import { Fragment, useEffect, useState } from 'react';
 import useToken from './useToken';
 import { connect } from 'react-redux';
 
-console.log('ls_token', localStorage.token);
 const URL = process.env.REACT_APP_BACKEND_URL;
 
 if (localStorage.token) {

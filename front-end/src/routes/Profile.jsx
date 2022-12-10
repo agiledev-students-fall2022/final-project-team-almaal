@@ -9,11 +9,10 @@ import fetcher from '../utils/setFetchToken';
 
 const { Title } = Typography;
 
-const URL = "http://localhost:3001/";
+const URL = process.env.REACT_APP_BACKEND_URL;
 
 let headers = {}
 if (localStorage.token) {
-    console.log("TRUE");
     headers = {
         'x-auth-token': localStorage.token
     }
@@ -21,7 +20,6 @@ if (localStorage.token) {
 }
 
 const Profile = () => {
-    console.log("profile starts here")
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [picture, setPicture] = useState(null);
@@ -100,11 +98,10 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        const getProfile = async () => {
+        const getProfile = () => {
             axios.get(URL + "profile").then(
-                function(response){
+                function (response) {
                     updateInformation(response.data)
-                
                 }
             )
             // const response = await fetcher(URL + "profile", {headers})
@@ -124,7 +121,7 @@ const Profile = () => {
                 <Space align="center">
                     <Space direction="vertical">
                         <Typography className={styles.inputLabel}>Username</Typography>
-                        <Typography className={styles.inputLabel}>Password</Typography>
+                        {/* <Typography className={styles.inputLabel}>Password</Typography> */}
                     </Space>
                     <Space direction="vertical">
                         <Space className={styles.input}>
@@ -133,12 +130,12 @@ const Profile = () => {
                                 <Button icon={<EditOutlined />} onClick={handleUsernameButton} />
                             </Tooltip>
                         </Space>
-                        <Space className={styles.input}>
+                        {/* <Space className={styles.input}>
                             <input type="password" className="form-control" id="exampleInputPassword1" disabled={allowPasswordEdit} placeholder={password} />
                             <Tooltip>
                                 <Button icon={<EditOutlined />} onClick={handlePasswordButton} />
                             </Tooltip>
-                        </Space>
+                        </Space> */}
                     </Space>
                 </Space>
                 <Space direction="vertical" className={styles.switchContainer}>

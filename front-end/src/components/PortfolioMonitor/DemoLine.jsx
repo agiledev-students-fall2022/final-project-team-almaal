@@ -24,7 +24,7 @@ const DemoLine = () => {
     /*Sprint-1 part ends*/
 
     try {
-      const response = await axios.get(URL + `/home/portfolioChartData`);
+      const response = await axios.get(URL + `home/portfolioChartData`);
       //Validates that the database is not empty
       if (response) {
         setData(response.data);

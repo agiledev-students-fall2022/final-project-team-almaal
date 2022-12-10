@@ -28,7 +28,7 @@ function Feed() {
                     setRunFlag(true);
                 }
             })
-    }, [backendData]);
+    }, []);
 
 
     if (runFlag) {

@@ -8,9 +8,9 @@ const auth = require('../middleware/auth')
 // define the profile page route
 
 router.get('/', auth, async (req, res) => {
-    // console.log("got here"+req.body.id)
     try {
-        const user = await User.findById("637820a5a5376540710ee44f");
+        const user = await User.findById(req.user.id);
+        console.log(user)
         return res.status(200).json(user)
     } catch (err) {
         console.error(err.message);
@@ -36,9 +36,9 @@ router.get('/logout', auth, async (req, res) => {
 router.post('/update', auth, async (req, res) => {
     console.log(req)
     const response = {}
-    if(req.body.username) {
-        try{
-            await User.findByIdAndUpdate(req.user.id, {"User.login.username" : req.body.username})
+    if (req.user.username) {
+        try {
+            await User.findByIdAndUpdate(req.user.id, { "User.login.username": req.user.username })
             // await User.updateOne(
             //     {
             //         "_id": req.user.id
@@ -58,44 +58,44 @@ router.post('/update', auth, async (req, res) => {
             //     //     ]
             //     // }
             // )
-            response.username = req.body.username 
-            console.log("Successfully updated username to "+req.body.username)
-        }catch(err){
-            console.log("Error occured, "+err)
+            response.username = req.user.username
+            console.log("Successfully updated username to " + req.user.username)
+        } catch (err) {
+            console.log("Error occured, " + err)
         }
     }
-    if(req.body.password){
-        try{
-            await User.findByIdAndUpdate(req.user.id, {"User.login.password" : req.body.password})
-            response.password = req.body.password
-            console.log("Successfully updated password to "+req.body.password) 
-        }catch(err){
-            console.log("Error occured, "+err)
-        }
-    }
-
-    if(req.body.investment_visibility){
-        try{
-            await User.findByIdAndUpdate(req.user.id,{investment_visibility : req.body.investment_visibility})
-            response.investment_visibility = req.body.investment_visibility
-            console.log("investment visibility switched to "+req.body.investment_visibility)
-        }catch(err){
+    if (req.user.password) {
+        try {
+            await User.findByIdAndUpdate(req.user.id, { "User.login.password": req.user.password })
+            response.password = req.user.password
+            console.log("Successfully updated password to " + req.user.password)
+        } catch (err) {
             console.log("Error occured, " + err)
         }
     }
 
-    if(req.body.profile_visibility){
-        try{
-            await User.findByIdAndUpdate(req.user.id,{profile_visibility : req.body.profile_visibility})
-            response.profile_visibility = req.body.profile_visibility
-            console.log("profile visibility switched to "+req.body.profile_visibility)
-        }catch(err){
+    if (req.user.investment_visibility) {
+        try {
+            await User.findByIdAndUpdate(req.user.id, { investment_visibility: req.user.investment_visibility })
+            response.investment_visibility = req.user.investment_visibility
+            console.log("investment visibility switched to " + req.user.investment_visibility)
+        } catch (err) {
             console.log("Error occured, " + err)
         }
     }
-    
+
+    if (req.user.profile_visibility) {
+        try {
+            await User.findByIdAndUpdate(req.user.id, { profile_visibility: req.user.profile_visibility })
+            response.profile_visibility = req.user.profile_visibility
+            console.log("profile visibility switched to " + req.user.profile_visibility)
+        } catch (err) {
+            console.log("Error occured, " + err)
+        }
+    }
+
     return res.status(200).json(response)
-    
+
 })
 
 module.exports = router

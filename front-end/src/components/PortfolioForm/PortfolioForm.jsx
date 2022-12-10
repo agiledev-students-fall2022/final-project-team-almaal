@@ -48,7 +48,7 @@ const CollectionCreateForm = ({
         //   .then((data) => console.log(data));
         // console.log("in form 2:", newStock);
         const result = await axios
-          .post(URL + `/home/`, newStock)
+          .post(URL + `home/`, newStock)
           .then((response) => response.json)
           //.then((data) => console.log(data))
           .catch(function (error) {
