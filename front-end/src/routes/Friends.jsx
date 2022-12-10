@@ -47,11 +47,13 @@ const Friends = () => {
                 .then(res => {
                     openNotification("topLeft", res.message)
                 })
+                .catch(err => openNotification("topLeft", err.response.data.message))
 
         } else if (type === "delete") {
             axios.post(URL + "friends/modifyrequest", { action: type, sender: friend._id })
                 .then(res => res.data)
                 .then(res => openNotification("topLeft", res.message))
+                .catch(err => openNotification("topLeft", err.response.data.message))
 
             console.log(type)
         } else if (type === "send") {
@@ -59,6 +61,7 @@ const Friends = () => {
             axios.post(URL + "friends/sendrequest", { searchId: friend._id })
                 .then(res => res.data)
                 .then(res => openNotification("topLeft", res.message))
+                .catch(err => openNotification("topLeft", err.response.data.message))
         }
     }
 
@@ -71,7 +74,12 @@ const Friends = () => {
                 console.log(data)
                 setItem(data);
                 setShowCard(true);
-            });
+            }).catch(err => {
+                setLoaderBool(false)
+                console.log(err.response.data)
+                setItem(err.response.data)
+                setShowCard(true)
+            })
     }
 
     const showModal = () => {
@@ -88,14 +96,14 @@ const Friends = () => {
 
     useEffect(() => {
         const getIncomingRequests = async () => {
-            const response = await axios.get(URL + "/friends")
+            const response = await axios.get(URL + "friends")
             const data = response.data;
 
             setIncomingRequests(data.friendRequests);
         }
 
         const getFriendList = async () => {
-            const response = await axios.get(URL + "/friends/friendlist")
+            const response = await axios.get(URL + "friends/friendlist")
             const data = response.data;
             setFriends(data.friends);
         }
