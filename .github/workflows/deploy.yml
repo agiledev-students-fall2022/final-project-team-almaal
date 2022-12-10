@@ -21,7 +21,6 @@ jobs:
         script: |
           pwd
           cd final-project-team-almaal
+          git pull
           docker-compose down
-          docker rmi almaal-frontend:v1
-          docker rmi almaal-server:v1
           docker-compose up -d
