@@ -25,6 +25,8 @@ jobs:
           docker-compose down
           docker system prune -a
           docker stop $(docker ps -a -q)
-          docker rm $(docker ps -a -q)
-          docker rmi $(docker images -a -q)
+          docker rm almaal-server:v1
+          docker rm almaal-frontend:v1
+          docker rmi almaal-server:v1
+          docker rmi almaal-frontend:v1
           docker-compose up -d
