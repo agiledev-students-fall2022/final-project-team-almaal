@@ -76,7 +76,6 @@ function App({ isAuthenticated }) {
                 {/* <p>Authenticated: {state.auth.isAuthenticated.toString()}</p> */}
                 <Navbar setToken={setToken} flag={false} />
                 <Routes>
-
                     {
                         state.auth.isAuthenticated ?
                             <>
