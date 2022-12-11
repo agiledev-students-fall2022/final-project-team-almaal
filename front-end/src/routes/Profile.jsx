@@ -28,8 +28,8 @@ const Profile = () => {
     const [totalFriends, setTotalFriends] = useState();
     const [totalInvestment, setTotalInvestment] = useState();
     const [totalPl, setTotalPl] = useState();
+    const [allowEdit, setAllowEdit] = useState(false);
     const [allowUsernameEdit, setAllowUsernameEdit] = useState(false);
-    const [allowPasswordEdit, setAllowPasswordEdit] = useState(false);
 
     const updateInformation = data => {
         setUsername(data.login.username)
@@ -42,44 +42,80 @@ const Profile = () => {
         setTotalPl(data.total_profit)
     }
 
-    const handleUsernameButton = () => {
-        setAllowUsernameEdit(!allowUsernameEdit);
-        if (!allowUsernameEdit) {
+    const updateUsername = () =>{
+        if(document.getElementById('exampleInputEmail1').value != ""){
             setUsername(document.getElementById('exampleInputEmail1').value)
-            axios.post(URL + "profile/update", { username: username })
-                .then(() => {
-                    console.log("successfully updated username to " + username)
-                })
-                .catch(err => {
-                    console.log(err);
-                })
         }
-
     }
 
-    const handlePasswordButton = () => {
-        setAllowPasswordEdit(!allowPasswordEdit);
-        if (!allowPasswordEdit) {
-            setPassword(document.getElementById('exampleInputPassword1').value)
-            axios.post(URL + "profile/update", { password: password })
+    const handleEditButton = async () => {
+        setAllowEdit(!allowEdit);
+        // console.log("allow edit: "+allowEdit)
+        if(allowEdit){
+            // setUsername(document.getElementById('exampleInputEmail1').value)
+            updateUsername()
+            console.log("username: "+username)
+            console.log(document.getElementById('exampleInputEmail1').value)
+            axios.post(URL + "profile/update", 
+                {   username: username,
+                    investment_visibility: investmentVisibility,
+                    profile_visibility: profileVisibility
+                })
                 .then(() => {
-                    console.log("successfully updated password to " + password)
+                    console.log("is it here?")
+                    console.log("successfully updated username to " + username)
+                    console.log("successfully updated investment visibility to " + investmentVisibility)
+                    console.log("successfully updated profile visibility to " + profileVisibility)
                 })
                 .catch(err => {
                     console.log(err);
                 })
         }
+    }
+
+    // const handleUsernameButton = () => {
+    //     setAllowUsernameEdit(!allowUsernameEdit);
+    //     if (!allowUsernameEdit) {
+    //         setUsername(document.getElementById('exampleInputEmail1').value)
+    //         axios.post(URL + "profile/update", { username: username })
+    //             .then(() => {
+    //                 console.log("successfully updated username to " + username)
+    //             })
+    //             .catch(err => {
+    //                 console.log(err);
+    //             })
+    //     }
+
+    // }
+
+    // const handlePasswordButton = () => {
+    //     setAllowPasswordEdit(!allowPasswordEdit);
+    //     if (!allowPasswordEdit) {
+    //         setPassword(document.getElementById('exampleInputPassword1').value)
+    //         axios.post(URL + "profile/update", { password: password })
+    //             .then(() => {
+    //                 console.log("successfully updated password to " + password)
+    //             })
+    //             .catch(err => {
+    //                 console.log(err);
+    //             })
+    //     }
+    // }
+
+    const handleUsernameButton = () => {
+        updateUsername()
     }
 
     const handleInvestmentSwitch = () => {
         setInvestmentVisibility(!investmentVisibility);
-        axios.post(URL + "profile/update", { investment_visibility: investmentVisibility })
-            .then(() => {
-                console.log("successfully updated investment visibility to " + investmentVisibility)
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        console.log("investment visibility: "+investmentVisibility)
+        // axios.post(URL + "profile/update", { investment_visibility: investmentVisibility })
+        //     .then(() => {
+        //         console.log("successfully updated investment visibility to " + investmentVisibility)
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
         // fetch(URL + 'profile/update', {
         //     method:'POST',
         //     body: JSON.stringify({investment_visibility: investmentVisibility})
@@ -88,13 +124,14 @@ const Profile = () => {
 
     const handleProfileSwitch = () => {
         setProfileVisibility(!profileVisibility);
-        axios.post(URL + "profile/update", { profile_visibility: profileVisibility })
-            .then(() => {
-                console.log("successfully updated profile visibility to " + profileVisibility)
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        console.log("profile visibility: "+profileVisibility)
+        // axios.post(URL + "profile/update", { profile_visibility: profileVisibility })
+        //     .then(() => {
+        //         console.log("successfully updated profile visibility to " + profileVisibility)
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
     }
 
     useEffect(() => {
@@ -108,11 +145,16 @@ const Profile = () => {
             // const data = await response.json();
             // console.log("Here", data)
             // updateInformation(data)
+            
         }
 
         getProfile();
+        
     }, [])
-
+    console.log("username: "+username)
+        console.log("investment visibility: "+investmentVisibility)
+        console.log("profile visibility: "+profileVisibility)
+        console.log("allow username edit: "+allowUsernameEdit)
     return (
         <div>
             {/* <Title level={2} className={styles.title}>Your Almaal Profile</Title> */}
@@ -125,9 +167,9 @@ const Profile = () => {
                     </Space>
                     <Space direction="vertical">
                         <Space className={styles.input}>
-                            <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled={allowUsernameEdit} placeholder={username} />
+                            <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled={!allowEdit} placeholder={username} />
                             <Tooltip>
-                                <Button icon={<EditOutlined />} onClick={handleUsernameButton} />
+                                <Button icon={<EditOutlined />} onClick={handleUsernameButton} disabled={!allowEdit}/>
                             </Tooltip>
                         </Space>
                         {/* <Space className={styles.input}>
@@ -139,9 +181,10 @@ const Profile = () => {
                     </Space>
                 </Space>
                 <Space direction="vertical" className={styles.switchContainer}>
-                    <Space size="small">Investment Visibility<Switch className={styles.switch} checked={investmentVisibility} onClick={handleInvestmentSwitch}></Switch></Space>
-                    <Space size="small">Hide Profile<Switch className={styles.switch} checked={profileVisibility} onClick={handleProfileSwitch}></Switch></Space>
+                    <Space size="small">Investment Visibility<Switch className={styles.switch} disabled={!allowEdit} checked={investmentVisibility} onClick={handleInvestmentSwitch}></Switch></Space>
+                    <Space size="small">Hide Profile<Switch className={styles.switch} disabled={!allowEdit} checked={profileVisibility} onClick={handleProfileSwitch}></Switch></Space>
                 </Space>
+                <Button type="primary" onClick={handleEditButton} >Edit</Button>
                 <Divider plain></Divider>
                 {/* <List className='cards'>
                     <Space>
@@ -169,7 +212,7 @@ const Profile = () => {
                 </Row>
             </Space>
         </div>
-    );
+    )
 
 }
 export default Profile

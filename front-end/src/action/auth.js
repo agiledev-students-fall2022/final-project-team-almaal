@@ -32,7 +32,7 @@ export const loadUser = () => async (dispatch) => {
             });
         }
     }
-};
+}
 
 // register User
 export const register =
@@ -64,7 +64,7 @@ export const register =
                     type: REGISTER_FAIL,
                 });
             }
-        };
+        }
 
 // login User
 export const login = (email, password, setToken) => async (dispatch) => {
@@ -94,9 +94,9 @@ export const login = (email, password, setToken) => async (dispatch) => {
             type: LOGIN_FAIL,
         });
     }
-};
+}
 
 // Logout/clear profile
 export const logout = () => (dispatch) => {
     dispatch({ type: LOGOUT });
-};
+}

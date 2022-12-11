@@ -38,11 +38,11 @@ router.get('/', auth, async (req, res) => {
 
 // update profile information
 router.post('/update', auth, async (req, res) => {
-    console.log(req)
+    console.log(req.body)
+    // console.log(req.body.hasOwnProperty('username')+" "+req.body.hasOwnProperty('investment_visibility')+" "+req.body.hasOwnProperty('profile_visibility'))
     const response = {}
     if (req.body.username) {
         try {
-            // await User.findByIdAndUpdate(req.user.id, { "User.login.username": req.body.username })
             await User.update({_id: req.user.id}, {'$set': {"login.username": req.body.username}})
             // await User.updateOne(
             //     {
@@ -79,9 +79,10 @@ router.post('/update', auth, async (req, res) => {
     //     }
     // }
     }
-    if (req.body.investment_visibility) {
+    if (req.body.hasOwnProperty('investment_visibility')) {
         try {
-            await User.findByIdAndUpdate(req.user.id, { investment_visibility: req.body.investment_visibility })
+            // await User.findByIdAndUpdate(req.user.id, { investment_visibility: req.body.investment_visibility })
+            await User.update({_id: req.user.id}, {'$set': {"investment_visibility": req.body.investment_visibility}})
             response.investment_visibility = req.body.investment_visibility
             console.log("investment visibility switched to " + req.body.investment_visibility)
         } catch (err) {
@@ -89,9 +90,10 @@ router.post('/update', auth, async (req, res) => {
         }
     }
 
-    if (req.body.profile_visibility) {
+    if (req.body.hasOwnProperty('profile_visibility')) {
         try {
-            await User.findByIdAndUpdate(req.user.id, { profile_visibility: req.body.profile_visibility })
+            // await User.findByIdAndUpdate(req.user.id, { profile_visibility: req.body.profile_visibility })
+            await User.update({_id: req.user.id}, {'$set': {"profile_visibility": req.body.profile_visibility}})
             response.profile_visibility = req.body.profile_visibility
             console.log("profile visibility switched to " + req.body.profile_visibility)
         } catch (err) {
