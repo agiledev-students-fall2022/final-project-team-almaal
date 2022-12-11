@@ -9,17 +9,17 @@ const auth = require('../middleware/auth')
 
 router.get('/', auth, async (req, res) => {
     // console.log("got here"+req.user.id)
-    // try {
-    //     const user = await User.findById(req.user.id);
-    //     console.log(user)
-    //     return res.status(200).json(user)
-    // } catch (err) {
-    //     console.error(err.message);
-    //     res.status(500).send('Server error');
-    // }
-    // return res.status(200).json(req.user)
+    try {
+        const user = await User.findById(req.user.id);
+        console.log(user)
+        return res.status(200).json(user)
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+    return res.status(200).json(req.user)
     
-    res.sendStatus(200).json(req.user);
+    // res.sendStatus(200);
     //return res.status(200).json(user)
     // return res.status(200)
     // User.findById(req.body.id, (err,found) => {
@@ -40,9 +40,10 @@ router.get('/', auth, async (req, res) => {
 router.post('/update', auth, async (req, res) => {
     console.log(req)
     const response = {}
-    if (req.user.username) {
+    if (req.body.username) {
         try {
-            await User.findByIdAndUpdate(req.user.id, { "User.login.username": req.user.username })
+            // await User.findByIdAndUpdate(req.user.id, { "User.login.username": req.body.username })
+            await User.update({_id: req.user.id}, {'$set': {"login.username": req.body.username}})
             // await User.updateOne(
             //     {
             //         "_id": req.user.id
@@ -62,8 +63,8 @@ router.post('/update', auth, async (req, res) => {
             //     //     ]
             //     // }
             // )
-            response.username = req.user.username
-            console.log("Successfully updated username to " + req.user.username)
+            response.username = req.body.username
+            console.log("Successfully updated username to " + req.body.username)
         } catch (err) {
             console.log("Error occured, " + err)
         }
@@ -77,29 +78,28 @@ router.post('/update', auth, async (req, res) => {
     //         console.log("Error occured, " + err)
     //     }
     // }
-
-    if (req.user.investment_visibility) {
+    }
+    if (req.body.investment_visibility) {
         try {
-            await User.findByIdAndUpdate(req.user.id, { investment_visibility: req.user.investment_visibility })
-            response.investment_visibility = req.user.investment_visibility
-            console.log("investment visibility switched to " + req.user.investment_visibility)
+            await User.findByIdAndUpdate(req.user.id, { investment_visibility: req.body.investment_visibility })
+            response.investment_visibility = req.body.investment_visibility
+            console.log("investment visibility switched to " + req.body.investment_visibility)
         } catch (err) {
             console.log("Error occured, " + err)
         }
     }
 
-    if (req.user.profile_visibility) {
+    if (req.body.profile_visibility) {
         try {
-            await User.findByIdAndUpdate(req.user.id, { profile_visibility: req.user.profile_visibility })
-            response.profile_visibility = req.user.profile_visibility
-            console.log("profile visibility switched to " + req.user.profile_visibility)
+            await User.findByIdAndUpdate(req.user.id, { profile_visibility: req.body.profile_visibility })
+            response.profile_visibility = req.body.profile_visibility
+            console.log("profile visibility switched to " + req.body.profile_visibility)
         } catch (err) {
             console.log("Error occured, " + err)
         }
     }
-    }
+
     return res.status(200).json(response)
-}
-)
+})
 
 module.exports = router
