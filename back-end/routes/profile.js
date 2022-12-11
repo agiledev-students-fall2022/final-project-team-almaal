@@ -7,7 +7,7 @@ const auth = require('../middleware/auth')
 
 // define the profile page route
 router.get('/', auth, async (req, res) => {
-    // console.log("got here"+req.body.id)
+    console.log("got here"+req.body.id)
     try {
         const user = await User.findById("637820a5a5376540710ee44f");
     } catch (err) {
