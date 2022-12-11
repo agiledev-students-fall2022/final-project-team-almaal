@@ -8,15 +8,18 @@ const auth = require('../middleware/auth')
 // define the profile page route
 
 router.get('/', auth, async (req, res) => {
-    console.log("got here"+req.body.id)
-    try {
-        const user = await User.findById(req.user.id);
-        console.log(user)
-        return res.status(200).json(user)
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
-    }
+    // console.log("got here"+req.user.id)
+    // try {
+    //     const user = await User.findById(req.user.id);
+    //     console.log(user)
+    //     return res.status(200).json(user)
+    // } catch (err) {
+    //     console.error(err.message);
+    //     res.status(500).send('Server error');
+    // }
+    // return res.status(200).json(req.user)
+    
+    res.sendStatus(200).json(req.user);
     //return res.status(200).json(user)
     // return res.status(200)
     // User.findById(req.body.id, (err,found) => {
@@ -29,9 +32,9 @@ router.get('/', auth, async (req, res) => {
 })
 
 // logout route
-router.get('/logout', auth, async (req, res) => {
-    res.status(200).redirect('/login')
-})
+// router.get('/logout', auth, async (req, res) => {
+//     res.status(200).redirect('/login')
+// })
 
 // update profile information
 router.post('/update', auth, async (req, res) => {
@@ -64,16 +67,16 @@ router.post('/update', auth, async (req, res) => {
         } catch (err) {
             console.log("Error occured, " + err)
         }
-    }
-    if (req.user.password) {
-        try {
-            await User.findByIdAndUpdate(req.user.id, { "User.login.password": req.user.password })
-            response.password = req.user.password
-            console.log("Successfully updated password to " + req.user.password)
-        } catch (err) {
-            console.log("Error occured, " + err)
-        }
-    }
+    // }
+    // if (req.user.password) {
+    //     try {
+    //         await User.findByIdAndUpdate(req.user.id, { "User.login.password": req.user.password })
+    //         response.password = req.user.password
+    //         console.log("Successfully updated password to " + req.user.password)
+    //     } catch (err) {
+    //         console.log("Error occured, " + err)
+    //     }
+    // }
 
     if (req.user.investment_visibility) {
         try {
@@ -94,9 +97,9 @@ router.post('/update', auth, async (req, res) => {
             console.log("Error occured, " + err)
         }
     }
-
+    }
     return res.status(200).json(response)
-
-})
+}
+)
 
 module.exports = router

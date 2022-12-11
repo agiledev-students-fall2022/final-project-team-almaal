@@ -22,7 +22,7 @@ api_key.apiKey = TOKEN
 const finnhubClient = new finnhub.DefaultApi()
 
 finnhubClient.quote("AAPL", (error, data, response) => {
-  console.log("current price",data.c)
+  // console.log("current price",data.c)
 });
 
 
