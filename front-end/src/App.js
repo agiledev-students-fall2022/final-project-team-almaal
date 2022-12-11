@@ -21,11 +21,10 @@ import { Fragment, useEffect, useState } from 'react';
 import useToken from './useToken';
 import { connect } from 'react-redux';
 
-console.log('ls_token', localStorage.token);
-const URL = "http://localhost:3001/";
+const URL = process.env.REACT_APP_BACKEND_URL;
 
 if (localStorage.token) {
-    setAuthToken(localStorage.token);    
+    setAuthToken(localStorage.token);
 }
 
 // function ret_Login(setToken){
@@ -85,7 +84,7 @@ function App({ isAuthenticated }) {
                                 <Route path='/friends' element={<Friends />} />
                                 <Route path='/groups' element={<Groups />} />
                                 <Route path='/profile' element={<Profile />} />
-                                {/* <Route path='/news' element={<News />} /> */}
+                                <Route path='/news' element={<News />} />
                             </> : <>
                                 <Route path='/register' element={<Register />} />
                                 <Route path='/' element={<Login setToken={setToken} invalidLink={false} />} />

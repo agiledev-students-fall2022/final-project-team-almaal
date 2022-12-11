@@ -24,11 +24,12 @@
         "react-router-dom": "^6.4.2",
         "react-scripts": "5.0.1",
         "redux": "^4.2.0",
+        "sentiment": "^5.0.2",
         "styled-components": "^5.3.6",
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "start": "WATCHPACK_POLLING=true react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Input, Table, Divider, Space } from "antd";
 import "./PortfolioMonitor.css";
 import axios from "axios";
-import DemoLine from "./DemoLine";
+//import DemoLine from "./DemoLine";
 // require('dotenv').config({path: 'front-end\.env'})
 
 // import { get } from 'react-scroll/modules/mixins/scroller';
+const URL = process.env.REACT_APP_BACKEND_URL
 const originData = [];
 
 //default columns at the beg of the form, not to be updated
@@ -75,10 +76,10 @@ export default function PortfolioMonitor() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/home/portfolioData`
+          URL + `home/portfolioData`
         );
         const retrived = response.data;
-        console.log(retrived);
+        // console.log(retrived);
         //const result = await response.json();
         //Validates that the database is not empty
         // if (response) {
@@ -171,15 +172,16 @@ export default function PortfolioMonitor() {
     >
       <div>
         <Table
-          scroll={{ x: "100vh", y: "60vh" }}
+          scroll={{ x: true }}
           columns={columns}
           dataSource={stocks}
           onChange={handleTableChange}
         />
       </div>
-      <div>
+      {/* removed chart temporarily */}
+      {/* <div>
         <DemoLine />
-      </div>
+      </div> */}
     </Space>
   );
 }

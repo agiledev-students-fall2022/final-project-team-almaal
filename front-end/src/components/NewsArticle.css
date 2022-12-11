@@ -1,0 +1,29 @@
+.news{
+    width: 90%;
+    padding: 15px;
+    display: block;
+    margin: auto;
+    margin-top: 1rem;
+    background-color: #eff2f5;
+    border-radius: 15px;
+}
+
+.news > a{
+    font-size: larger;
+    font-weight: 600;
+}
+
+.news >p{
+    text-align: justify;
+}
+
+.score{
+    position: absolute;
+    margin-top: 1rem;
+    margin-left: 70%;
+    width: 10%;
+}
+
+.score > h5{
+    color: black;
+}

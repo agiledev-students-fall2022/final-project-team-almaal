@@ -7,6 +7,9 @@ services:
       context: ./front-end
       dockerfile: Dockerfile.frontend
     container_name: almaal_frontend
+    volumes:
+      - ./front-end:/frontend
+      - /frontend/node_modules
     ports:
       - 3000:3000
 
@@ -16,12 +19,9 @@ services:
       context: ./back-end
       dockerfile: Dockerfile.backend
     container_name: almaal_server
-    environment:
-      - FRONTEND_PORT=3000
-      - BACKEND_PORT=3001
-      - DB_USER=team-almaal
-      - DB_PASSWORD=team-almaal123
-      - DB_URL=mongodb+srv://team-almaal:team-almaal123@cluster0.euf8pot.mongodb.net/?retryWrites=true&w=majority
+    volumes:
+      - ./back-end:/server
+      - /server/node_modules
     ports:
       - 3001:3001
     pull_policy: never
