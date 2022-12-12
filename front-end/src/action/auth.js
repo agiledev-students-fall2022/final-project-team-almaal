@@ -13,7 +13,6 @@ import {
 import setAuthToken from '../utils/setAuthToken';
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
-console.log(axios.defaults.baseURL)
 // Load User
 
 export const loadUser = () => async (dispatch) => {
@@ -33,7 +32,7 @@ export const loadUser = () => async (dispatch) => {
             });
         }
     }
-};
+}
 
 // register User
 export const register =
@@ -65,7 +64,7 @@ export const register =
                     type: REGISTER_FAIL,
                 });
             }
-        };
+        }
 
 // login User
 export const login = (email, password, setToken) => async (dispatch) => {
@@ -95,9 +94,9 @@ export const login = (email, password, setToken) => async (dispatch) => {
             type: LOGIN_FAIL,
         });
     }
-};
+}
 
 // Logout/clear profile
 export const logout = () => (dispatch) => {
     dispatch({ type: LOGOUT });
-};
+}

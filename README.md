@@ -39,6 +39,14 @@ We decided to take rotation in assignment of the following roles for very Sprint
 - Scrum Master: Safal
 - Product Owner: Krises
 
+#### Sprint 3
+- Scrum Master: Frank Wu
+- Product Owner: Wenbo Bao
+
+#### Sprint 4
+- Scrum Master: Maisha Mahrin
+- Product Owner: Frank Wu
+
 ## set up discord channels ✅
 - Public communications channels ✅
 - Private communications channels ✅

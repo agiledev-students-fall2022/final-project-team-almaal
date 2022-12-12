@@ -18,27 +18,28 @@ const app = require('../app');
 describe('Profile', () => {
     // test /profile route
     describe('Tests for /profile route', () => {
-        it('it should return 200', (done) => {
+        it('it should return 200', done => {
             chai.request(app)
                 .get('/profile')
                 .end((err, res) => {
+                    expect(err).to.be.null;
                     expect(res).to.have.status(200);
-                    done();
-                });
-        });
-    });
+                    done()
+                })
+        })
+    })
 
     //test /logout route
-    describe('Tests for /profile/logout route', () => {
-        it('it should return 200 http response code', (done) => {
-            chai.request(app)
-                .get('/profile/logout')
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    done();
-                });
-        });
-    });
+    // describe('Tests for /profile/logout route', () => {
+    //     it('it should return 200 http response code', (done) => {
+    //         chai.request(app)
+    //             .get('/profile/logout')
+    //             .end((err, res) => {
+    //                 res.should.have.status(200);
+    //                 done();
+    //             });
+    //     });
+    // });
 
     // test /update route
     describe('Tests for POST /profile/update route', () => {

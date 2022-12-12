@@ -21,7 +21,6 @@ import { Fragment, useEffect, useState } from 'react';
 import useToken from './useToken';
 import { connect } from 'react-redux';
 
-console.log('ls_token', localStorage.token);
 const URL = process.env.REACT_APP_BACKEND_URL;
 
 if (localStorage.token) {
@@ -77,7 +76,6 @@ function App({ isAuthenticated }) {
                 {/* <p>Authenticated: {state.auth.isAuthenticated.toString()}</p> */}
                 <Navbar setToken={setToken} flag={false} />
                 <Routes>
-
                     {
                         state.auth.isAuthenticated ?
                             <>
@@ -85,7 +83,7 @@ function App({ isAuthenticated }) {
                                 <Route path='/friends' element={<Friends />} />
                                 <Route path='/groups' element={<Groups />} />
                                 <Route path='/profile' element={<Profile />} />
-                                {/* <Route path='/news' element={<News />} /> */}
+                                <Route path='/news' element={<News />} />
                             </> : <>
                                 <Route path='/register' element={<Register />} />
                                 <Route path='/' element={<Login setToken={setToken} invalidLink={false} />} />

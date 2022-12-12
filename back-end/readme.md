@@ -9,6 +9,8 @@
 7. run **npm start** to run the front-end
 
 ## We have containerized front-end and back-end
+## We have containerized the project (extra credit)
+## We have set up the Continuous Deployment (extra credit)
 
 run **docker-compose up** to start
 run **docker-compose down** to stop

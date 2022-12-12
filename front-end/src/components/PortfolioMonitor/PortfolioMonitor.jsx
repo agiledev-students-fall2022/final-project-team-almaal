@@ -206,7 +206,7 @@ export default function PortfolioMonitor() {
     >
       <div>
         <Table
-          scroll={{ x: "100vh", y: "60vh" }}
+          scroll={{ x: true }}
           columns={columns}
           dataSource={stocks}
           onChange={handleTableChange}
