@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, InputNumber, Input, Modal } from "antd";
 import axios from "axios";
 
-const URL = process.env.REACT_APP_BACKEND_URL
+const URL = process.env.REACT_APP_BACKEND_URL;
 
 const CollectionCreateForm = ({
   open,
@@ -24,10 +24,11 @@ const CollectionCreateForm = ({
       onCancel={onCancel}
       onOk={async () => {
         const current = new Date();
-        const date = `${current.getDate()}/${current.getMonth() + 1
-          }/${current.getFullYear()}`;
+        const date = `${current.getDate()}/${
+          current.getMonth() + 1
+        }/${current.getFullYear()}`;
         const newStock = {
-          key: count + 1,
+          //key: count + 1,
           ticker: form.getFieldValue("ticker"),
           position: form.getFieldValue("position"),
           quantity: form.getFieldValue("quantity"),
@@ -36,19 +37,20 @@ const CollectionCreateForm = ({
         };
         setData(newStock);
         setCount(count + 1);
-        console.log("IN FORM 1:", newStock);
-        const requestOptions = {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newStock),
-        };
+        //console.log("IN FORM 1:", newStock);
+        // const requestOptions = {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify(newStock),
+        // };
         // //POST request to the database to add a new stock
         // await fetch(`http://localhost:3001/home/`, requestOptions)
         //   .then((response) => response.json)
         //   .then((data) => console.log(data));
         // console.log("in form 2:", newStock);
         const result = await axios
-          .post(URL + `home/`, newStock)
+          //.post(URL + `/home/`, newStock)
+          .post("http://localhost:3001/home/", newStock)
           .then((response) => response.json)
           //.then((data) => console.log(data))
           .catch(function (error) {
@@ -136,7 +138,7 @@ const PortfolioForm = ({ setCount, count, setData, data }) => {
   const [open, setOpen] = useState(false);
   //const[data,setData]=useState('');
   const onCreate = (values) => {
-    console.log("Received values of form: ", values);
+    //console.log("Received values of form: ", values);
     setOpen(false);
   };
 
