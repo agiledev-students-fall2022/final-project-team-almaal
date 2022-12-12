@@ -20,7 +20,21 @@ const UsersSchema = new mongoose.Schema({
       },
     },
   },
-  investment: Array,
+  investment: {
+    type: [
+      {
+        ticker: String,
+        position: String,
+        quantity: Number,
+        price: Number,
+        timestamp: Date,
+        marketprice: Number,
+        profitloss: Number,
+      },
+    ],
+    default: undefined,
+    required: "true",
+  },
   investment_visibility: {
     type: "Boolean",
     required: "true",
