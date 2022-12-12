@@ -71,54 +71,56 @@ router.get("/portfolioData", auth, async (req, res, next) => {
 
     //stockFetcher(newInvestment)
 
+    const promises = [];
+
     // trying with foor loop
-    // for (let i = 0; i < newInvestment.length; i++) {
-    //   const fetchData = async () => {
-    //     const response = await axios
-    //       .get(
-    //         `https://finnhub.io/api/v1/quote?symbol=${newInvestment[i].ticker}&token=${TOKEN}`
-    //       )
-    //       //.then(apiResponse => apiResponse.data) // pass data along directly to client
-    //       //.then((data) => (newInvestment[i].marketprice = data.c))
-    //       .then((data) =>
-    //         console.log("data.c in .then ", newInvestment[i].ticker, data.c)
-    //       )
-    //       .then(
-    //         console.log(
-    //           "newInvestment[i].marketprice in .then ",
-    //           newInvestment[i].marketprice
-    //         )
-    //       )
-    //       //res.json(newInvestment)))
-    //       //.then(data=>console.log("marketprice 1",newInvestment[i].marketprice))
-    //       //.then(newInvestment[i].marketprice=>())
-    //       .catch((err) => next(err)); // pass any errors to express
-    //     console.log("response outside .then ", response);
-    //     //console.log("marketprice 1", newInvestment[i].marketprice);
-    //   };
-    //   fetchData();
-    // }
+    for (let i = 0; i < newInvestment.length; i++) {
+      promises.push(
+        axios.get(
+          `https://finnhub.io/api/v1/quote?symbol=${newInvestment[i].ticker}&token=${TOKEN}`
+        )
+      );
+      // const fetchData = async () => {
+      //   const response = await axios
+      //     .get(
+      //       `https://finnhub.io/api/v1/quote?symbol=${newInvestment[i].ticker}&token=${TOKEN}`
+      //     )
+      //     //.then(apiResponse => apiResponse.data) // pass data along directly to client
+      //     //.then((data) => (newInvestment[i].marketprice = data.c))
+      //     .then((data) => {
+      //       console.log(
+      //         "data.c in .then ",
+      //         newInvestment[i].ticker,
+      //         data.data.c
+      //       );
+      //       newInvestment[i].marketprice = data.data.c;
+      //       console.log("newInvestment[i]: ", newInvestment[i]);
+      //       res.status(200).json(newInvestment);
+      //     })
+      //     .catch((err) => next(err)); // pass any errors to express
+      //   //console.log("response outside .then ", response);
+      //   //console.log("marketprice 1", newInvestment[i].marketprice);
+      // };
+      // //console.log("gelo world in home router 1", i);
+      // fetchData();
+      // console.log("gelo world in home router", i);
+    }
+    const result = await Promise.all(promises);
+    //console.log("response from promises", res.data.c);
+    result.forEach((r, index) => {
+      //console.log("r: ", r.data);
+      newInvestment[index].marketprice = r.data.c;
+      newInvestment[index].profitloss = profitLossCalculator(
+        newInvestment[index].price,
+        newInvestment[index].marketprice,
+        newInvestment[index].position,
+        newInvestment[index].quantity
+      );
+    });
 
-    //console.log("marketprice 2",newInvestment)
-
-    //trying with forEach
-
-    // newInvestment.forEach(async (s) => {
-    //   try {
-    //     await axios
-    //       .get(
-    //         `https://finnhub.io/api/v1/quote?symbol=${s.ticker}&token=${TOKEN}`
-    //       )
-    //       .then((data) => data.c);
-    //     s.marketprice = data;
-    //     console.log("s", s.marketprice);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // });
-    console.log("data 2:", newInvestment);
-    //res.status(200).json({ success: true, newInvestment })//responsing with an array of json objects
     res.status(200).json(newInvestment);
+    //console.log("data 2:", newInvestment);
+    //res.status(200).json(newInvestment);
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, error });
@@ -145,7 +147,7 @@ const profitLossCalculator = (price, currentPrice, position, quantity) => {
 
 //     stocks.forEach((s) => {
 //         if (!isNaN(Number(s.profitLoss))) {
-//             profitLossTotal += Number(s.profitLoss);
+//             profitLossTotal += Number(s.profitloss);
 //         }
 //     });
 
