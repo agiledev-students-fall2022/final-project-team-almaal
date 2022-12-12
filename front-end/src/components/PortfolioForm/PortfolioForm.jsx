@@ -38,11 +38,11 @@ const CollectionCreateForm = ({
         setData(newStock);
         setCount(count + 1);
         //console.log("IN FORM 1:", newStock);
-        const requestOptions = {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newStock),
-        };
+        // const requestOptions = {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify(newStock),
+        // };
         // //POST request to the database to add a new stock
         // await fetch(`http://localhost:3001/home/`, requestOptions)
         //   .then((response) => response.json)

@@ -72,32 +72,32 @@ router.get("/portfolioData", auth, async (req, res, next) => {
     //stockFetcher(newInvestment)
 
     // trying with foor loop
-    for (let i = 0; i < newInvestment.length; i++) {
-      const fetchData = async () => {
-        const response = await axios
-          .get(
-            `https://finnhub.io/api/v1/quote?symbol=${newInvestment[i].ticker}&token=${TOKEN}`
-          )
-          //.then(apiResponse => apiResponse.data) // pass data along directly to client
-          //.then((data) => (newInvestment[i].marketprice = data.c))
-          .then((data) =>
-            console.log("data.c in .then ", newInvestment[i].ticker, data.c)
-          )
-          .then(
-            console.log(
-              "newInvestment[i].marketprice in .then ",
-              newInvestment[i].marketprice
-            )
-          )
-          //res.json(newInvestment)))
-          //.then(data=>console.log("marketprice 1",newInvestment[i].marketprice))
-          //.then(newInvestment[i].marketprice=>())
-          .catch((err) => next(err)); // pass any errors to express
-        console.log("response outside .then ", response);
-        //console.log("marketprice 1", newInvestment[i].marketprice);
-      };
-      fetchData();
-    }
+    // for (let i = 0; i < newInvestment.length; i++) {
+    //   const fetchData = async () => {
+    //     const response = await axios
+    //       .get(
+    //         `https://finnhub.io/api/v1/quote?symbol=${newInvestment[i].ticker}&token=${TOKEN}`
+    //       )
+    //       //.then(apiResponse => apiResponse.data) // pass data along directly to client
+    //       //.then((data) => (newInvestment[i].marketprice = data.c))
+    //       .then((data) =>
+    //         console.log("data.c in .then ", newInvestment[i].ticker, data.c)
+    //       )
+    //       .then(
+    //         console.log(
+    //           "newInvestment[i].marketprice in .then ",
+    //           newInvestment[i].marketprice
+    //         )
+    //       )
+    //       //res.json(newInvestment)))
+    //       //.then(data=>console.log("marketprice 1",newInvestment[i].marketprice))
+    //       //.then(newInvestment[i].marketprice=>())
+    //       .catch((err) => next(err)); // pass any errors to express
+    //     console.log("response outside .then ", response);
+    //     //console.log("marketprice 1", newInvestment[i].marketprice);
+    //   };
+    //   fetchData();
+    // }
 
     //console.log("marketprice 2",newInvestment)
 
@@ -178,25 +178,75 @@ router.post("/", auth, async (req, res) => {
     const doc = await UsersModel.findById(req.user.id).orFail(() => {
       throw "No user registered";
     });
+    let found = 0;
+    for (let i = 0; i < doc.investment.length; i++) {
+      //if you bought the same stock for same price later, we just increment quantity of current stock if invested before
+      if (
+        doc.investment[i].ticker == req.body.ticker &&
+        doc.investment[i].price == req.body.price &&
+        req.body.position == "BUY" &&
+        doc.investment[i].position == req.body.position
+      ) {
+        let amount = doc.investment[i].quantity;
+        //doc.investment[i].quantity = amount + req.body.quantity;
+        amount = amount + req.body.quantity;
+        doc.investment.set(i, {
+          ticker: req.body.ticker,
+          position: req.body.position,
+          price: req.body.price,
+          timestamp: req.body.timestamp,
+          marketprice: 0,
+          profitloss: 0,
+          quantity: amount,
+        });
 
-    const newdata = {
-      //user_id:req.user.id,
-      //key: req.body.key,
-      ticker: req.body.ticker,
-      position: req.body.position,
-      quantity: req.body.quantity,
-      price: req.body.price,
-      timestamp: req.body.timestamp,
-      marketprice: 0,
-      profitloss: 0,
-    };
-    //newdata.save()
-    doc.investment.push(newdata);
-    console.log("New Data Added: ", newdata);
-    // for (let i = 0; i < doc.investment.length; i++) {
-    //     console.log("New Data Added : ",i,doc.investment[i] )
-    //     }
+        found = 1;
+        console.log(
+          "found, amount, doc.investment[i].quantity: ",
+          found,
+          amount,
+          doc.investment[i].quantity
+        );
+        await doc.save();
+      } else if (
+        doc.investment[i].ticker == req.body.ticker &&
+        req.body.position == "SELL"
+      ) {
+        //if same company te invested befiore but now I have sold, check for position requested and deduct quantity
+        let amount = doc.investment[i].quantity;
+        doc.investment[i].quantity = amount - req.body.quantity;
+        if (doc.investment[i].quantity < 0) {
+          doc.investment[i].quantity = 0;
+        }
+        found = 1;
+        await doc.save();
+      }
+    }
     await doc.save();
+    console.log(
+      "found, doc.investment[3].quantity, doc.investment[3].price: ",
+      found,
+      doc.investment[3].quantity,
+      doc.investment[3].price
+    );
+    //if no similar previous investment or if similar investment but not same price like before, we add th new investment
+    if (found == 0) {
+      const newdata = {
+        //user_id:req.user.id,
+        //key: req.body.key,
+        ticker: req.body.ticker,
+        position: req.body.position,
+        quantity: req.body.quantity,
+        price: req.body.price,
+        timestamp: req.body.timestamp,
+        marketprice: 0,
+        profitloss: 0,
+      };
+      doc.investment.push(newdata);
+      console.log("New Data Added: ", newdata);
+      await doc.save();
+    }
+
     return res.status(200).json({ success: true });
   } catch (error) {
     return res.status(500).json({ success: false, error });

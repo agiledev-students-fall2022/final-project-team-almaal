@@ -90,7 +90,7 @@ export default function PortfolioMonitor() {
         //   console.log("response: ", responseFinn); //this console not printing cuz of error
         // } //we want to set this market price to the marketpruce in the fetched data in (2)
 
-        response.data[0].marketprice = 10;
+        //response.data[0].marketprice = 10;
 
         setStocks(response.data);
       } catch (error) {
