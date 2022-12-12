@@ -178,6 +178,7 @@ router.post("/", auth, async (req, res) => {
     const doc = await UsersModel.findById(req.user.id).orFail(() => {
       throw "No user registered";
     });
+    console.log("doc.investment.length, ", doc.investment.length);
     let found = 0;
     for (let i = 0; i < doc.investment.length; i++) {
       //if you bought the same stock for same price later, we just increment quantity of current stock if invested before
@@ -222,13 +223,14 @@ router.post("/", auth, async (req, res) => {
         await doc.save();
       }
     }
-    await doc.save();
-    console.log(
-      "found, doc.investment[3].quantity, doc.investment[3].price: ",
-      found,
-      doc.investment[3].quantity,
-      doc.investment[3].price
-    );
+    //await doc.save();
+    // console.log(
+    //   "found, doc.investment[3].quantity, doc.investment[3].price: ",
+    //   found,
+    //   doc.investment[3].quantity,
+    //   doc.investment[3].price
+    // );
+    console.log("found: ", found);
     //if no similar previous investment or if similar investment but not same price like before, we add th new investment
     if (found == 0) {
       const newdata = {
