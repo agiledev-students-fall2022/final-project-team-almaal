@@ -6,44 +6,46 @@ import axios from "axios";
 // require('dotenv').config({path: 'front-end\.env'})
 
 // import { get } from 'react-scroll/modules/mixins/scroller';
-const URL = process.env.REACT_APP_BACKEND_URL
-const originData = [];
+const URL = process.env.REACT_APP_BACKEND_URL;
+//finnhub stuff
+const STOCK_API = "https://finnhub.io/api/v1/";
+const TOKEN = "cdbkvuaad3ibgg4mqf8gcdbkvuaad3ibgg4mqf90";
 
 //default columns at the beg of the form, not to be updated
 const columns = [
   {
     title: "ticker",
     dataIndex: "ticker",
-    key: "ticker",
+    // key: "ticker",
     width: "30%",
   },
   {
     title: "position",
     dataIndex: "position",
-    key: "position",
+    // key: "position",
     width: "30%",
   },
   {
     title: "quantity",
     dataIndex: "quantity",
-    key: "quantity",
+    //key: "quantity",
     width: "30%",
   },
   {
     title: "price",
-    key: "price",
+    //key: "price",
     dataIndex: "price",
     width: "30%",
   },
   {
     title: "marketprice",
-    key: "marketprice",
+    //key: "marketprice",
     dataIndex: "marketprice",
     width: "30%",
   },
   {
     title: "profitloss",
-    key: "profitloss",
+    //key: "profitloss",
     dataIndex: "profitloss",
     width: "30%",
   },
@@ -71,24 +73,25 @@ export default function PortfolioMonitor() {
   //   }, []);
   /*SPrint -1 fetch data ends */
 
+  //FRONT_END!!
   useEffect(() => {
     //GET request to the database to fetch the stock which are already in our portfolio
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          URL + `/home/portfolioData`
-        );
-        const retrived = response.data;
-        console.log(retrived);
-        //const result = await response.json();
-        //Validates that the database is not empty
-        // if (response) {
-        //   response.data = response.data.map((res) => {
-        //     res.key = res.ticker;
-        //     return res;
-        //   });
-        //   setStocks(response.data);
-        // }
+          "http://localhost:3001/home/portfolioData"
+        ); //fetches data from back-end db -2
+
+        //trying out stockFetcher seperately, still dn work
+        // for (let i = 0; i < stocks.length; i++) {
+        //   const responseFinn = await axios.get(
+        //     `https://finnhub.io/api/v1/quote?symbol=${stocks[i].ticker}&token=${TOKEN}`
+        //   ); //fetches api data of current maarekt price
+        //   console.log("response: ", responseFinn); //this console not printing cuz of error
+        // } //we want to set this market price to the marketpruce in the fetched data in (2)
+
+        response.data[0].marketprice = 10;
+
         setStocks(response.data);
       } catch (error) {
         /*The option how to handle the error is totally up to you. 
@@ -97,13 +100,37 @@ export default function PortfolioMonitor() {
       }
     };
 
+    // const fetchMarketprice = async () => {
+    //   for (let i = 0; i < stocks.length; i++) {
+    //     try {
+    //       const response = await axios.get(
+    //         `https://finnhub.io/api/v1/quote?symbol=${stocks[i].ticker}&token=${TOKEN}`
+    //       );
+
+    //       //for (let i = 0; i < response.data.length; i++) {}
+    //       //const result = stockFetcher(response.data[0].ticker);
+    //       //const retrived = response.data;
+    //       //response.data[0].marketprice = 10;
+    //       console.log("response: ");
+    //       console.log("response: ", response);
+    //       //console.log("result ", result);
+    //       //setStocks(response.data);
+    //     } catch (error) {
+    //       /*The option how to handle the error is totally up to you.
+    //             Ideally, you can send notification to the user */
+    //       console.log(error);
+    //     }
+    //   }
+    // };
+
     fetchData();
+    //fetchMarketprice();
   }, [setStocks]);
 
   //   stocks.map((item)=>(
   //   // <handleFetch details={item}/>
   //   originData.push({
-  //     key:item.id,
+  //
   //     ticker: item.ticker,
   //     position:item.position,
   //     quantity:item.quantity,
@@ -121,6 +148,13 @@ export default function PortfolioMonitor() {
       ...sorter,
     });
   };
+  // const stockFetcher = (stock) => {
+  //   const result = axios.get(
+  //     `https://finnhub.io/api/v1/quote?symbol=${stock}&token=${TOKEN}`
+  //   );
+  //   console.log("result.data.c: ", result);
+  //   return result.data.c;
+  // };
 
   //no need for Sprint-1
 
