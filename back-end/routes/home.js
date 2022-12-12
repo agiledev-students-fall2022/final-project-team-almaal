@@ -69,8 +69,6 @@ router.get("/portfolioData", auth, async (req, res, next) => {
     //   //console.log("current price of ticker and profitloss: ",newInvestment[i].ticker,newInvestment[i].marketprice,newInvestment[i].profitloss )
     // }
 
-    //stockFetcher(newInvestment)
-
     const promises = [];
 
     // trying with foor loop
@@ -119,8 +117,6 @@ router.get("/portfolioData", auth, async (req, res, next) => {
     });
 
     res.status(200).json(newInvestment);
-    //console.log("data 2:", newInvestment);
-    //res.status(200).json(newInvestment);
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, error });
@@ -141,23 +137,6 @@ const profitLossCalculator = (price, currentPrice, position, quantity) => {
   return profitLoss.toFixed(2);
 };
 
-//Calculates the profit or loss for the whole portfolio (No need for Sprint-1)
-// const profitLossTotalCalculator = (stocks) => {
-//     let profitLossTotal = 0;
-
-//     stocks.forEach((s) => {
-//         if (!isNaN(Number(s.profitLoss))) {
-//             profitLossTotal += Number(s.profitloss);
-//         }
-//     });
-
-//     return profitLossTotal.toFixed(2);
-// };
-
-// const fetchPrices = () => {
-//     //Fetches prices and updates the state with current prices and profit or loss for the position
-//     stockFetcher(stocks, setStocks, profitLossCalculator);
-// };
 // using async/await in this route to show another way of dealing with asynchronous requests to an external API or database
 router.get("/portfolioChartData", auth, (req, res, next) => {
   axios
@@ -225,19 +204,10 @@ router.post("/", auth, async (req, res) => {
         await doc.save();
       }
     }
-    //await doc.save();
-    // console.log(
-    //   "found, doc.investment[3].quantity, doc.investment[3].price: ",
-    //   found,
-    //   doc.investment[3].quantity,
-    //   doc.investment[3].price
-    // );
     console.log("found: ", found);
     //if no similar previous investment or if similar investment but not same price like before, we add th new investment
     if (found == 0) {
       const newdata = {
-        //user_id:req.user.id,
-        //key: req.body.key,
         ticker: req.body.ticker,
         position: req.body.position,
         quantity: req.body.quantity,
@@ -303,4 +273,3 @@ router.get("/", auth, async (req, res) => {
 // })
 
 module.exports = router;
-//module.exports = home
