@@ -43,8 +43,10 @@ function News(props) {
     <div style={{ width: "100%", overflowY: "auto" }}>
       {data != undefined &&
         data.map((val) => {
-          val["sentiment"] = get_sentiment(val.description).comparative;
-          return <NewsArticle data={val} />;
+          if(val.description != null){
+            val["sentiment"] = get_sentiment(val.description).comparative;
+            return <NewsArticle data={val} />;
+          }
         })}
 
       {data == undefined && (
