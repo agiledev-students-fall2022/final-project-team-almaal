@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Input, Table, Divider, Space } from "antd";
+import { Input, Table, Divider, Space, Button } from "antd";
 import "./PortfolioMonitor.css";
 import axios from "axios";
 import DemoLine from "./DemoLine";
@@ -97,15 +97,13 @@ export default function PortfolioMonitor() {
         display: "flex",
       }}
     >
-      <div>
-        <Table
-          style={{ maxWidth: 250 }}
-          scroll={{ x: true }}
-          columns={columns}
-          dataSource={stocks}
-          onChange={handleTableChange}
-        />
-      </div>
+      <Table
+        style={{ maxWidth: 250 }}
+        scroll={{ x: true }}
+        columns={columns}
+        dataSource={stocks}
+        onChange={handleTableChange}
+      />
       {/* removed chart temporarily */}
       {/* <div>
         <DemoLine />
