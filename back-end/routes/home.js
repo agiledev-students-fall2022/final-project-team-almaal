@@ -69,55 +69,53 @@ router.get("/portfolioData", auth, async (req, res, next) => {
     //   //console.log("current price of ticker and profitloss: ",newInvestment[i].ticker,newInvestment[i].marketprice,newInvestment[i].profitloss )
     // }
 
-    //stockFetcher(newInvestment)
+    const promises = [];
 
     // trying with foor loop
-    // for (let i = 0; i < newInvestment.length; i++) {
-    //   const fetchData = async () => {
-    //     const response = await axios
-    //       .get(
-    //         `https://finnhub.io/api/v1/quote?symbol=${newInvestment[i].ticker}&token=${TOKEN}`
-    //       )
-    //       //.then(apiResponse => apiResponse.data) // pass data along directly to client
-    //       //.then((data) => (newInvestment[i].marketprice = data.c))
-    //       .then((data) =>
-    //         console.log("data.c in .then ", newInvestment[i].ticker, data.c)
-    //       )
-    //       .then(
-    //         console.log(
-    //           "newInvestment[i].marketprice in .then ",
-    //           newInvestment[i].marketprice
-    //         )
-    //       )
-    //       //res.json(newInvestment)))
-    //       //.then(data=>console.log("marketprice 1",newInvestment[i].marketprice))
-    //       //.then(newInvestment[i].marketprice=>())
-    //       .catch((err) => next(err)); // pass any errors to express
-    //     console.log("response outside .then ", response);
-    //     //console.log("marketprice 1", newInvestment[i].marketprice);
-    //   };
-    //   fetchData();
-    // }
+    for (let i = 0; i < newInvestment.length; i++) {
+      promises.push(
+        axios.get(
+          `https://finnhub.io/api/v1/quote?symbol=${newInvestment[i].ticker}&token=${TOKEN}`
+        )
+      );
+      // const fetchData = async () => {
+      //   const response = await axios
+      //     .get(
+      //       `https://finnhub.io/api/v1/quote?symbol=${newInvestment[i].ticker}&token=${TOKEN}`
+      //     )
+      //     //.then(apiResponse => apiResponse.data) // pass data along directly to client
+      //     //.then((data) => (newInvestment[i].marketprice = data.c))
+      //     .then((data) => {
+      //       console.log(
+      //         "data.c in .then ",
+      //         newInvestment[i].ticker,
+      //         data.data.c
+      //       );
+      //       newInvestment[i].marketprice = data.data.c;
+      //       console.log("newInvestment[i]: ", newInvestment[i]);
+      //       res.status(200).json(newInvestment);
+      //     })
+      //     .catch((err) => next(err)); // pass any errors to express
+      //   //console.log("response outside .then ", response);
+      //   //console.log("marketprice 1", newInvestment[i].marketprice);
+      // };
+      // //console.log("gelo world in home router 1", i);
+      // fetchData();
+      // console.log("gelo world in home router", i);
+    }
+    const result = await Promise.all(promises);
+    //console.log("response from promises", res.data.c);
+    result.forEach((r, index) => {
+      //console.log("r: ", r.data);
+      newInvestment[index].marketprice = r.data.c;
+      newInvestment[index].profitloss = profitLossCalculator(
+        newInvestment[index].price,
+        newInvestment[index].marketprice,
+        newInvestment[index].position,
+        newInvestment[index].quantity
+      );
+    });
 
-    //console.log("marketprice 2",newInvestment)
-
-    //trying with forEach
-
-    // newInvestment.forEach(async (s) => {
-    //   try {
-    //     await axios
-    //       .get(
-    //         `https://finnhub.io/api/v1/quote?symbol=${s.ticker}&token=${TOKEN}`
-    //       )
-    //       .then((data) => data.c);
-    //     s.marketprice = data;
-    //     console.log("s", s.marketprice);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // });
-    console.log("data 2:", newInvestment);
-    //res.status(200).json({ success: true, newInvestment })//responsing with an array of json objects
     res.status(200).json(newInvestment);
   } catch (error) {
     console.log(error);
@@ -139,23 +137,6 @@ const profitLossCalculator = (price, currentPrice, position, quantity) => {
   return profitLoss.toFixed(2);
 };
 
-//Calculates the profit or loss for the whole portfolio (No need for Sprint-1)
-// const profitLossTotalCalculator = (stocks) => {
-//     let profitLossTotal = 0;
-
-//     stocks.forEach((s) => {
-//         if (!isNaN(Number(s.profitLoss))) {
-//             profitLossTotal += Number(s.profitLoss);
-//         }
-//     });
-
-//     return profitLossTotal.toFixed(2);
-// };
-
-// const fetchPrices = () => {
-//     //Fetches prices and updates the state with current prices and profit or loss for the position
-//     stockFetcher(stocks, setStocks, profitLossCalculator);
-// };
 // using async/await in this route to show another way of dealing with asynchronous requests to an external API or database
 router.get("/portfolioChartData", auth, (req, res, next) => {
   axios
@@ -223,19 +204,10 @@ router.post("/", auth, async (req, res) => {
         await doc.save();
       }
     }
-    //await doc.save();
-    // console.log(
-    //   "found, doc.investment[3].quantity, doc.investment[3].price: ",
-    //   found,
-    //   doc.investment[3].quantity,
-    //   doc.investment[3].price
-    // );
     console.log("found: ", found);
     //if no similar previous investment or if similar investment but not same price like before, we add th new investment
     if (found == 0) {
       const newdata = {
-        //user_id:req.user.id,
-        //key: req.body.key,
         ticker: req.body.ticker,
         position: req.body.position,
         quantity: req.body.quantity,
@@ -301,4 +273,3 @@ router.get("/", auth, async (req, res) => {
 // })
 
 module.exports = router;
-//module.exports = home
