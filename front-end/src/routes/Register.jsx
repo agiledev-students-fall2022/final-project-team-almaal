@@ -1,12 +1,13 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAlert } from "../action/alert";
 import { register } from "../action/auth";
 import PropTypes from "prop-types";
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,19 +19,32 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
+    let flag = false;
     e.preventDefault();
-    if (password !== password2) {
+    var validRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    console.log('Email', email);
+    if (password != password2) {
+      flag = (false);
+      alert("Passwords do not match!");
       setAlert("Passwords do not match", "danger");
-    } else {
-      console.log("HERE");
+    } 
+    else if(password.length < 8){
+      alert("Password Length to short");
+    }
+    else if(!validRegex.test(email)){
+      flag = (false);
+      console.log('em')
+      alert("Please enter a valid email!");
+      setAlert("Passwords do not match", "danger");
+    } 
+    else{flag = (true);}
+    console.log(flag);
+    if(flag) {
+      console.log('HERE');
       register({ name, email, password });
+      navigate("/");
     }
   };
-
-  if (isAuthenticated) {
-    //window.location.replace("/");
-    return <Navigate to="/"></Navigate>;
-  }
 
   return (
     <Fragment>
@@ -52,7 +66,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           </div>
           <div className="form-group">
             <input
-              type="email"
+              type="text"
               placeholder="Email Address"
               name="email"
               value={email}
