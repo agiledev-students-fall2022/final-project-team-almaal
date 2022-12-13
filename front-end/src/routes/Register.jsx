@@ -25,10 +25,12 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     console.log('Email', email);
     if (password != password2) {
       flag = (false);
-      console.log('pass')
       alert("Passwords do not match!");
       setAlert("Passwords do not match", "danger");
     } 
+    else if(password.length < 8){
+      alert("Password Length to short");
+    }
     else if(!validRegex.test(email)){
       flag = (false);
       console.log('em')
