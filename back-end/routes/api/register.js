@@ -63,13 +63,12 @@ router.post(
 
             console.log(user)
             await user.save();
-            console.log("HEEHEHEHE6969")
             const payload = {
                 user: {
                     id: user.id,
                 },
             };
-            console.log("HEEHEHEHE")
+            
             jwt.sign(
                 payload,
                 process.env.JWT_SECRET,
