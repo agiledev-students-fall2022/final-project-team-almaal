@@ -23,7 +23,7 @@ api_key.apiKey = TOKEN;
 const finnhubClient = new finnhub.DefaultApi();
 
 finnhubClient.quote("AAPL", (error, data, response) => {
-  console.log("current price", data.c);
+  //console.log("current price", data.c);
 });
 
 /**
@@ -54,21 +54,6 @@ router.get("/portfolioData", auth, async (req, res, next) => {
       let entry = doc.investment[i];
       newInvestment.push(entry);
     }
-
-    // for(let i=0;i<newInvestment.length;i++)
-    // {
-    //   finnhubClient.quote(newInvestment[i].ticker, (error, data, response) => {
-    //       //console.log("current price of ticker: ",newInvestment[i].ticker,data.c)
-    //       findata=data.c //setting the maketprice
-    //       console.log("current price 1 of ticker: ",newInvestment[i].ticker,newInvestment[i].marketprice)
-    //       //res.status(200).json(newInvestment[i])
-    //  });
-    //  newInvestment[i].marketprice=findata
-    //   console.log("current price 2 of ticker: ",newInvestment[i].ticker,newInvestment[i].marketprice)
-    //   newInvestment[i].profitloss=profitLossCalculator(newInvestment[i].price, newInvestment[i].marketprice, newInvestment[i].position, newInvestment[i].quantity)
-    //   //console.log("current price of ticker and profitloss: ",newInvestment[i].ticker,newInvestment[i].marketprice,newInvestment[i].profitloss )
-    // }
-
     const promises = [];
 
     // trying with foor loop
@@ -118,7 +103,7 @@ router.get("/portfolioData", auth, async (req, res, next) => {
 
     res.status(200).json(newInvestment);
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     res.status(500).json({ success: false, error });
   }
 });
@@ -133,7 +118,6 @@ const profitLossCalculator = (price, currentPrice, position, quantity) => {
       profitLoss = (price - currentPrice) * quantity;
     }
   }
-
   return profitLoss.toFixed(2);
 };
 
@@ -159,8 +143,8 @@ router.post("/", auth, async (req, res) => {
     const doc = await UsersModel.findById(req.user.id).orFail(() => {
       throw "No user registered";
     });
-    console.log("doc.investment.length, ", doc.investment.length);
-    let found = 0;
+
+    let found = 0; //flag to check for repeated data
     for (let i = 0; i < doc.investment.length; i++) {
       //if you bought the same stock for same price later, we just increment quantity of current stock if invested before
       if (
@@ -170,7 +154,6 @@ router.post("/", auth, async (req, res) => {
         doc.investment[i].position == req.body.position
       ) {
         let amount = doc.investment[i].quantity;
-        //doc.investment[i].quantity = amount + req.body.quantity;
         amount = amount + req.body.quantity;
         doc.investment.set(i, {
           ticker: req.body.ticker,
@@ -183,23 +166,32 @@ router.post("/", auth, async (req, res) => {
         });
 
         found = 1;
-        
-        await doc.save();
-      } else if (
-        doc.investment[i].ticker == req.body.ticker &&
-        req.body.position == "SELL"
-      ) {
-        //if same company te invested befiore but now I have sold, check for position requested and deduct quantity
-        let amount = doc.investment[i].quantity;
-        doc.investment[i].quantity = amount - req.body.quantity;
-        if (doc.investment[i].quantity < 0) {
-          doc.investment[i].quantity = 0;
-        }
-        found = 1;
+
         await doc.save();
       }
+      // else if (
+      //   doc.investment[i].ticker == req.body.ticker &&
+      //   req.body.position == "SELL"
+      // ) {
+      //   //if same company te invested befiore but now I have sold, check for position requested and deduct quantity
+      //   let amount = doc.investment[i].quantity;
+      //   amount = amount - req.body.quantity;
+      //   if (amount < 0) {
+      //             doc.investment.set(i, {
+      //               ticker: req.body.ticker,
+      //               position: "BUY",
+      //               price: req.body.price,
+      //               timestamp: req.body.timestamp,
+      //               marketprice: 0,
+      //               profitloss: 0,
+      //               quantity: 0,
+      //             });
+      //   }
+      //   found = 1;
+      //   await doc.save();
+      // }
     }
-    console.log("found: ", found);
+    //console.log("found: ", found);
     //if no similar previous investment or if similar investment but not same price like before, we add th new investment
     if (found == 0) {
       const newdata = {
@@ -212,59 +204,25 @@ router.post("/", auth, async (req, res) => {
         profitloss: 0,
       };
       doc.investment.push(newdata);
-      console.log("New Data Added: ", newdata);
       await doc.save();
+      console.log("New Data Added: ", newdata);
     }
 
     return res.status(200).json({ success: true });
   } catch (error) {
     return res.status(500).json({ success: false, error });
   }
-  // const data = new Portfolio({
-  //     user_id:req.body.id,
-  //     //key:req.body.key,
-  //     ticker: req.body.ticker,
-  //     position: req.body.position,
-  //     quantity: req.body.quantity,
-  //     price: req.body.price,
-  //     timestamp:req.body.timestamp,
-  // })
-  // data.save()
-  // //.then(result=>{res.json(result)})
-  // .catch(err=>console.log(err))
-  // storeData.push(data)
-  // console.log("IN BACKEND",data)
-  // // ... then send a response of some kind to client
-  // res.json(storeData)
-  //console.log(storeData)
-  //res.send(storeData)
 });
 
 // receive POST data from the client
-router.get("/", auth, async (req, res) => {
+router.get("/getUsername", auth, async (req, res) => {
   // now do something amazing with the data we received from the client
-
-  res.send(storeData);
+  const doc = await UsersModel.findById(req.user.id).orFail(() => {
+    throw "No user registered";
+  });
+  const username = doc.name;
+  //console.log("username: ", username);
+  res.send(username);
 });
-
-// // using async/await in this route to show another way of dealing with asynchronous requests to an external API or database
-// router.get("/portfolioData", auth, (req, res, next) => {
-//     axios
-//         .get("https://my.api.mockaroo.com/stock_data.json?key=8052c770")
-//         .then(apiResponse => apiResponse.data) // pass data along directly to client
-//         .then(data=>res.json(data))
-//         .catch(err => next(err)) // pass any errors to express
-
-// })
-
-// // using async/await in this route to show another way of dealing with asynchronous requests to an external API or database
-// router.get("/portfolioChartData", auth, (req, res, next) => {
-//     axios
-//         .get("https://my.api.mockaroo.com/chart_data.json?key=8052c770")
-//         .then(apiChartResponse => apiChartResponse.data) // pass data along directly to client
-//         .then(data=>res.json(data))
-//         .catch(err => next(err)) // pass any errors to express
-
-// })
 
 module.exports = router;
