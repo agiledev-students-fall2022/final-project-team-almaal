@@ -68,7 +68,7 @@ export default function PortfolioMonitor() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/home/portfolioData"
+          URL + "home/portfolioData"
         ); //fetches data from back-end db -2
 
         setStocks(response.data);
