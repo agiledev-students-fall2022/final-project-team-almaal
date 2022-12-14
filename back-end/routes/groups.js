@@ -78,6 +78,8 @@ router.get('/', auth, (req, res) => {
                     res.status(200).json({'message':'No Posts Found'});
                 }
             })
+        }else{
+            res.status(200).json({'message':'No Posts Found'});
         }
     })
 
