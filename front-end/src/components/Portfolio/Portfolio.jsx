@@ -86,7 +86,7 @@ const Portfolio = () => {
   //         ...item,
   //         ...row,
   //       });
-  //     //console.log(newData[index]);
+  //     //
   //     const requestOptions = {
   //       method: 'POST',
   //       headers: { 'Content-Type': 'application/json' },
@@ -95,7 +95,7 @@ const Portfolio = () => {
   // //POST request to the database to add a new stock
   //   await fetch(`http://localhost:3001/home/`, requestOptions)
   //   .then(response=>response.json)
-  //   .then(data=>console.log(data) )
+  //   .then(data=>
   //       setData(newData);
   //       setEditingKey('');
   //     } else {
@@ -245,7 +245,7 @@ const Portfolio = () => {
   //     },
   //   };
 
-  console.log("in Portfolio", data);
+  
   return (
     <div>
       <PortfolioForm
@@ -354,7 +354,7 @@ export default Portfolio;
 //           ...item,
 //           ...row,
 //         });
-//       //console.log(newData[index]);
+//       //
 //       const requestOptions = {
 //         method: 'POST',
 //         headers: { 'Content-Type': 'application/json' },
@@ -363,7 +363,7 @@ export default Portfolio;
 //   //POST request to the database to add a new stock
 //     await fetch(`http://localhost:3001/home/`, requestOptions)
 //     .then(response=>response.json)
-//     .then(data=>console.log(data) )
+//     .then(data=>
 //         setData(newData);
 //         setEditingKey('');
 //       } else {
@@ -533,7 +533,7 @@ export default Portfolio;
 //         // } catch (error) {
 //         //     /*The option how to handle the error is totally up to you.
 //         //     Ideally, you can send notification to the user */
-//         //     console.log(error);
+//         //     
 //         // }
 //     const newData = {
 //       key: count,
@@ -556,7 +556,7 @@ export default Portfolio;
 //   //     ...row,
 //   //   });
 //   //   setDataSource(newData);
-//   //   console.log("Data saved");
+//   //   
 //   // };
 //   // const components = {
 //   //   body: {
@@ -611,7 +611,7 @@ export default Portfolio;
 //     //         } catch (error) {
 //     //             /*The option how to handle the error is totally up to you.
 //     //             Ideally, you can send notification to the user */
-//     //             console.log(error);
+//     //             
 //     //         }
 //     //     };
 
@@ -722,7 +722,7 @@ export default Portfolio;
 // //             } catch (error) {
 // //                 /*The option how to handle the error is totally up to you.
 // //                 Ideally, you can send notification to the user */
-// //                 console.log(error);
+// //                 
 // //             }
 // //         };
 
@@ -743,7 +743,7 @@ export default Portfolio;
 // //         } catch (error) {
 // //             /*The option how to handle the error is totally up to you.
 // //             Ideally, you can send notification to the user */
-// //             console.log(error);
+// //             
 // //         }
 // //     };
 

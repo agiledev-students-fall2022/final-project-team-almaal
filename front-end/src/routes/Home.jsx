@@ -46,7 +46,7 @@ const Home = () => {
                   />
                 </Col>
                 <Col span={10}>
-                  <Row className={letterClass}> MaishaMahrin
+                  <Row className={letterClass}>
                     {/* <span >  Maisha Mahrin </span> */}
                   </Row>
                   <Row className={letterClass}>

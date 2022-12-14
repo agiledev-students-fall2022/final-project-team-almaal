@@ -55,7 +55,6 @@ if (localStorage.token) {
 function App({ isAuthenticated }) {
     const state = useSelector(state => state)
 
-    console.log(store.getState())
     const { token, setToken } = useToken();
 
     const [render, rerender] = useState(false);

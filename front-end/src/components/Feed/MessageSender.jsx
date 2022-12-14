@@ -32,7 +32,7 @@ function MessageSender({ session_user, callback }) {
             axios.post(URL + 'groups/feedpost', formData, {
                 headers: { "Content-Type": "multipart/form-data" }
             }).then(
-                console.log("REQ SENT"),
+                
                 setImage(null),
                 setInput(""),
                 callback(false)

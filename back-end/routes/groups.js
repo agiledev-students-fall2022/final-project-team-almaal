@@ -37,9 +37,9 @@ router.get('/', auth, (req, res) => {
     const user_id = req.user.id;
     let friend_list = [];
     let feed_posts = [];
-
+    let session;
     Users.find({_id:  mongoose.Types.ObjectId(user_id)}).exec(async (err, result)=>{
-        if(!err){
+        if(!err && result.length>0){
             friend_list.push(...result[0].friends);
             
             await new Promise((resolve, reject) => {
@@ -50,20 +50,19 @@ router.get('/', auth, (req, res) => {
                     Posts.find({user_id:  mongoose.Types.ObjectId(val)}).sort({timestamp: -1}).exec((err, obj)=>{
                         if(!err){
                             feed_posts.push(...obj);
-
                             cnt++;
-
                             if (cnt === expected_cnt) {
                                 resolve();
                             }
-                        }
+                        }                        
                     })
 
                     
                 });
+                resolve();
             })
-            
-            const session = {
+
+            session = {
                 user_id : user_id,
                 username: result[0].name,
                 user_pp : check_PP(result)
@@ -75,11 +74,15 @@ router.get('/', auth, (req, res) => {
                     res.status(200).json({session_user: session, feed: feed_posts.sort((a, b) => {
                         return b.timestamp - a.timestamp;
                     })});
+                }else{
+                    res.status(200).json({'message':'No Posts Found'});
                 }
-
             })
+        }else{
+            res.status(200).json({'message':'No Posts Found'});
         }
     })
+
 })
 
 router.post("/feedpost", auth, upload.single('post_img'), (req, res) => {

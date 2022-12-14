@@ -54,6 +54,7 @@ export const register =
                 });
                 dispatch(loadUser());
             } catch (err) {
+                alert("User already exists!")
                 const errors = err.response.data.errors;
                 if (errors) {
                     errors.forEach((error) =>
@@ -77,16 +78,16 @@ export const login = (email, password, setToken) => async (dispatch) => {
 
     try {
         const res = await axios.post('/api/auth', body, config);
-        setToken(res.data);
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data,
         });
 
         dispatch(loadUser());
+        setToken(res.data);
     } catch (err) {
         const errors = err.response.data.errors;
-
+        alert("Username or Password invalid!");
         if (errors) {
             errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
         }

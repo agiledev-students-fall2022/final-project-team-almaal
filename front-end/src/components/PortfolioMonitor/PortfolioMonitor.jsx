@@ -74,7 +74,6 @@ export default function PortfolioMonitor() {
       } catch (error) {
         /*The option how to handle the error is totally up to you. 
                 Ideally, you can send notification to the user */
-        console.log(error);
       }
     };
 
