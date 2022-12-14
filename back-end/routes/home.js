@@ -205,8 +205,8 @@ router.post("/", auth, async (req, res) => {
         profitloss: 0,
       };
       doc.investment.push(newdata);
-      console.log("New Data Added: ", newdata);
       await doc.save();
+      console.log("New Data Added: ", newdata);
     }
 
     return res.status(200).json({ success: true });
