@@ -87,7 +87,7 @@ export default function PortfolioMonitor() {
         //   const responseFinn = await axios.get(
         //     `https://finnhub.io/api/v1/quote?symbol=${stocks[i].ticker}&token=${TOKEN}`
         //   ); //fetches api data of current maarekt price
-        //   console.log("response: ", responseFinn); //this console not printing cuz of error
+        //   
         // } //we want to set this market price to the marketpruce in the fetched data in (2)
 
         //response.data[0].marketprice = 10;
@@ -96,7 +96,7 @@ export default function PortfolioMonitor() {
       } catch (error) {
         /*The option how to handle the error is totally up to you. 
                 Ideally, you can send notification to the user */
-        console.log(error);
+        
       }
     };
 
@@ -111,14 +111,14 @@ export default function PortfolioMonitor() {
     //       //const result = stockFetcher(response.data[0].ticker);
     //       //const retrived = response.data;
     //       //response.data[0].marketprice = 10;
-    //       console.log("response: ");
-    //       console.log("response: ", response);
-    //       //console.log("result ", result);
+    //       
+    //       
+    //       //
     //       //setStocks(response.data);
     //     } catch (error) {
     //       /*The option how to handle the error is totally up to you.
     //             Ideally, you can send notification to the user */
-    //       console.log(error);
+    //       
     //     }
     //   }
     // };
@@ -139,7 +139,7 @@ export default function PortfolioMonitor() {
   //     profitloss:item.profitloss,
   //   })
   //  ));
-  // console.log("Hurray: "+originData.map(item=>(item.ticker))+"   ");
+  // 
 
   const handleTableChange = (pagination, filters, sorter) => {
     setTableParams({
@@ -152,7 +152,7 @@ export default function PortfolioMonitor() {
   //   const result = axios.get(
   //     `https://finnhub.io/api/v1/quote?symbol=${stock}&token=${TOKEN}`
   //   );
-  //   console.log("result.data.c: ", result);
+  //   
   //   return result.data.c;
   // };
 
@@ -225,7 +225,7 @@ export default function PortfolioMonitor() {
 //   fetch(`https://my.api.mockaroo.com/stockDATA.json?key=8052c770${qs.stringify(getRandomuserParams(tableParams))}`).then((res) => res.json())
 //     .then(({ results }) => {
 //       setStocks(results);
-//       console.log(results);
+//       
 //       setTableParams({
 //         ...tableParams,
 //         pagination: {

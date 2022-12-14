@@ -19,7 +19,7 @@ const DemoLine = () => {
     //   .then((response) => response.json())
     //   .then((json) => setData(json))
     //   .catch((error) => {
-    //     console.log('fetch data failed', error);
+    //     
     //   });
     /*Sprint-1 part ends*/
 
@@ -32,7 +32,7 @@ const DemoLine = () => {
     } catch (error) {
       /*The option how to handle the error is totally up to you. 
       Ideally, you can send notification to the user */
-      console.log('fetch data for graph failed', error);
+      
     }
   };
   const COLOR_PLATE_10 = [

@@ -37,9 +37,9 @@ router.get('/', auth, (req, res) => {
     const user_id = req.user.id;
     let friend_list = [];
     let feed_posts = [];
-
+    let session;
     Users.find({_id:  mongoose.Types.ObjectId(user_id)}).exec(async (err, result)=>{
-        if(!err){
+        if(!err && result.length>0){
             friend_list.push(...result[0].friends);
             
             await new Promise((resolve, reject) => {
@@ -50,36 +50,37 @@ router.get('/', auth, (req, res) => {
                     Posts.find({user_id:  mongoose.Types.ObjectId(val)}).sort({timestamp: -1}).exec((err, obj)=>{
                         if(!err){
                             feed_posts.push(...obj);
-
                             cnt++;
-
                             if (cnt === expected_cnt) {
                                 resolve();
                             }
-                        }
+                        }                        
                     })
 
                     
                 });
+                resolve();
             })
-            
-            const session = {
+
+            session = {
                 user_id : user_id,
                 username: result[0].name,
                 user_pp : check_PP(result)
                 //(typeof(result[0].picture.medium) == undefined ? null :  result[0].picture.medium)
             };
             Posts.find({'user_id': mongoose.Types.ObjectId(user_id)}).sort({timestamp: -1}).exec(async (err, result) =>{
-                if(!err){
+                if(!err && result.length>0){
                     feed_posts.push(...result);
                     res.status(200).json({session_user: session, feed: feed_posts.sort((a, b) => {
                         return b.timestamp - a.timestamp;
                     })});
+                }else{
+                    res.status(200).json({'message':'No Posts Found'});
                 }
-
             })
         }
     })
+
 })
 
 router.post("/feedpost", auth, upload.single('post_img'), (req, res) => {
@@ -128,10 +129,10 @@ router.post("/feedpost", auth, upload.single('post_img'), (req, res) => {
         //     comments:[]
         // })
 
-        // console.log(req.body);
-        // console.log('Upload Complete');
+        // 
+        // 
 
-        // console.log('/n', data);
+        // 
         //return res.status(200).json({result:true, message:'post saved successfully'});
     }, 0000);
 

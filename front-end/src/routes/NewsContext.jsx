@@ -16,8 +16,8 @@ const News = (props) => {
       .get(
         `https://newsapi.org/v2/everything?q=Crypto&from=2022-10-23&sortBy=popularity&apiKey=5073ab7ebd72447e8e321fe070f28e8d`
       )
-      .then((response) => {setData(response.data); console.log("-->", data);})
-      .catch((error) => console.log(error));
+      .then((response) => {setData(response.data); 
+      .catch((error) => 
   }, []);
 
   return (

@@ -42,7 +42,7 @@ const nav = (setToken) => {
             defaultOpenKeys={['sub1']}
             // mode="inline"
             theme="dark"
-            onClick={() => { console.log("key clicked") }}
+            onClick={() => { 
         >
             <Menu.Item key="1" icon={<DesktopOutlined />}>
                 <Link to="/">Home</Link>
@@ -146,7 +146,7 @@ const Navbar = ({ setToken, flag }) => {
                 // tags={<Tag color="blue">Running</Tag>}
                 extra={notlogin && [
                     <Dropdown key="1" overlay={nav(setToken)} trigger={['click']} placement="bottomRight">
-                        <a onClick={(e) => { e.preventDefault(); console.log("Clicked") }}>
+                        <a onClick={(e) => { e.preventDefault(); 
                             <Space className={styles.button}>
                                 <Button
                                     type="primary"
