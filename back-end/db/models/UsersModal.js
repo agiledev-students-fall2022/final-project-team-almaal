@@ -33,7 +33,6 @@ const UsersSchema = new mongoose.Schema({
       },
     ],
     default: undefined,
-    required: "true",
   },
   investment_visibility: {
     type: "Boolean",

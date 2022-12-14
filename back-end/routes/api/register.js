@@ -31,6 +31,7 @@ router.post(
         }
 
         const { name, email, password } = req.body;
+        console.log(typeof(name), typeof(email), typeof(password));
         try {
             let user = await User.findOne({ email });
 
@@ -56,18 +57,18 @@ router.post(
             });
             // encrypt password
             const salt = await bcrypt.genSalt(10);
-
+            user.investment = []
             user.login.username = email
             user.login.password = await bcrypt.hash(password, salt);
 
+            console.log(user)
             await user.save();
-
             const payload = {
                 user: {
                     id: user.id,
                 },
             };
-
+            
             jwt.sign(
                 payload,
                 process.env.JWT_SECRET,
@@ -81,7 +82,7 @@ router.post(
             // return jsonwebtoken;
             console.log(req.body);
         } catch (err) {
-            console.error(err.message);
+            console.error('-->', err.message);
             res.status(500).send('Server error');
         }
     }

@@ -30,7 +30,7 @@ function Feed() {
                     }
                 }
             )
-       }, 10000) 
+       }, 2000) 
     }, []);
 
 
@@ -42,7 +42,7 @@ function Feed() {
                 callback={setDataFlag}
             />
             {(typeof (backendData.feed) === 'undefined') ? (
-                <p>Loading ...</p>
+                <h6 style={{marginTop: '5%', display:'flex', justifyContent:'center'}}>No Posts ... </h6>
             ) : (
 
                 backendData.feed.map((key, i) => (
