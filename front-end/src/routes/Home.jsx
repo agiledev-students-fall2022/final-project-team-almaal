@@ -8,7 +8,7 @@ import Portfolio from "../components/Portfolio/Portfolio";
 import PortfolioMonitor from "../components/PortfolioMonitor/PortfolioMonitor";
 import setAuthToken from "../utils/setAuthToken";
 import axios from "axios";
-
+const URL = process.env.REACT_APP_BACKEND_URL;
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -30,7 +30,7 @@ const Home = () => {
   const getUsername = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3001/home/getUsername"
+        URL + "home/getUsername"
       );
       console.log("name:", response);
       setUsername(response.data);
