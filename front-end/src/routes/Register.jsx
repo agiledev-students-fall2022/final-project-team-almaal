@@ -41,8 +41,11 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     console.log(flag);
     if(flag) {
       console.log('HERE');
+      
       register({ name, email, password });
       navigate("/");
+     
+    
     }
   };
 

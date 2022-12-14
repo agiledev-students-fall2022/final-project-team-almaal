@@ -18,7 +18,9 @@ router.get('/', auth, async (req, res) => {
         })
 
         const requests = []
+        console.log(doc.friendRequests.length);
         for (let i = 0; i < doc.friendRequests.length; i++) {
+            console.log("muji")
             let entry = await UsersModel.findById(doc.friendRequests[i]).orFail(() => {
                 throw "Requester Profile not found"
             })

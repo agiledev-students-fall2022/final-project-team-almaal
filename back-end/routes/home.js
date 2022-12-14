@@ -183,12 +183,7 @@ router.post("/", auth, async (req, res) => {
         });
 
         found = 1;
-        console.log(
-          "found, amount, doc.investment[i].quantity: ",
-          found,
-          amount,
-          doc.investment[i].quantity
-        );
+        
         await doc.save();
       } else if (
         doc.investment[i].ticker == req.body.ticker &&

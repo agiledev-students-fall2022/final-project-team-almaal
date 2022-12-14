@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { login } from '../action/auth';
 import styles from './Login.module.css'
 
-const Login = ({ setToken, login, invalidLink }) => {
+const Login = ({ setToken, login, invalidLink, isAuthenticated }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',

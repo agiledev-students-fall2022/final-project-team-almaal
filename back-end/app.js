@@ -19,7 +19,7 @@ const auth = require("./middleware/auth");
 require("dotenv").config();
 
 mongoose.connect(`${process.env.DB_URL}`).then(
-  (connection) => console.log("Connected to MongoDB"),
+  (connection) => console.log("MongoDB Connected"),
   (err) => console.log(err)
 );
 
@@ -76,12 +76,12 @@ app.use("/api/register", register);
 app.use("/api/auth", require("./routes/api/auth"));
 
 app.get("/", (req, res) => {
-  console.log("hello world");
+  
   res.send("Hello World!!!");
 });
 
 module.exports = app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
+  
 });
 
 // module.exports = app.listen(port);

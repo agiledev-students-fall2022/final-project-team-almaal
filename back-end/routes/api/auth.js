@@ -52,7 +52,7 @@ router.post(
 
             // make sure the password is correct
 
-            // console.log(user)
+            // 
             const isMatch = await bcrypt.compare(password, user.login.password);
 
             if (!isMatch) {
@@ -67,8 +67,8 @@ router.post(
                 },
             };
 
-            console.log("PRINT", payload)
-            console.log("JWT: ", process.env.JWT_SECRET);
+            
+            
             jwt.sign(
                 payload,
                 process.env.JWT_SECRET,

@@ -35,7 +35,7 @@ function News(props) {
         setData(news.results);
       })
       .catch((error) => {
-        console.log(error);
+        
       });
   }, []);
 

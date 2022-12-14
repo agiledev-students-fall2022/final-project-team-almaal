@@ -50,25 +50,25 @@ const Profile = () => {
 
     const handleEditButton = async () => {
         setAllowEdit(!allowEdit);
-        // console.log("allow edit: "+allowEdit)
+        // 
         if(allowEdit){
             // setUsername(document.getElementById('exampleInputEmail1').value)
             updateUsername()
-            console.log("username: "+username)
-            console.log(document.getElementById('exampleInputEmail1').value)
+            
+            
             axios.post(URL + "profile/update", 
                 {   username: username,
                     investment_visibility: investmentVisibility,
                     profile_visibility: profileVisibility
                 })
                 .then(() => {
-                    console.log("is it here?")
-                    console.log("successfully updated username to " + username)
-                    console.log("successfully updated investment visibility to " + investmentVisibility)
-                    console.log("successfully updated profile visibility to " + profileVisibility)
+                    
+                    
+                    
+                    
                 })
                 .catch(err => {
-                    console.log(err);
+                    
                 })
         }
     }
@@ -79,10 +79,10 @@ const Profile = () => {
     //         setUsername(document.getElementById('exampleInputEmail1').value)
     //         axios.post(URL + "profile/update", { username: username })
     //             .then(() => {
-    //                 console.log("successfully updated username to " + username)
+    //                 
     //             })
     //             .catch(err => {
-    //                 console.log(err);
+    //                 
     //             })
     //     }
 
@@ -94,10 +94,10 @@ const Profile = () => {
     //         setPassword(document.getElementById('exampleInputPassword1').value)
     //         axios.post(URL + "profile/update", { password: password })
     //             .then(() => {
-    //                 console.log("successfully updated password to " + password)
+    //                 
     //             })
     //             .catch(err => {
-    //                 console.log(err);
+    //                 
     //             })
     //     }
     // }
@@ -108,13 +108,13 @@ const Profile = () => {
 
     const handleInvestmentSwitch = () => {
         setInvestmentVisibility(!investmentVisibility);
-        console.log("investment visibility: "+investmentVisibility)
+        
         // axios.post(URL + "profile/update", { investment_visibility: investmentVisibility })
         //     .then(() => {
-        //         console.log("successfully updated investment visibility to " + investmentVisibility)
+        //         
         //     })
         //     .catch(err => {
-        //         console.log(err);
+        //         
         //     })
         // fetch(URL + 'profile/update', {
         //     method:'POST',
@@ -124,13 +124,13 @@ const Profile = () => {
 
     const handleProfileSwitch = () => {
         setProfileVisibility(!profileVisibility);
-        console.log("profile visibility: "+profileVisibility)
+        
         // axios.post(URL + "profile/update", { profile_visibility: profileVisibility })
         //     .then(() => {
-        //         console.log("successfully updated profile visibility to " + profileVisibility)
+        //         
         //     })
         //     .catch(err => {
-        //         console.log(err);
+        //         
         //     })
     }
 
@@ -143,7 +143,7 @@ const Profile = () => {
             )
             // const response = await fetcher(URL + "profile", {headers})
             // const data = await response.json();
-            // console.log("Here", data)
+            // 
             // updateInformation(data)
             
         }
@@ -151,10 +151,10 @@ const Profile = () => {
         getProfile();
         
     }, [])
-    console.log("username: "+username)
-        console.log("investment visibility: "+investmentVisibility)
-        console.log("profile visibility: "+profileVisibility)
-        console.log("allow username edit: "+allowUsernameEdit)
+    
+        
+        
+        
     return (
         <div>
             {/* <Title level={2} className={styles.title}>Your Almaal Profile</Title> */}

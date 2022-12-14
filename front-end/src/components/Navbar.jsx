@@ -42,7 +42,6 @@ const nav = (setToken) => {
             defaultOpenKeys={['sub1']}
             // mode="inline"
             theme="dark"
-            onClick={() => { console.log("key clicked") }}
         >
             <Menu.Item key="1" icon={<DesktopOutlined />}>
                 <Link to="/">Home</Link>

@@ -20,7 +20,7 @@ function login(e) {
             alert(resp.data.message);
         })
         .catch(err => {
-            console.log(err);
+            
         })
 }
 
