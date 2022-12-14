@@ -23,7 +23,7 @@ api_key.apiKey = TOKEN;
 const finnhubClient = new finnhub.DefaultApi();
 
 finnhubClient.quote("AAPL", (error, data, response) => {
-  
+  console.log("current price", data.c);
 });
 
 /**
@@ -58,15 +58,15 @@ router.get("/portfolioData", auth, async (req, res, next) => {
     // for(let i=0;i<newInvestment.length;i++)
     // {
     //   finnhubClient.quote(newInvestment[i].ticker, (error, data, response) => {
-    //       //
+    //       //console.log("current price of ticker: ",newInvestment[i].ticker,data.c)
     //       findata=data.c //setting the maketprice
-    //       
+    //       console.log("current price 1 of ticker: ",newInvestment[i].ticker,newInvestment[i].marketprice)
     //       //res.status(200).json(newInvestment[i])
     //  });
     //  newInvestment[i].marketprice=findata
-    //   
+    //   console.log("current price 2 of ticker: ",newInvestment[i].ticker,newInvestment[i].marketprice)
     //   newInvestment[i].profitloss=profitLossCalculator(newInvestment[i].price, newInvestment[i].marketprice, newInvestment[i].position, newInvestment[i].quantity)
-    //   //
+    //   //console.log("current price of ticker and profitloss: ",newInvestment[i].ticker,newInvestment[i].marketprice,newInvestment[i].profitloss )
     // }
 
     const promises = [];
@@ -86,27 +86,27 @@ router.get("/portfolioData", auth, async (req, res, next) => {
       //     //.then(apiResponse => apiResponse.data) // pass data along directly to client
       //     //.then((data) => (newInvestment[i].marketprice = data.c))
       //     .then((data) => {
-      //       
+      //       console.log(
       //         "data.c in .then ",
       //         newInvestment[i].ticker,
       //         data.data.c
       //       );
       //       newInvestment[i].marketprice = data.data.c;
-      //       
+      //       console.log("newInvestment[i]: ", newInvestment[i]);
       //       res.status(200).json(newInvestment);
       //     })
       //     .catch((err) => next(err)); // pass any errors to express
-      //   //
-      //   //
+      //   //console.log("response outside .then ", response);
+      //   //console.log("marketprice 1", newInvestment[i].marketprice);
       // };
-      // //
+      // //console.log("gelo world in home router 1", i);
       // fetchData();
-      // 
+      // console.log("gelo world in home router", i);
     }
     const result = await Promise.all(promises);
-    //
+    //console.log("response from promises", res.data.c);
     result.forEach((r, index) => {
-      //
+      //console.log("r: ", r.data);
       newInvestment[index].marketprice = r.data.c;
       newInvestment[index].profitloss = profitLossCalculator(
         newInvestment[index].price,
@@ -118,7 +118,7 @@ router.get("/portfolioData", auth, async (req, res, next) => {
 
     res.status(200).json(newInvestment);
   } catch (error) {
-    
+    console.log(error);
     res.status(500).json({ success: false, error });
   }
 });
@@ -154,12 +154,12 @@ let storeData = [];
 // receive POST data from the client, adding investment to specific user databases
 router.post("/", auth, async (req, res) => {
   // now do something amazing with the data we received from the client
-  //
+  //console.log(req.body)
   try {
     const doc = await UsersModel.findById(req.user.id).orFail(() => {
       throw "No user registered";
     });
-    
+    console.log("doc.investment.length, ", doc.investment.length);
     let found = 0;
     for (let i = 0; i < doc.investment.length; i++) {
       //if you bought the same stock for same price later, we just increment quantity of current stock if invested before
@@ -184,11 +184,6 @@ router.post("/", auth, async (req, res) => {
 
         found = 1;
         
-          "found, amount, doc.investment[i].quantity: ",
-          found,
-          amount,
-          doc.investment[i].quantity
-        );
         await doc.save();
       } else if (
         doc.investment[i].ticker == req.body.ticker &&
@@ -204,7 +199,7 @@ router.post("/", auth, async (req, res) => {
         await doc.save();
       }
     }
-    
+    console.log("found: ", found);
     //if no similar previous investment or if similar investment but not same price like before, we add th new investment
     if (found == 0) {
       const newdata = {
@@ -217,7 +212,7 @@ router.post("/", auth, async (req, res) => {
         profitloss: 0,
       };
       doc.investment.push(newdata);
-      
+      console.log("New Data Added: ", newdata);
       await doc.save();
     }
 
@@ -236,12 +231,12 @@ router.post("/", auth, async (req, res) => {
   // })
   // data.save()
   // //.then(result=>{res.json(result)})
-  // .catch(err=>
+  // .catch(err=>console.log(err))
   // storeData.push(data)
-  // 
+  // console.log("IN BACKEND",data)
   // // ... then send a response of some kind to client
   // res.json(storeData)
-  //
+  //console.log(storeData)
   //res.send(storeData)
 });
 

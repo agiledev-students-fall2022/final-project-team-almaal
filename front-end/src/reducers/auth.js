@@ -19,12 +19,6 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
     switch (type) {
         case USER_LOADED:
-            
-                ...state,
-                isAuthenticated: true,
-                loading: false,
-                user: payload,
-            });
             return {
                 ...state,
                 isAuthenticated: true,

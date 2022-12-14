@@ -18,7 +18,9 @@ router.get('/', auth, async (req, res) => {
         })
 
         const requests = []
+        console.log(doc.friendRequests.length);
         for (let i = 0; i < doc.friendRequests.length; i++) {
+            console.log("muji")
             let entry = await UsersModel.findById(doc.friendRequests[i]).orFail(() => {
                 throw "Requester Profile not found"
             })
@@ -91,7 +93,7 @@ router.get('/friendlist', auth, async (req, res) => {
 
         return res.status(200).json({ success: true, id: req.user.id, friends })
     } catch (error) {
-        
+        console.log(error)
         return res.status(500).json({ success: false, error })
     }
 })
@@ -103,7 +105,7 @@ router.get('/viewprofile', auth, async (req, res) => {
         })
         res.status(200).json({ success: true, id: req.body.id, profile: doc })
     } catch (error) {
-        
+        console.log(error)
         res.status(500).json({ success: false, error })
     }
 })
@@ -184,14 +186,14 @@ router.get('/populate', auth, async (req, res) => {
             entries.push(result)
         }
 
-        // 
+        // console.log(entries)
         const insertResponse = await UsersModel.insertMany(entries)
-        
+        console.log(insertResponse)
 
         res.status(200).send("ok")
     } catch (e) {
         res.status(500).json({ error: e })
-        
+        console.log(e)
     }
 })
 

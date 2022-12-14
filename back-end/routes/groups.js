@@ -69,7 +69,7 @@ router.get('/', auth, (req, res) => {
                 //(typeof(result[0].picture.medium) == undefined ? null :  result[0].picture.medium)
             };
             Posts.find({'user_id': mongoose.Types.ObjectId(user_id)}).sort({timestamp: -1}).exec(async (err, result) =>{
-                if(!err && result.length>0){
+                if(!err){
                     feed_posts.push(...result);
                     res.status(200).json({session_user: session, feed: feed_posts.sort((a, b) => {
                         return b.timestamp - a.timestamp;
@@ -129,10 +129,10 @@ router.post("/feedpost", auth, upload.single('post_img'), (req, res) => {
         //     comments:[]
         // })
 
-        // 
-        // 
+        // console.log(req.body);
+        // console.log('Upload Complete');
 
-        // 
+        // console.log('/n', data);
         //return res.status(200).json({result:true, message:'post saved successfully'});
     }, 0000);
 

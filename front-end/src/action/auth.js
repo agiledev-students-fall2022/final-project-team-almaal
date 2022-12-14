@@ -18,7 +18,7 @@ axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
 export const loadUser = () => async (dispatch) => {
     if (localStorage.token) {
         setAuthToken(localStorage.token);
-        
+        console.log(localStorage.token)
 
         try {
             const res = await axios.get('/api/auth');
@@ -54,6 +54,7 @@ export const register =
                 });
                 dispatch(loadUser());
             } catch (err) {
+                alert("User already exists!")
                 const errors = err.response.data.errors;
                 if (errors) {
                     errors.forEach((error) =>

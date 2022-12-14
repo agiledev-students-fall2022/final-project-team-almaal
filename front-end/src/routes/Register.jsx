@@ -22,7 +22,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     let flag = false;
     e.preventDefault();
     var validRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-    
+    console.log('Email', email);
     if (password != password2) {
       flag = (false);
       alert("Passwords do not match!");
@@ -33,22 +33,18 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     }
     else if(!validRegex.test(email)){
       flag = (false);
-      
+      console.log('em')
       alert("Please enter a valid email!");
       setAlert("Passwords do not match", "danger");
     } 
     else{flag = (true);}
-    
+    console.log(flag);
     if(flag) {
-      
+      console.log('HERE');
       
       register({ name, email, password });
-      
-      if(isAuthenticated){
-        navigate("/");
-      }else{
-        alert("User already exists!")
-      }
+      navigate("/");
+     
     
     }
   };
