@@ -50,7 +50,7 @@ const CollectionCreateForm = ({
         // 
         const result = await axios
           //.post(URL + `/home/`, newStock)
-          .post("http://localhost:3001/home/", newStock)
+          .post(URL + "home/", newStock)
           .then((response) => response.json)
           //.then((data) => 
           .catch(function (error) {
