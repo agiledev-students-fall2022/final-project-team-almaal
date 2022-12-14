@@ -118,7 +118,6 @@ const profitLossCalculator = (price, currentPrice, position, quantity) => {
       profitLoss = (price - currentPrice) * quantity;
     }
   }
-
   return profitLoss.toFixed(2);
 };
 
@@ -216,10 +215,14 @@ router.post("/", auth, async (req, res) => {
 });
 
 // receive POST data from the client
-router.get("/", auth, async (req, res) => {
+router.get("/getUsername", auth, async (req, res) => {
   // now do something amazing with the data we received from the client
-
-  res.send(storeData);
+  const doc = await UsersModel.findById(req.user.id).orFail(() => {
+    throw "No user registered";
+  });
+  const username = doc.name;
+  //console.log("username: ", username);
+  res.send(username);
 });
 
 module.exports = router;

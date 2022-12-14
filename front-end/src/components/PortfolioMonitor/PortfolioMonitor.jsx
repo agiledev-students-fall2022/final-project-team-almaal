@@ -54,6 +54,7 @@ const columns = [
 export default function PortfolioMonitor() {
   //State of the stocks
   const [stocks, setStocks] = useState([]);
+  const [showfooter, setShowFooter] = useState(true);
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
@@ -87,7 +88,32 @@ export default function PortfolioMonitor() {
       ...sorter,
     });
   };
-
+  //calculating the totAL INVESTMENT and profit/loss
+  let totalInvest = 0;
+  let totalProfitLoss = 0;
+  const totalInvestment = () => {
+    totalInvest = 0;
+    totalProfitLoss = 0;
+    for (let i = 0; i < stocks.length; i++) {
+      //calc total investment
+      if (stocks[i].position == "BUY") {
+        totalInvest += stocks[i].price * stocks[i].quantity;
+      }
+      totalProfitLoss += stocks[i].profitloss;
+    }
+    const final =
+      "totalProfitLoss: $" +
+      totalProfitLoss +
+      " and totalInvestment: $" +
+      totalInvest;
+    return final;
+  };
+  // const defaultFooter = () => {
+  //   const totalInvestment = totalInvestment();
+  // };
+  const tableProps = {
+    footer: showfooter ? totalInvestment : undefined,
+  };
   return (
     <Space
       direction="verticle"
@@ -97,6 +123,7 @@ export default function PortfolioMonitor() {
       }}
     >
       <Table
+        {...tableProps}
         style={{ maxWidth: 250 }}
         scroll={{ x: true }}
         columns={columns}
