@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  almaal-frontend:
+    image: almaal-frontend:v1
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile.frontend
+    container_name: almaal_frontend
+    volumes:
+      - ./front-end:/frontend
+      - /frontend/node_modules
+    ports:
+      - 3000:3000
+
+  almaal-backend:
+    image: almaal-server:v1
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile.backend
+    container_name: almaal_server
+    volumes:
+      - ./back-end:/server
+      - /server/node_modules
+    ports:
+      - 3001:3001
+    pull_policy: never

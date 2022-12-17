@@ -78,6 +78,7 @@ node_modules/
 **/node_modules/
 jspm_packages/
 **/jspm_packages
+*/package-lock.json
 
 # Results of React build script
 build/

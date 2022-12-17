@@ -1,0 +1,80 @@
+.container {
+    width: 60%;
+    margin: 3rem auto;
+}
+
+.title {
+    /* font-family: 'Times New Roman', Times, serif; */
+    padding-bottom: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.profileImage {
+    width: 4rem;
+    height: 4rem;
+}
+
+.searchArea {
+    width: 100%;
+    position: relative;
+}
+
+
+.search {
+    position: relative;
+    z-index: 2;
+
+}
+
+.card {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    background-color: rgba(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+}
+
+.imgAndName {
+    display: flex;
+}
+
+.imgAndName div:nth-child(2) {
+    padding-left: 1rem;
+}
+
+.friendsLink {
+    padding-top: 1rem;
+    text-decoration: underline;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.friendsLink:hover {
+    font-weight: 500;
+}
+
+.seemore {
+    display: block;
+    margin: 0 auto;
+}
+
+.icon {
+    font-size: 1.25rem;
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        width: 90%;
+        /* font-size: 12px; */
+    }
+
+    .profileImage {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    .icon {
+        font-size: 1rem;
+    }
+}

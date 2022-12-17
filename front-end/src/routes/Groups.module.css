@@ -1,0 +1,139 @@
+@media only screen and (max-width: 600px) {
+    .mainLayout{
+        width: 100%;
+        background-color: 'red';
+    }
+  .mainsitelayout{
+    width: 100%;
+  }
+
+  .chatSec{
+    width: 0%;
+    display: none;
+  }
+
+  .ant-drawer-body {
+    padding: 24px 0;
+  }
+
+  .drawerCard{
+    background-color: aliceblue;
+    position:absolute;
+    top:100vh;
+    transform:translateY(-100%);
+    width:100%;
+ }
+
+ .dChatSec{
+    width: 100%;
+    height: 100vh;
+    background-color: #FAF9F6;
+ }
+}
+
+@media only screen and (min-width: 600px){
+    .mainsitelayout{
+        width: 26%;
+    }
+}
+.mainLayout{
+    width: 100%;
+    height:100vh;
+}
+
+.sideSearchBar{
+    display: block;
+    margin: auto;
+    width: 90%;
+}
+
+.sideGroups{
+    margin-top:5%;
+    height: 80%;
+    overflow: auto;
+    padding: 0 16px;
+    border: 1px solid rgba(140, 140, 140, 0.35);
+}
+
+.sideTitle{
+    color:"black";
+    display:inline-block;
+    padding-left:  5%;;
+}
+
+
+.chatSec{
+    width: 100%;
+}
+.siteLayoutBackground{
+    width: 100%;
+    display: inline-block;
+    background:#ededed;
+    height:100vh
+}
+
+.addbtn{
+    display:inline-block;
+    margin-left:55%;
+}
+
+.card {
+    position: absolute;
+    margin-left:6%;
+    width: 320px;
+    z-index: 1;
+    background-color: rgba(240, 248, 255, 0.95);
+}
+
+.imgAndName {
+    display: flex;
+}
+
+.imgAndName div:nth-child(2) {
+    padding-left: 1rem;
+}
+
+.p:hover{
+    background-color: red;
+}
+.groupSetting:hover{
+    background-color: beige;
+}
+
+.userCard{
+    display: flex;
+    width: 100%;
+    background:#ededed;
+}
+
+.chatLayout{
+    height: 100vh;
+    background: grey;
+    border-color: black;
+    padding: 1px;
+}
+
+.chatContent{
+    background:grey;
+    padding:5px 1px 1px 1px;
+    margin: 0;
+    min-height: 280;
+}
+
+.groupChat{
+    display: block; 
+    width: 100%; 
+    background:#ededed; 
+    height:100%; 
+    overflow-y: scroll;
+}
+
+.rChat{
+    width: 50%;
+    display: block;
+}
+
+.sChat{
+    margin-left:50%;
+    display: block;
+}

@@ -1,0 +1,156 @@
+.post{
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: 0px 5px 7px -7px rgba(0, 0, 0, 0.75);
+}
+
+.post__top {
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding: 15px;
+}
+
+.horizicon{
+    display: flex;
+    padding-left: 90%;
+}
+
+.post__avatar{
+    margin-right: 10px;
+}
+
+.post__topInfo > h3{
+    font-weight: 600;
+    margin: 0;
+    color: black;
+    font-size: medium;
+}
+
+.post__topInfo > p{
+    margin: 0;
+    font-size: small;
+    color: gray;
+}
+
+.post__bottom {
+	padding: 0px 20px 5px;
+}
+
+.post__bottom > p{
+    margin: 0;
+}
+
+.post__image > img {
+    width: 100%;
+}
+
+.post__options {
+    padding-top: 10px;
+    border-top: 1px solid lightgray;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: medium;
+    color: gray;
+    cursor:  pointer;
+    padding: 5px;
+}
+
+.post__option{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    flex: 1;
+}
+
+.post__option > p{
+    margin: 0;
+    margin-left: 10px;
+}
+
+.post__option:hover{
+    background-color: #eff2f5;
+    border-radius: 10px;
+}
+
+.like__counter{
+    display: flex;
+    padding: 5px 15px 5px 15px;
+}
+
+.like__counter > p{
+    margin: 0;
+    padding-left: 0.5rem;
+}
+
+.post__comment{
+    display: flex;
+    border-bottom: 1px solid #eff2f5;
+    border-top: 1px solid lightgray;
+    padding: 10px 15px 10px 15px;
+}
+
+.post__comment > form{
+    width: 100%;
+    flex: 1;
+    display: flex;
+}
+
+.post__comment > form > input {
+    width: 100%;
+    outline-width: 0;
+    border: none;
+    padding: 5px 20px;
+    margin: 0 10px;
+    border-radius: 999px;
+    background-color: #eff2f5;
+}
+
+.post__comment > form > button {
+    display: none;   
+}
+
+.comment__input{
+    flex: 1;
+}
+
+.drawer{
+    padding-left: -10px;
+    min-height: 90%;
+}
+
+.drawer_comment{
+    margin-left: -10px;
+    position:absolute;
+    top:90vh;
+    transform:translateY(-90%);
+    width:100%;
+
+    display: flex;
+    border-bottom: 1px solid #eff2f5;
+    border-top: 1px solid lightgray;
+    padding: 10px 5px 10px 5px;
+}
+
+.drawer_comment > form{
+    width: 100%;
+    flex: 1;
+    display: flex;
+}
+
+.drawer_comment > form > input {
+    width: 100%;
+    outline-width: 0;
+    border: none;
+    padding: 5px 20px;
+    margin: 0 10px;
+    border-radius: 999px;
+    background-color: #eff2f5;
+}
+
+.drawer_comment > form > button {
+    display: none;   
+}
