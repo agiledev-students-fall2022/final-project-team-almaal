@@ -1,18 +1,38 @@
 import React from 'react'
 import styles from '../routes/Friends.module.css'
-import { Input, Space, Card, Col, Row, Image, Divider, Button, Popover } from 'antd';
+import { Input, Space, Card, Col, Row, Image, Divider, Button, Popover, message } from 'antd';
 import { CheckOutlined, DeleteOutlined, MoreOutlined, UserAddOutlined } from "@ant-design/icons"
 import { Typography } from 'antd'
+
+import axios from 'axios'
+
 const { Title } = Typography
 
 
 const IncomingRequest = ({ request, type, handleRemove }) => {
+    const [messageApi, contextHolder] = message.useMessage();
+
     const modifyRequest = (e, action, friend) => {
         handleRemove(action, friend);
     }
 
+    const removeFriend = async (e, friend) => {
+        try {
+
+            const res = await axios.post(process.env.REACT_APP_BACKEND_URL + 'friends/deletefriend', {
+                friendId: friend._id
+            })
+
+            modifyRequest(e, "friendRemove", friend)
+
+        } catch (err) {
+            messageApi.info('Error');
+        }
+    }
+
     return (
         <div className={styles.requestBox}>
+            {contextHolder}
             <Row gutter={16} style={{ display: "flex", alignItems: "center", height: "4rem" }}>
                 <Col span={20}>
                     <div className={styles.imgAndName}>
@@ -48,8 +68,8 @@ const IncomingRequest = ({ request, type, handleRemove }) => {
                     <Col span={2} offset={2} style={{ cursor: "pointer" }}>
                         <Popover placement="bottomRight" content={
                             <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-                                <Button type="text" >View Profile</Button>
-                                <Button type="text" danger>Delete Connection</Button>
+                                {/* <Button type="text" >View Profile</Button> */}
+                                <Button type="text" danger onClick={(e) => removeFriend(e, request)}>Delete Connection</Button>
                             </div>
                         }>
                             <MoreOutlined style={{ fontSize: "1.5rem" }} />
