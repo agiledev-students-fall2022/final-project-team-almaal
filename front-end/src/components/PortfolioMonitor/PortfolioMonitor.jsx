@@ -115,25 +115,20 @@ export default function PortfolioMonitor() {
     footer: showfooter ? totalInvestment : undefined,
   };
   return (
-    <Space
-      direction="verticle"
-      size="middle"
-      style={{
-        display: "flex",
-      }}
-    >
-      <Table
-        {...tableProps}
-        style={{ maxWidth: 250 }}
-        scroll={{ x: true }}
-        columns={columns}
-        dataSource={stocks}
-        onChange={handleTableChange}
-      />
-      {/* removed chart temporarily */}
-      {/* <div>
-        <DemoLine />
-      </div> */}
-    </Space>
+    // <Space
+    //   direction="verticle"
+    //   size="middle"
+    //   style={{
+    //     display: "flex",
+    //   }}
+    // >
+    <Table
+      {...tableProps}
+      // style={{ maxWidth: 250 }}
+      scroll={{ x: 250 }}
+      columns={columns}
+      dataSource={stocks}
+      onChange={handleTableChange}
+    />
   );
 }
