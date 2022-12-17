@@ -76,12 +76,12 @@ app.use("/api/register", register);
 app.use("/api/auth", require("./routes/api/auth"));
 
 app.get("/", (req, res) => {
-  
-  res.send("Hello World!!!");
+
+  res.send("Hello!!!");
 });
 
 module.exports = app.listen(port, () => {
-  
+
 });
 
 // module.exports = app.listen(port);

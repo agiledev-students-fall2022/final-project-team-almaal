@@ -32,7 +32,7 @@ const Home = () => {
       const response = await axios.get(
         URL + "home/getUsername"
       );
-      console.log("name:", response);
+
       setUsername(response.data);
     } catch (error) {
       console.log(error);
@@ -76,13 +76,7 @@ const Home = () => {
               <div className="portfolio-configuration">
                 <Portfolio />
                 <div className="portfolio-button-continue-wrapper">
-                  <p></p>
-                  {/* <button
-                                    className='portfolio-button-continue'
-                                    onClick={() => setIsPortfolioReady(true)}
-                                >
-                                    <span>Continue</span>
-                                </button> */}
+                  {/* <p></p> */}
                   <Button
                     onClick={() => setIsPortfolioReady(true)}
                     type="primary"

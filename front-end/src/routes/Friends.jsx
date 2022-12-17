@@ -37,8 +37,13 @@ const Friends = () => {
     };
 
     const handleRemove = (type, friend) => {
-        if (type !== "send") setIncomingRequests(incomingRequests.filter(request => request.login.uuid !== friend.login.uuid))
-        
+        console.log(friend, friends)
+        if (type === "friendRemove") {
+            setFriends(friends.filter(entry => entry._id !== friend._id))
+            openNotification("topLeft", "Friend Removed")
+        }
+        if (type === "accept" || type === "delete") setIncomingRequests(incomingRequests.filter(request => request._id !== friend._id))
+
         if (type === "accept") {
             axios.post(URL + "friends/modifyrequest", {
                 action: type,
@@ -55,7 +60,7 @@ const Friends = () => {
                 .then(res => openNotification("topLeft", res.message))
                 .catch(err => openNotification("topLeft", err.response.data.message))
 
-            
+
         } else if (type === "send") {
             // setShowCard(false);
             axios.post(URL + "friends/sendrequest", { searchId: friend._id })
@@ -71,12 +76,12 @@ const Friends = () => {
             .then(res => res.data)
             .then(data => {
                 setLoaderBool(false);
-                
+
                 setItem(data);
                 setShowCard(true);
             }).catch(err => {
                 setLoaderBool(false)
-                
+
                 setItem(err.response.data)
                 setShowCard(true)
             })
